@@ -7,7 +7,7 @@ declare module '@mui/material/Button' {
   }
 }
 
-const defaultTheme = createTheme();
+// const defaultTheme = createTheme();
 
 const theme = createTheme({
   palette: {
@@ -25,30 +25,14 @@ const theme = createTheme({
     MuiButton: {
       variants: [
         {
-          props: { variant: 'linkBtn' },
+          props: { variant: 'linkBtn', color: 'secondary' },
           style: {
             textTransform: 'none',
-            border: `2px dashed ${defaultTheme.palette.primary.main}`,
             color: 'black',
-          },
+          }
         },
       ]
     },
-    MuiLink: {
-      // variants: [
-      //   {
-      //     props: { variant: 'first' },
-      //     style: {
-      //       border: '1px solid black'
-      //     }
-      //   }
-      // ]
-      styleOverrides: {
-        root: {
-          backgroundColor: 'black'
-        }
-      }
-    }
   }
 })
 

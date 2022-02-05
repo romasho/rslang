@@ -9,11 +9,11 @@ function Header() {
     <AppBar position='static'>
       <Toolbar sx={{ justifyContent: 'center' }}>
         <nav className='main-nav'>
-          <Button component={RouterLink} to="/" variant='linkBtn'>Home</Button>
-          <Button component={RouterLink} to="/about" variant='linkBtn'>About</Button>
-          <Button component={RouterLink} to="/dictionary" variant='linkBtn'>Dictionary</Button>
-          <Button component={RouterLink} to="/audio-call" variant='linkBtn'>Audio call </Button>
-          <Button component={RouterLink} to="/sprint" variant='linkBtn'>Sprint game</Button>
+          <Button component={RouterLink} to="/" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Home</Button>
+          <Button component={RouterLink} to="/about" variant='linkBtn' sx={{ fontWeight: 'bold' }}>About</Button>
+          <Button component={RouterLink} to="/dictionary" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Dictionary</Button>
+          <Button component={RouterLink} to="/audio-call" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Audio call </Button>
+          <Button component={RouterLink} to="/sprint" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Sprint game</Button>
         </nav>
       </Toolbar>
     </AppBar>
