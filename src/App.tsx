@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Header } from './components';
-import { About, Home, Dictionary, AudioCall, Sprint } from './components/Pages';
+import { Authorization, Home, Dictionary, AudioCall, Sprint } from './components/Pages';
 
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/dictionary' element={<Dictionary />} />
-          <Route path='/about' element={<About />} />
+          <Route path='/authorization' element={<Authorization />} />
           <Route path='/audio-call' element={<AudioCall />} />
           <Route path='/sprint' element={<Sprint />} />
         </Routes>

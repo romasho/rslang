@@ -1,13 +1,13 @@
 import React from 'react';
 import { Footer } from '../..';
 
-function About() {
+function Authorization() {
   return (
     <>
-      <h1>About</h1>
+      <h1>Authorization</h1>
       <Footer />
     </>
   );
 }
 
-export default About;
+export default Authorization;
