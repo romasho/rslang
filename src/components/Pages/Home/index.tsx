@@ -5,9 +5,9 @@ import { Footer } from '../..';
 function Home() {
   return (
     <>
-      <Container>
+      <Container sx={{ pt: 2, pb: 2, flexGrow: 1 }}>
+        <h1 className="title">RSLang is a handy app for learning English!</h1>
 
-        <h1>Home</h1>
       </Container>
 
       <Footer />

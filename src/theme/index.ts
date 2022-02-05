@@ -7,8 +7,6 @@ declare module '@mui/material/Button' {
   }
 }
 
-// const defaultTheme = createTheme();
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -32,7 +30,7 @@ const theme = createTheme({
           }
         },
       ]
-    },
+    }
   }
 })
 

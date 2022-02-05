@@ -8,7 +8,6 @@ function App() {
   return (
 
     <Router>
-
       <Header />
       <main>
         <Routes>
@@ -20,7 +19,6 @@ function App() {
         </Routes>
       </main>
     </Router>
-
 
   );
 }
