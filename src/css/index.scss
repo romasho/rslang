@@ -68,4 +68,11 @@ main {
   background-color: $main;
   display: flex; 
   align-self: flex-end;
+  align-items: center;
+}
+
+.creaters {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
 }
