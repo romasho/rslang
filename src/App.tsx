@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Header, Footer } from './components';
-
+// import { ThemeProvider } from '@emotion/react';
+import { Header } from './components';
+// import theme from './theme';
 import { About, Home, Dictionary } from './components/Pages';
 
 
@@ -17,8 +18,8 @@ function App() {
           <Route path='/about' element={<About />} />
         </Routes>
       </main>
-      <Footer />
     </Router>
+
 
   );
 }
