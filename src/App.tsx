@@ -8,6 +8,7 @@ function App() {
   return (
 
     <Router>
+
       <Header />
       <main>
         <Routes>

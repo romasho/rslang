@@ -15,9 +15,9 @@ function Header() {
         </IconButton>
         <Box sx={{ flexGrow: 1 }} />
         <nav className='main-nav' >
-          <Button component={RouterLink} to="/dictionary" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Dictionary</Button>
-          <Button component={RouterLink} to="/audio-call" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Audio call </Button>
-          <Button component={RouterLink} to="/sprint" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Sprint game</Button>
+          <Button component={RouterLink} to="/dictionary" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Учебник</Button>
+          <Button component={RouterLink} to="/audio-call" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Аудио вызов</Button>
+          <Button component={RouterLink} to="/sprint" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Спринт</Button>
           <IconButton component={RouterLink} to="/authorization">
             <LoginIcon color="secondary" />
           </IconButton>
