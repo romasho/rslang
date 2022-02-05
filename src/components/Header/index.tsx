@@ -1,29 +1,20 @@
 import React from 'react';
-import {
-  BrowserRouter as Router, Link, Routes, Route,
-} from 'react-router-dom';
-import About from '../Pages/About';
-import Dictionary from '../Pages/Dictionary';
-import Home from '../Pages/Home';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@mui/material/Link'
 
-function Navigation() {
+function Header() {
   return (
-    <Router>
-      <div>
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/dictionary">Dictionary</Link>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/dictionary" element={<Dictionary />} />
-          </Routes>
-        </nav>
-      </div>
-    </Router>
+
+    <header>
+      <nav>
+        <Link component={RouterLink} to="/">Home</Link>
+        <Link component={RouterLink} to="/about">About</Link>
+        <Link component={RouterLink} to="/dictionary">Dictionary</Link>
+      </nav>
+    </header>
+
 
   );
 }
 
-export default Navigation;
+export default Header;
