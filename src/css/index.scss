@@ -1,9 +1,3 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 @font-face {
   font-family: Roboto Light;
   src: url(../assets/fonts/roboto/Roboto-Light.ttf);
@@ -27,4 +21,65 @@
 @font-face {
   font-family: Roboto Medium;
   src: url(../assets/fonts/roboto/Roboto-Medium.ttf);
+}
+
+$main: #96CEB4;
+$secondary: #D9534F;
+$bg: #fffbd2; 
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #fffbd2;
+  min-height: 100vh;
+  font-family: inherit;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 64px);
+}
+
+.main-nav {
+  display: flex;
+  column-gap: 20px;
+}
+
+.title {
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.footer {
+  width: 100%;
+  height: 64px;
+  padding: 0 20px;
+  background-color: $main;
+  display: flex; 
+  align-self: flex-end;
+  align-items: center;
+}
+
+.rs-link {
+  transition: all .3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+.creaters {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
 }

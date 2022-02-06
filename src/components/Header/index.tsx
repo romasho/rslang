@@ -1,29 +1,31 @@
 import React from 'react';
-import {
-  BrowserRouter as Router, Link, Routes, Route,
-} from 'react-router-dom';
-import About from '../Pages/About';
-import Dictionary from '../Pages/Dictionary';
-import Home from '../Pages/Home';
+import { Link as RouterLink } from 'react-router-dom';
+import { AppBar, Toolbar, Button, IconButton, Box } from '@mui/material';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import LoginIcon from '@mui/icons-material/Login';
 
-function Navigation() {
+function Header() {
   return (
-    <Router>
-      <div>
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/dictionary">Dictionary</Link>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/dictionary" element={<Dictionary />} />
-          </Routes>
+
+    <AppBar position='static'>
+      <Toolbar>
+        <IconButton area-label="" component={RouterLink} to="/" color="secondary" >
+          <MenuBookIcon />
+        </IconButton>
+        <Box sx={{ flexGrow: 1 }} />
+        <nav className='main-nav' >
+          <Button component={RouterLink} to="/dictionary" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Dictionary</Button>
+          <Button component={RouterLink} to="/audio-call" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Audio call</Button>
+          <Button component={RouterLink} to="/sprint" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Sprint</Button>
+          <IconButton component={RouterLink} to="/authorization">
+            <LoginIcon color="secondary" />
+          </IconButton>
         </nav>
-      </div>
-    </Router>
+      </Toolbar>
+    </AppBar>
+
 
   );
 }
 
-export default Navigation;
+export default Header;
