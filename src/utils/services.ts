@@ -244,6 +244,10 @@ export async function updateUserSettings(settings: ISettings): Promise<ISettings
   }
 }
 
+export function signOut(): void {
+  loadState().auth = null;
+  saveState();
+}
 
 /*
 Examples of usage:
@@ -259,6 +263,8 @@ Examples of usage:
     createUser({ name: 'ExampleDude', email: 'example3@gmail.com', password: '123456789'}) => create new user and return created object
 
     signIn({email: 'example@gmail.com', password: '12345678'}) => login and return user object with token, also saves user credentials in local storage
+
+    signOut() => logout by resetting current user credentials in local storage
 
     getUser('61feaf3049f2c80016c599b0') => get individual user by id
 --------------------------------------------------------------------------------------------------------------------------------------------------
