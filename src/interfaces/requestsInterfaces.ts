@@ -28,14 +28,14 @@ interface IUserResponse {
 }
 
 
-interface IValidErr {
+interface IErr {
   message: string;
   path: string[];
 }
 
-interface IValidErrResponse {
+interface IResponseErr {
   error: {
-    errors: IValidErr[],
+    errors: IErr[],
     status: 'failed'
   };
 }
@@ -48,6 +48,44 @@ interface ILoginResponse {
   name: string;
 }
 
+interface IUserWord {
+  id: string;
+  difficulty: string;
+  optional?: {};
+  wordId: string;
+}
 
+type IUserWordInput = Omit<IUserWord, 'id' | 'wordId'>
 
-export type { IWord, IUserInput, IUserResponse, IValidErrResponse, ILoginResponse };
+interface IAggregatedWordsInput {
+  id: string;
+  group?: number;
+  page?: number;
+  wordsPerPage?: number;
+  filter?: string;
+}
+
+type IWordAggregated = Omit<IWord, 'id'>;
+
+interface IWordAggr extends IWordAggregated {
+  _id: string;
+}
+
+interface IAggregatedWords {
+  paginatedResults: IWordAggr[],
+  totalCount: { count: number};
+}
+
+interface IStatistic {
+  id: string
+  learnedWords?: number;
+  optional?: {};
+}
+
+interface ISettings {
+  id: string
+  wordsPerDay?: number;
+  optional?: {};
+}
+
+export type { IWord, IUserInput, IUserResponse, IResponseErr, ILoginResponse, IUserWord, IUserWordInput, IAggregatedWordsInput, IAggregatedWords, IStatistic, ISettings }
