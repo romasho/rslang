@@ -71,6 +71,13 @@ main {
   align-items: center;
 }
 
+.rs-link {
+  transition: all .3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
 .creaters {
   display: flex;
   align-items: center;
