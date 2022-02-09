@@ -1,14 +1,97 @@
 import { Grid, Paper, Box, Typography, TextField, Button, Tabs, Tab } from '@mui/material';
-import React from 'react';
+import React, { useReducer } from "react"
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { Footer } from '../..';
+import type { IAuthorizationState, IAction } from '../../../interfaces/authorizationInterface';
+import type { IResponseErr } from '../../../interfaces/requestsInterfaces';
+import { createUser, signIn } from '../../../utils/services';
+
+const initialFieldsState: IAuthorizationState = {
+  regName: {
+    value: '',
+    errMessage: ''
+  },
+  regEmail: {
+    value: '',
+    errMessage: ''
+  },
+  regPassword: {
+    value: '',
+    errMessage: ''
+  },
+  logEmail: {
+    value: '',
+    errMessage: ''
+  },
+  logPassword: {
+    value: '',
+    errMessage: ''
+  }
+};
+
+function reducer (state: IAuthorizationState, action: IAction) {
+  switch (action.type) {
+    case 'set-field-value':
+      return {
+        ...state,
+        [action.payload.name]: {
+          value: action.payload.value,
+          errMessage: ''
+        }
+      };
+    case 'set-err-message':
+      return {
+        ...state,
+        [action.payload.name]: {
+          ...state[action.payload.name as keyof IAuthorizationState],
+          errMessage: action.payload.value
+        }
+      };
+
+    default:
+      throw new Error('Unknown action')
+  }
+}
 
 function Authorization() {
   const [tabValue, setTabValue] = React.useState(1);
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
+  };
+
+  const [fields, dispatch] = useReducer(reducer, initialFieldsState);
+
+  const onSetValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: "set-field-value",
+      payload: {
+        name: event.target.name,
+        value: event.target.value
+      }
+    })
+  };
+
+  const onErrResponse = (err: IResponseErr | string) => {
+    if (typeof err === 'string') {
+      dispatch({
+        type: "set-err-message",
+        payload: {
+          name: 'regEmail',
+          value: err
+        }
+      })
+    }
+  };
+
+  const onSubmit = async (event: React.FormEvent<HTMLInputElement>) => {
+    event.preventDefault();
+
+    const response = await createUser({name: fields.regName.value, email: fields.regEmail.value, password: fields.regPassword.value});
+
+    if (typeof response === 'string') onErrResponse(response);
+    console.log(fields);
   };
 
   return (
@@ -50,8 +133,13 @@ function Authorization() {
               <Typography component='h4' variant='h4'>
                 Sign up
               </Typography>
-              <Box component='form' sx={{ maxWidth: 470 }}>
+              <Box component='form' sx={{ maxWidth: 470 }} onSubmit={onSubmit}>
                 <TextField
+                  error={!!fields.regName.errMessage}
+                  value={fields.regName.value}
+                  helperText={fields.regName.errMessage}
+                  onChange={onSetValue}
+                  name="regName"
                   margin="normal"
                   required
                   fullWidth
@@ -59,23 +147,29 @@ function Authorization() {
                   variant="standard"
                 />
                 <TextField
+                  error={!!fields.regEmail.errMessage}
+                  value={fields.regEmail.value}
+                  helperText={fields.regEmail.errMessage}
+                  onChange={onSetValue}
+                  name="regEmail"
                   margin="normal"
                   required
                   fullWidth
-                  id="email"
                   label="Email Address"
-                  name="email"
                   autoComplete="email"
                   variant="standard"
                 />
                 <TextField
+                  error={!!fields.regPassword.errMessage}
+                  value={fields.regPassword.value}
+                  helperText={fields.regPassword.errMessage}
+                  onChange={onSetValue}
+                  name="regPassword"
                   margin="normal"
                   required
                   fullWidth
                   type="password"
-                  id="password"
                   label="Password"
-                  name="password"
                   autoComplete="current-password"
                   variant="standard"
                 />
@@ -104,23 +198,29 @@ function Authorization() {
               </Typography>
               <Box component='form' sx={{ maxWidth: 470 }}>
                 <TextField
+                  error={!!fields.logEmail.errMessage}
+                  value={fields.logEmail.value}
+                  helperText={fields.logEmail.errMessage}
+                  onChange={onSetValue}
+                  name="logEmail"
                   margin="normal"
                   required
                   fullWidth
-                  id="email"
                   label="Email Address"
-                  name="email"
                   autoComplete="email"
                   variant="standard"
                 />
                 <TextField
+                  error={!!fields.logPassword.errMessage}
+                  value={fields.logPassword.value}
+                  helperText={fields.logPassword.errMessage}
+                  onChange={onSetValue}
+                  name="logPassword"
                   margin="normal"
                   required
                   fullWidth
                   type="password"
-                  id="password"
                   label="Password"
-                  name="password"
                   autoComplete="current-password"
                   variant="standard"
                 />
@@ -131,6 +231,18 @@ function Authorization() {
                   sx={{ mt: 3, mb: 2 }}
                 >
                   Sign in
+                </Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  sx={{
+                    mt: 1,
+                    bgcolor: "secondary.main",
+                    color: "white"
+                  }}
+                >
+                  Log out
                 </Button>
               </Box>
             </Box>
