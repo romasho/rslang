@@ -30,7 +30,7 @@ interface IUserResponse {
 
 interface IErr {
   message: string;
-  path: string[];
+  path: [string];
 }
 
 interface IResponseErr {
