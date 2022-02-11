@@ -105,7 +105,6 @@ function Home() {
           </Grid>
         </Grid>
         <Grid container justifyContent='space-between' sx={{ m: 0, mb: 2 }}>
-
           <Grid item xs={12} sm={8} md={6}>
             <Typography variant='h4' gutterBottom component='h2' sx={{ fontWeight: 700 }}>Team</Typography>
             <Paper sx={{ width: '95%', p: 2, mb: 2 }}>
@@ -152,8 +151,6 @@ function Home() {
             }} />
         </Grid>
       </Container>
-
-
       <Footer />
     </>
   );

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { AppBar, Toolbar, Button, IconButton, Box, Container, Menu, MenuItem, Link } from '@mui/material';
+import { AppBar, Toolbar, Button, IconButton, Box, Container, Menu, MenuItem, Link, Typography } from '@mui/material';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import MenuIcon from "@mui/icons-material/Menu";
 import LoginIcon from '@mui/icons-material/Login';
 
-const pages = ['Dictionary', 'Audio call', 'Sprint']
-const path = ['/dictionary', '/audio-call', '/sprint']
+const pages = ['SchoolBook', 'Audio call', 'Sprint']
+const path = ['/schoolBook', '/audio-call', '/sprint']
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -71,14 +71,18 @@ function Header() {
             <MenuBookIcon />
           </IconButton>
 
-
-
           <Box sx={{ flexGrow: 1 }} />
+
           <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
-            <Button component={RouterLink} to="/dictionary" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Dictionary</Button>
+            <Button component={RouterLink} to="/schoolbook" variant='linkBtn' sx={{ fontWeight: 'bold' }}>SchoolBook</Button>
             <Button component={RouterLink} to="/audio-call" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Audio call</Button>
             <Button component={RouterLink} to="/sprint" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Sprint</Button>
           </Box>
+
+
+          <Typography />
+
+
           <IconButton component={RouterLink} to="/authorization" sx={{ ml: 1 }}>
             <LoginIcon color="secondary" />
           </IconButton>
