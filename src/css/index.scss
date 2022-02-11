@@ -61,6 +61,14 @@ main {
   line-height: 28px;
 }
 
+.avatar {
+  padding: 0;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
 .footer {
   width: 100%;
   min-height: 64px;
