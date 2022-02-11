@@ -24,7 +24,7 @@ function Home() {
               }} />
             <Grid item xs={12} sm={7} md={4} sx={{ mt: { xs: 0, sm: 12 } }}>
               <Typography variant='h4' gutterBottom component='h1' sx={{ fontWeight: 700 }}>LanguageHike</Typography>
-              <Typography variant='h5' gutterBottom component='h2'>Learn English step-by-step - just like hiking</Typography>
+              <Typography variant='h5' gutterBottom component='h2'>Learn English step-by-step — just like hiking</Typography>
               <Typography>
                 An application for the effective study of foreign words in a playful way. Always at hand. On any device.
               </Typography>
