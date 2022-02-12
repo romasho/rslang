@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Header } from './components';
 import { Authorization, Home, Dictionary, AudioCall, Sprint } from './components/Pages';
+import { AudioCallProvider } from './components/Pages/AudioCall/context';
 
 
 function App() {
@@ -14,8 +15,8 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/dictionary' element={<Dictionary />} />
           <Route path='/authorization' element={<Authorization />} />
-          <Route path='/audio-call' element={<AudioCall />} />
-          <Route path='/sprint' element={<Sprint />} />
+          <Route path='/audio-call' element={<AudioCallProvider><AudioCall /></AudioCallProvider>} />
+           
         </Routes>
       </main>
     </Router>
