@@ -26,7 +26,7 @@ export async function getWord(id: string): Promise<IWord | null> {
   }
 }
 
-export async function createUser(user: IUserInput): Promise<IUserResponse | IResponseErr | string | null> {
+export async function createUser(user: IUserInput): Promise<IUserResponse | IResponseErr | null> {
   const result = await fetch('https://rs-lang-team-be.herokuapp.com/users', {
     method: 'POST',
     headers: {
@@ -36,13 +36,21 @@ export async function createUser(user: IUserInput): Promise<IUserResponse | IRes
     body: JSON.stringify(user),
   });
   try {
-    if (result.status === 417) return result.text();
+    if (result.status === 417) return {
+      error: {
+        errors: [
+          {
+            message: await result.text(),
+            path: ['email']
+          }
+        ],
+        status: 'failed'
+      }
+    };
     return await result.json()
   } catch {
     return null
   }
-
-
 }
 
 export async function signIn(user: Omit<IUserInput, 'name'>): Promise<ILoginResponse | IResponseErr | null> {
