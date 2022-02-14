@@ -1,4 +1,5 @@
 import { ToggleButtonGroup, ToggleButton, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import React from 'react';
 
 export interface SimpleDialogProps {
@@ -6,11 +7,25 @@ export interface SimpleDialogProps {
   selectedValue: string
 }
 
+const StylesToggleButton = styled(ToggleButton)({
+  width: 50,
+  height: 50,
+  fontSize: 24,
+  color: 'white',
+  '&.Mui-selected': {
+    fontWeight: 'bold',
+    color: 'white',
+    backgroundColor: 'rgba(0, 0, 0, 0.2)'
+  },
+});
+
 function DifficultySelector(props: SimpleDialogProps) {
   const { onChange, selectedValue} = props;
 
   const handleChange = (event: React.MouseEvent<HTMLElement>, difficulty: string) => {
-    onChange(difficulty);
+    if (difficulty !== null) {
+      onChange(difficulty);
+    }
   };
 
   return (
@@ -24,24 +39,24 @@ function DifficultySelector(props: SimpleDialogProps) {
         onChange={handleChange}
         sx={{ fontSize:240, backdropFilter: 'blur(5px)' }}
       >
-        <ToggleButton value='1' sx={{ width: 50, height: 50, fontSize: 24, color: 'white' }}>
+        <StylesToggleButton value='1'>
           1
-        </ToggleButton>
-        <ToggleButton value='2' sx={{ width: 50, height: 50, fontSize: 24, color: 'white' }}>
+        </StylesToggleButton>
+        <StylesToggleButton value='2'>
           2
-        </ToggleButton>
-        <ToggleButton value='3' sx={{ width: 50, height: 50, fontSize: 24, color: 'white' }}>
+        </StylesToggleButton>
+        <StylesToggleButton value='3'>
           3
-        </ToggleButton>
-        <ToggleButton value='4' sx={{ width: 50, height: 50, fontSize: 24, color: 'white' }}>
+        </StylesToggleButton>
+        <StylesToggleButton value='4'>
           4
-        </ToggleButton>
-        <ToggleButton value='5' sx={{ width: 50, height: 50, fontSize: 24, color: 'white' }}>
+        </StylesToggleButton>
+        <StylesToggleButton value='5'>
           5
-        </ToggleButton>
-        <ToggleButton value='6' sx={{ width: 50, height: 50, fontSize: 24, color: 'white' }}>
+        </StylesToggleButton>
+        <StylesToggleButton value='6'>
           6
-        </ToggleButton>
+        </StylesToggleButton>
       </ToggleButtonGroup>
     </>
   );
