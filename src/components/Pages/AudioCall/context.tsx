@@ -6,14 +6,12 @@ interface IInitialState {
     words: IWord[],
     answers: string[],
     showResults: boolean,
+    currentAnswer: string,
 }
 
 interface IAction {
-    type: 'NEXT_QUESTION' | 'LOADED_QUESTIONS' | 'ANSWERS';
-    payload: {
-      name: string;
-      value: string;
-    }
+    type: 'NEXT_QUESTION' | 'LOADED_QUESTIONS' | 'ANSWERS' | 'SELECT_ANSWER';
+    payload:  IWord[]; 
   }
 
 const initialState: IInitialState = {
@@ -21,11 +19,19 @@ const initialState: IInitialState = {
     words: [],
     answers: [],
     showResults: false,
+    currentAnswer: ','
 }
 
-const reducer = (state: IInitialState, action: IAction) => {
-    if (action.type === "NEXT_QUESTION") {
-        const showResults =
+const reducer = (state: IInitialState, action: IAction): IInitialState => {
+    switch(action.type) {
+        case 'SELECT_ANSWER': {
+            return {
+                ...state,
+                currentAnswer: action.payload,
+            }
+        }
+        case 'NEXT_QUESTION': {
+            const showResults =
         state.currentQuestionIndex === state.words.length - 1;
         const currentQuestionIndex =
         showResults ? state.currentQuestionIndex : state.currentQuestionIndex + 1;
@@ -34,20 +40,23 @@ const reducer = (state: IInitialState, action: IAction) => {
             currentQuestionIndex,
             showResults,
         }
-    }
-    if (action.type === "LOADED_QUESTIONS") {
-        return {
-            ...state,
-            words: action.payload,
+        }
+        case 'LOADED_QUESTIONS': {
+            return {
+                ...state,
+                words: action.payload,
+            }
+        }
+        case 'ANSWERS': {
+            return {
+                ...state,
+                answers: action.payload,
+            }
+        }
+        default: {
+            return state
         }
     }
-    if (action.type === "ANSWERS") {
-        return {
-            ...state,
-            answers: action.payload,
-        }
-    }
-    return state;
 }
 
 export const AudioCallContext: React.Context<IInitialState> = createContext(initialState);

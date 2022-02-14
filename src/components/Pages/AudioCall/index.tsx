@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import React, { useState, useEffect, useContext } from 'react';
 import { IWord } from '../../../interfaces/requestsInterfaces';
 import { getWords } from '../../../utils/services';
@@ -40,7 +41,7 @@ function AudioCall() {
 
   useEffect(() => {
     if (isDataLoaded) {
-      console.log('work');
+
       playAudio(`https://rs-lang-team-be.herokuapp.com/${quizState.words[quizState.currentQuestionIndex].audio}`);
       getResponseOptions(quizState.words[quizState.currentQuestionIndex])
     }
@@ -56,15 +57,12 @@ function AudioCall() {
         (<><h2>Аудиовызов</h2>
           <p>Тренировка Аудиовызов развивает словарный запас. Вы должны выбрать перевод услышанного слова.</p>
           <div>
-            {LEVELS.map(el => <input type="button"
-              value={el + 1}
-              onClick={() => {
+            {LEVELS.map(el => <Button variant="outlined" onClick={() => {
                 getWords(el, Math.floor(Math.random() * 30)).then(elem => {
                   dispatch({type: "LOADED_QUESTIONS", payload: elem})
                   setIsDataLoaded(true);
                 });
-              }}
-               />)}
+              }}>{el + 1}</Button>)}
           </div></>)
       }
     </div>
