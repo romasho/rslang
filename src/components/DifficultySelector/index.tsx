@@ -2,7 +2,7 @@ import { ToggleButtonGroup, ToggleButton, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React from 'react';
 
-export interface SimpleDialogProps {
+interface SimpleDialogProps {
   onChange: Function;
   selectedValue: string
 }
