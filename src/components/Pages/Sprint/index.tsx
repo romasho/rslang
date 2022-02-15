@@ -1,8 +1,65 @@
+import { Grid, Typography, Button } from '@mui/material';
 import React from 'react';
+import DifficultySelector from '../../DifficultySelector';
+import GameDialog from '../../GameDialog';
 
 function Sprint() {
+  const [selectedValue, setSelectedValue] = React.useState('1');
+  const [gameStarted, setGameState] = React.useState(false);
+
+  const handleDifficultyChange = (value: 'string') => {
+    setSelectedValue(value);
+  };
+
+  const handleGameStart = () => {
+    setGameState(true);
+  };
+
   return (
-    <h1>Sprint game</h1>
+    <Grid container  sx={{
+      flexGrow: 1,
+      backgroundImage: 'url(forest-red-bg.jpg)',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center center',
+      mixBlendMode: 'multiply',
+    }}>
+      {gameStarted?
+        <Grid container justifyContent='center' alignItems='center'>
+          <Grid item xs={12} sm={6} md={4}>
+            <GameDialog />
+          </Grid>
+
+        </Grid>
+        :
+        <Grid container sx={{
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <Typography component='h1' variant='h1' sx={{ mb: 10, fontFamily: 'Permanent Marker' }}>
+            Sprint
+          </Typography>
+          <Typography sx={{ mb: 10, fontSize:32, fontFamily: 'Bebas Neue'}}>
+            Check how much points you can score in one minute, <br/> making educated guesses about words
+          </Typography>
+          <DifficultySelector onChange={handleDifficultyChange} selectedValue={selectedValue} />
+          <Button variant='contained'
+            onClick={handleGameStart}
+            sx={{ 
+              mt: 10, 
+              fontSize: 24, 
+              fontWeight: 'bold', 
+              bgcolor: 'background.default', 
+              fontFamily: 'Bebas Neue', 
+              letterSpacing: 3  
+            }}>
+            Start game
+          </Button>
+        </Grid>
+      }
+
+    </Grid>
   );
 }
 
