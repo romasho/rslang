@@ -1,7 +1,7 @@
-import { Grid, Typography, Button, Paper } from '@mui/material';
-import MusicNoteIcon from '@mui/icons-material/MusicNote';
+import { Grid, Typography, Button } from '@mui/material';
 import React from 'react';
 import DifficultySelector from '../../DifficultySelector';
+import GameDialog from '../../GameDialog';
 
 function Sprint() {
   const [selectedValue, setSelectedValue] = React.useState('1');
@@ -27,19 +27,7 @@ function Sprint() {
       {gameStarted?
         <Grid container justifyContent='center' alignItems='center'>
           <Grid item xs={12} sm={6} md={4}>
-
-            <Grid container component={Paper} elevation={3} flexDirection='column' alignItems='center'>
-              <Grid container justifyContent='space-between'>
-                <MusicNoteIcon />
-              </Grid>
-              <Typography fontSize={32}>Word</Typography>
-              <Typography fontSize={24}>Перевод</Typography>
-              <Grid container justifyContent='space-around'>
-                <Button variant="contained" color='error'>Incorrect</Button>
-                <Button variant="contained" color='success'>Correct</Button>
-              </Grid>
-            </Grid>
-
+            <GameDialog />
           </Grid>
 
         </Grid>
