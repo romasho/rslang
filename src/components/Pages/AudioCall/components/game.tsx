@@ -1,6 +1,8 @@
+import { Box, Button } from "@mui/material";
 import React, { useContext } from "react";
 import { AudioCallContext } from "../context";
 import Question from "./qustion"
+import TableResult from "./results";
 
 
 function Game() {
@@ -8,21 +10,21 @@ function Game() {
   console.log('value', quizState);
 
   return (
-    <div>
+    <Box sx={{ display: 'flex', alignContent: 'center', flexDirection: 'column',
+    alignItems: 'center', height: '100%' }}>
       {quizState.showResults &&(
-        <div>
-          End
-        </div>
+        <TableResult/>
       )}
       {!quizState.showResults && (
-        <>
+        <Box sx={{ display: 'flex', alignContent: 'center', flexDirection: 'column',
+        alignItems: 'center' }}>
           <div>Audiocall</div>
           <div>Question {quizState.currentQuestionIndex + 1}/{quizState.words.length}</div>
           <Question/>
-          <button type="button" onClick={() => dispatch({type: "NEXT_QUESTION"})}>Next Question</button>
-        </>
+          <Button variant="outlined" type="button" onClick={() => dispatch({type: "NEXT_QUESTION"})} disabled={!quizState.currentAnswer}>Next Question</Button>
+        </Box>
       )}
-    </div>
+    </Box>
   )
 }
 

@@ -1,17 +1,27 @@
 import React, { useContext } from 'react';
+import { IconButton } from '@mui/material';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import { playAudio } from '..';
 import { AudioCallContext } from '../context';
 import Answer from './answer'
-import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import { IconButton } from '@mui/material';
+
 
 function Question() {
   const [quizState, dispatch] = useContext(AudioCallContext);
   const currentWord = quizState.words[quizState.currentQuestionIndex];
   return (
     <div>
-        <IconButton aria-label="delete" size="large" onClick={() => { playAudio(`https://rs-lang-team-be.herokuapp.com/${currentWord.audio}`) }}>
-         <VolumeUpIcon size="large" />
+        <IconButton aria-label="delete" 
+        size="large" 
+        onClick={() => { playAudio(`https://rs-lang-team-be.herokuapp.com/${currentWord.audio}`) }}
+        sx={{
+          width: '120px',
+          height: '120px',
+        }}>
+         <VolumeUpIcon sx={{
+          width: '100px',
+          height: '100px',
+        }}/>
         </IconButton>
         <div>
           {quizState.answers.map((answer) => (
@@ -19,7 +29,7 @@ function Question() {
               answerText={answer}
               correctAnswer={currentWord.wordTranslate}
               currentAnswer={quizState.currentAnswer}
-              onSelectAnswer={(answerText) => dispatch({ type: "SELECT_ANSWER", payload: answerText })} />
+              onSelectAnswer={(answerText: string) => dispatch({ type: "SELECT_ANSWER", payload: answerText })} />
           ))}
         </div>
     </div>

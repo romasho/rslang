@@ -1,45 +1,57 @@
 import React, { createContext, useReducer } from "react";
 import { IWord } from "../../../interfaces/requestsInterfaces";
 
-interface IInitialState {
+export interface IInitialState {
     currentQuestionIndex: number,
     words: IWord[],
     answers: string[],
     showResults: boolean,
     currentAnswer: string,
+    usersAnswers: boolean[]
 }
 
 interface IAction {
     type: 'NEXT_QUESTION' | 'LOADED_QUESTIONS' | 'ANSWERS' | 'SELECT_ANSWER';
-    payload:  IWord[]; 
-  }
+    payload: any;
+}
 
 const initialState: IInitialState = {
     currentQuestionIndex: 0,
     words: [],
     answers: [],
     showResults: false,
-    currentAnswer: ','
+    currentAnswer: '',
+    usersAnswers: [],
 }
 
 const reducer = (state: IInitialState, action: IAction): IInitialState => {
-    switch(action.type) {
+    switch (action.type) {
         case 'SELECT_ANSWER': {
+            
+            if (action.payload === state.words[state.currentQuestionIndex].wordTranslate) {
+                return {
+                    ...state,
+                    currentAnswer: action.payload,
+                    usersAnswers: [...state.usersAnswers, true]
+                }
+            }
             return {
                 ...state,
                 currentAnswer: action.payload,
+                usersAnswers: [...state.usersAnswers, false]
             }
         }
         case 'NEXT_QUESTION': {
             const showResults =
-        state.currentQuestionIndex === state.words.length - 1;
-        const currentQuestionIndex =
-        showResults ? state.currentQuestionIndex : state.currentQuestionIndex + 1;
-        return {
-            ...state,
-            currentQuestionIndex,
-            showResults,
-        }
+                state.currentQuestionIndex === state.words.length - 1;
+            const currentQuestionIndex =
+                showResults ? state.currentQuestionIndex : state.currentQuestionIndex + 1;
+            return {
+                ...state,
+                currentQuestionIndex,
+                showResults,
+                currentAnswer: '',
+            }
         }
         case 'LOADED_QUESTIONS': {
             return {
@@ -59,11 +71,20 @@ const reducer = (state: IInitialState, action: IAction): IInitialState => {
     }
 }
 
-export const AudioCallContext: React.Context<IInitialState> = createContext(initialState);
+export const AudioCallContext = createContext<[
+    state: IInitialState,
+    dispatch: React.Dispatch<any>
+]>([initialState, () => null]);
 
-export function AudioCallProvider({ children }) {
-    const value = useReducer(reducer, initialState)
+type Props = {
+    children: React.ReactNode
+};
+
+export function AudioCallProvider({ children }: Props) {
+    const state = useReducer(reducer, initialState)
     return (
-        <AudioCallContext.Provider value={value}>{children}</AudioCallContext.Provider>
+        <AudioCallContext.Provider value={state}>
+            {children}
+        </AudioCallContext.Provider>
     );
 }
