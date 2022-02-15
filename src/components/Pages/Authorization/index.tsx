@@ -1,5 +1,5 @@
 import { Grid, Paper, Box, Typography, TextField, Button, CircularProgress, Tabs, Tab } from '@mui/material';
-import React, { useReducer } from "react";
+import React from "react";
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { Footer } from '../..';
@@ -67,7 +67,7 @@ function Authorization() {
     window.location.href = '/';
   };
 
-  const [fields, dispatch] = useReducer(reducer, initialFieldsState);
+  const [fields, dispatch] = React.useReducer(reducer, initialFieldsState);
 
   const onSetValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -142,6 +142,7 @@ function Authorization() {
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
             backgroundPosition: 'center 40%',
+            zIndex: '-1'
           }}
         />
         <Grid item xs={12} sm={6} md={4} component={Paper} elevation={6} sx={{ bgcolor: 'background.default' }}>
