@@ -7,7 +7,7 @@ interface SimpleDialogProps {
   selectedValue: string
 }
 
-const StylesToggleButton = styled(ToggleButton)({
+export const StylesToggleButton = styled(ToggleButton)({
   width: 50,
   height: 50,
   fontSize: 24,
