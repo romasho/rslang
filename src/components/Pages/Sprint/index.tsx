@@ -7,13 +7,17 @@ function Sprint() {
   const [selectedValue, setSelectedValue] = React.useState('1');
   const [gameStarted, setGameState] = React.useState(false);
 
-  const handleDifficultyChange = (value: 'string') => {
+  const handleDifficultyChange = (value: string) => {
     setSelectedValue(value);
   };
 
   const handleGameStart = () => {
     setGameState(true);
   };
+
+  const handleAnswer = (answer: boolean) => {
+    console.log(answer);
+  }
 
   return (
     <Grid container  sx={{
@@ -27,7 +31,7 @@ function Sprint() {
       {gameStarted?
         <Grid container justifyContent='center' alignItems='center'>
           <Grid item xs={12} sm={6} md={4}>
-            <GameDialog />
+            <GameDialog onClick={handleAnswer} isCorrect={false} word='Word' translation='Переводыч' />
           </Grid>
 
         </Grid>
