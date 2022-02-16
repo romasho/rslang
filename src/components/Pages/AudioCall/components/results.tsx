@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,16 +10,25 @@ import { IconButton } from "@mui/material";
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { AudioCallContext } from "../context";
 import { IWord } from "../../../../interfaces/requestsInterfaces";
 import { playAudio } from "..";
 
-export default function TableResult() {
-const [quizState, dispatch] = useContext(AudioCallContext);
+interface IResults {
+  words: IWord[],
+  usersAnswers: boolean[],
+}
+
+export default function TableResult({ words, usersAnswers }: IResults){
   return (
-    <TableContainer component={Paper} sx={{maxWidth: 600, margin: '0 auto', display: 'flex', flexDirection: 'column',
-    alignItems: 'center'}}>
-      <h3>Results</h3>
+    <TableContainer component={Paper}
+      sx={{
+        maxWidth: 600,
+        margin: '20px auto',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      }}>
+      <h3>Your results {(usersAnswers.filter(el => el === true).length / words.length) * 100}%</h3>
       <Table sx={{ maxWidth: 600, }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
@@ -31,7 +40,7 @@ const [quizState, dispatch] = useContext(AudioCallContext);
           </TableRow>
         </TableHead>
         <TableBody>
-          {(quizState.words as IWord[]).map((word, index) => (
+          {(words as IWord[]).map((word, index) => (
             <TableRow
               key={word.word}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -44,7 +53,7 @@ const [quizState, dispatch] = useContext(AudioCallContext);
               <TableCell align="right">{word.word}</TableCell>
               <TableCell align="right">{word.transcription}</TableCell>
               <TableCell align="right">{word.wordTranslate}</TableCell>
-              <TableCell align="right">{quizState.usersAnswers[index] ? <CheckCircleIcon color="success"/> : <CancelIcon color="error"/>}</TableCell>
+              <TableCell align="right">{usersAnswers[index] ? <CheckCircleIcon color="success" /> : <CancelIcon color="error" />}</TableCell>
             </TableRow>
           ))}
         </TableBody>

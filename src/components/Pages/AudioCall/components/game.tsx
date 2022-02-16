@@ -7,21 +7,30 @@ import TableResult from "./results";
 
 function Game() {
   const [quizState, dispatch] = useContext(AudioCallContext);
-  console.log('value', quizState);
 
   return (
-    <Box sx={{ display: 'flex', alignContent: 'center', flexDirection: 'column',
-    alignItems: 'center', height: '100%' }}>
-      {quizState.showResults &&(
-        <TableResult/>
+    <Box sx={{
+      display: 'flex', alignContent: 'center', flexDirection: 'column',
+      alignItems: 'center', 
+    }}>
+      {quizState.showResults && (
+        <TableResult words={quizState.words} usersAnswers={quizState.usersAnswers} />
       )}
       {!quizState.showResults && (
-        <Box sx={{ display: 'flex', alignContent: 'center', flexDirection: 'column',
-        alignItems: 'center' }}>
-          <div>Audiocall</div>
+        <Box sx={{
+          display: 'flex', 
+          alignContent: 'center', 
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}>
           <div>Question {quizState.currentQuestionIndex + 1}/{quizState.words.length}</div>
-          <Question/>
-          <Button variant="outlined" type="button" onClick={() => dispatch({type: "NEXT_QUESTION"})} disabled={!quizState.currentAnswer}>Next Question</Button>
+          <Question />
+          <Button variant="outlined"
+            type="button"
+            onClick={() => dispatch({ type: "NEXT_QUESTION" })}
+            disabled={!quizState.currentAnswer}>
+            Next Question
+          </Button>
         </Box>
       )}
     </Box>

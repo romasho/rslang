@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { IconButton } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import { playAudio } from '..';
 import { AudioCallContext } from '../context';
@@ -10,7 +10,7 @@ function Question() {
   const [quizState, dispatch] = useContext(AudioCallContext);
   const currentWord = quizState.words[quizState.currentQuestionIndex];
   return (
-    <div>
+    <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <IconButton aria-label="delete" 
         size="large" 
         onClick={() => { playAudio(`https://rs-lang-team-be.herokuapp.com/${currentWord.audio}`) }}
@@ -32,7 +32,7 @@ function Question() {
               onSelectAnswer={(answerText: string) => dispatch({ type: "SELECT_ANSWER", payload: answerText })} />
           ))}
         </div>
-    </div>
+    </Box>
   );
 }
 

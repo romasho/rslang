@@ -20,7 +20,8 @@ function Answer({ answerText, onSelectAnswer, currentAnswer, correctAnswer }: IA
     type='button' 
     id={answerText} 
     name="answer" 
-    disabled={!!currentAnswer} 
+    disabled={!!currentAnswer}
+    sx={{margin: '20px 10px' }}
     onClick={() => onSelectAnswer(answerText)}>
         {answerText}
     </Button>

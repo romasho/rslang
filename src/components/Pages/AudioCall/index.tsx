@@ -1,9 +1,10 @@
-import { Button } from '@mui/material';
+import { Button, Grid, ToggleButtonGroup, Typography } from '@mui/material';
 import React, { useState, useEffect, useContext } from 'react';
 import { IWord } from '../../../interfaces/requestsInterfaces';
 import { getWords } from '../../../utils/services';
 import Game from './components/game';
 import { AudioCallContext } from './context';
+import { StylesToggleButton } from '../../DifficultySelector';
 
 const LEVELS = [0, 1, 2, 3, 4, 5];
 const audioPlayer = new Audio();
@@ -29,7 +30,7 @@ function AudioCall() {
       arrResponse = [...arrResponse, randomResponse.wordTranslate];
     }
     arrResponse.sort(() => Math.random() - 0.5);
-    dispatch({type: "ANSWERS", payload: arrResponse})
+    dispatch({ type: "ANSWERS", payload: arrResponse })
   };
 
   useEffect(() => {
@@ -48,24 +49,56 @@ function AudioCall() {
   }, [quizState.currentQuestionIndex]);
 
   return (
-    <div>
+    <Grid container sx={{
+      flexGrow: 1,
+      backgroundImage: 'url(forest-blue-bg.jpg)',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center center',
+      mixBlendMode: 'multiply',
+    }}>
       {isDataLoaded ?
         (
-          <Game />
+          <Grid container justifyContent='center' alignItems='center'>
+            <Grid item xs="auto" sm={6} md={6}>
+              <Game />
+            </Grid>
+          </Grid>
         )
         :
-        (<><h2>Аудиовызов</h2>
-          <p>Тренировка Аудиовызов развивает словарный запас. Вы должны выбрать перевод услышанного слова.</p>
-          <div>
-            {LEVELS.map(el => <Button variant="outlined" onClick={() => {
+        (<Grid container sx={{
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <Typography component='h1' variant='h1' sx={{ mb: 10, fontFamily: 'Permanent Marker' }}>
+            Audiocall
+          </Typography>
+          <Typography sx={{ mb: 10, fontSize: 32, fontFamily: 'Bebas Neue' }}>
+            Audiocall training develops vocabulary. You have to choose the translation of the word you heard.
+          </Typography>
+          <Typography variant='h5' sx={{ fontFamily: 'Bebas Neue', color: 'white' }}>
+            Select difficulty level
+          </Typography>
+          <ToggleButtonGroup
+            exclusive
+            sx={{
+              fontSize: 240,
+              backdropFilter: 'blur(5px)'
+            }}
+          >
+            {LEVELS.map(el => <StylesToggleButton value={el}
+              onClick={() => {
                 getWords(el, Math.floor(Math.random() * 30)).then(elem => {
-                  dispatch({type: "LOADED_QUESTIONS", payload: elem})
-                  setIsDataLoaded(true);
-                });
-              }}>{el + 1}</Button>)}
-          </div></>)
+                  dispatch({ type: "LOADED_QUESTIONS", payload: elem })
+                  setIsDataLoaded(true)});
+              }}>
+              {el + 1}
+            </StylesToggleButton>)}
+          </ToggleButtonGroup>
+        </Grid>)
       }
-    </div>
+    </Grid>
   );
 }
 
