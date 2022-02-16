@@ -15,18 +15,31 @@ interface GameDialogProps {
 }
 
 function GameDialog(props: GameDialogProps) {
-  const { onClick, isCorrect, word, translation} = props;
-  // const [answerStatus, setAnswerStatus] = React.useState('none');
+  const { onClick, isCorrect, word, translation } = props;
+  const [answerStatus, setAnswerStatus] = React.useState<boolean | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     const { answer } = (event.target as HTMLElement).dataset;
-    if (answer !== null) {
-      onClick(answer);
-    }
+    if (answer === isCorrect.toString()) setAnswerStatus(true);
+    else setAnswerStatus(false);
+    onClick(`${answer} ${answerStatus}`);
   };
 
+  React.useEffect(() => {
+    setTimeout(() => setAnswerStatus(null), 1000);
+    // setAnswerStatus(null);
+    console.log('lolol')
+  }, [word]);
+
   return (
-    <Grid container component={Paper} elevation={3} flexDirection='column' alignItems='center' sx={{ p: 2, border: '2px solid red' }}>
+    <Grid container component={Paper} elevation={3} flexDirection='column' alignItems='center' sx={{
+      p: 2,
+      outline: (() => {
+        if (answerStatus === null) return 'none';
+        if (answerStatus)return '2px solid green';
+        return '2px solid red';
+      })(),
+    }}>
 
       <Grid container justifyContent='space-between' flexWrap='nowrap' sx={{ mb: 2 }}>
         <IconButton>

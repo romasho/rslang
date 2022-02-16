@@ -2,22 +2,35 @@ import { Grid, Typography, Button } from '@mui/material';
 import React from 'react';
 import DifficultySelector from '../../DifficultySelector';
 import GameDialog from '../../GameDialog';
+import { getWords } from '../../../utils/services';
+import type { IWord } from '../../../interfaces/requestsInterfaces'
+
+// function Random(min: number, max: number) {
+//   const minValue = Math.ceil(min);
+//   const maxValue = Math.floor(max);
+//   return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
+// }
 
 function Sprint() {
   const [selectedValue, setSelectedValue] = React.useState('1');
   const [gameStarted, setGameState] = React.useState(false);
+  const [words, setWords] = React.useState<IWord[]>([]);
+
+  const [currentWord, setWord] = React.useState(0);
 
   const handleDifficultyChange = (value: string) => {
     setSelectedValue(value);
   };
 
-  const handleGameStart = () => {
+  const handleGameStart = async () => {
+    setWords(await getWords(+selectedValue - 1));
     setGameState(true);
   };
 
   const handleAnswer = (answer: boolean) => {
+    setWord(currentWord + 1);
     console.log(answer);
-  }
+  };
 
   return (
     <Grid container  sx={{
@@ -31,7 +44,8 @@ function Sprint() {
       {gameStarted?
         <Grid container justifyContent='center' alignItems='center'>
           <Grid item xs={12} sm={6} md={4}>
-            <GameDialog onClick={handleAnswer} isCorrect={false} word='Word' translation='Переводыч' />
+            {console.log(words)}
+            <GameDialog onClick={handleAnswer} isCorrect={!false} word={words[currentWord].word} translation={words[currentWord].wordTranslate}/>
           </Grid>
 
         </Grid>

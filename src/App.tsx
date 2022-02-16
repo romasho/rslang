@@ -16,7 +16,7 @@ function App() {
           <Route path='/dictionary' element={<Dictionary />} />
           <Route path='/authorization' element={<Authorization />} />
           <Route path='/audio-call' element={<AudioCallProvider><AudioCall /></AudioCallProvider>} />
-           
+          <Route path='/sprint' element={<Sprint />} />
         </Routes>
       </main>
     </Router>
