@@ -1,0 +1,9 @@
+div > .Button-uncorrect:disabled {
+    background-color: red;
+    color: aliceblue;
+  }
+
+  div > .Button-correct:disabled {
+    background-color: green;
+    color: aliceblue; 
+  }
