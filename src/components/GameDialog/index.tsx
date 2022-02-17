@@ -8,37 +8,71 @@ import HelpIcon from '@mui/icons-material/Help';
 import React from 'react';
 
 interface GameDialogProps {
-  onClick: Function;
+  onAnswer: Function;
   isCorrect: boolean;
   word: string;
   translation: string;
+  onExit: Function;
 }
 
 function GameDialog(props: GameDialogProps) {
-  const { onClick, isCorrect, word, translation } = props;
+  const { onAnswer, isCorrect, word, translation, onExit } = props;
   const [answerStatus, setAnswerStatus] = React.useState<boolean | null>(null);
+  const [indicators, setIndicators] = React.useState<('disabled' | 'secondary')[]>(Array(3).fill('disabled'));
+
+  const handleAnswer = (answer: boolean) => {
+    if (answer === isCorrect) setAnswerStatus(true);
+    else setAnswerStatus(false);
+    onAnswer(`${answer} ${answerStatus}`);
+  }
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    const { answer } = (event.target as HTMLElement).dataset;
-    if (answer === isCorrect.toString()) setAnswerStatus(true);
-    else setAnswerStatus(false);
-    onClick(`${answer} ${answerStatus}`);
+    const answer  = ((event.target as HTMLElement).dataset.answer === 'true');
+    handleAnswer(answer);
+  };
+
+  const handleKeyUp = (event: KeyboardEvent) => {
+    console.log(word);
+    if (event.key === 'ArrowRight') handleAnswer(true);
+    if (event.key === 'ArrowLeft') handleAnswer(false);
+  };
+
+  const updateIndicators = (result: boolean) => {
+    const indicatorsClone = indicators.slice();
+    if (result && indicatorsClone.includes('disabled')) {
+      indicatorsClone[indicatorsClone.indexOf('disabled')] = 'secondary';
+    } else indicatorsClone.fill('disabled')
+    setIndicators(indicatorsClone);
   };
 
   React.useEffect(() => {
-    setTimeout(() => setAnswerStatus(null), 1000);
-    // setAnswerStatus(null);
-    console.log('lolol')
+    document.addEventListener('keyup', handleKeyUp);
+    return () => {
+      document.removeEventListener('keyup', handleKeyUp);
+    }
+  }, [word])
+
+  React.useEffect(() => {
+    updateIndicators(!!answerStatus);
+    setTimeout(() => setAnswerStatus(null), 700);
   }, [word]);
 
   return (
-    <Grid container component={Paper} elevation={3} flexDirection='column' alignItems='center' sx={{
-      p: 2,
-      outline: (() => {
-        if (answerStatus === null) return 'none';
-        if (answerStatus)return '2px solid green';
-        return '2px solid red';
+    <Grid 
+      container 
+      component={Paper} 
+      elevation={3} 
+      flexDirection='column' 
+      alignItems='center'
+     
+      sx={{
+        p: 2,
+        outline: (() => {
+          if (answerStatus === null) return 'none';
+          if (answerStatus) return '2px solid green';
+          return '2px solid red';
       })(),
+      transition: '0.3s cubic-bezier'
     }}>
 
       <Grid container justifyContent='space-between' flexWrap='nowrap' sx={{ mb: 2 }}>
@@ -51,14 +85,14 @@ function GameDialog(props: GameDialogProps) {
           </IconButton>
         </Tooltip>
         <Grid container alignItems='center' justifyContent='center'>
-          <CircleIcon color="disabled" />
-          <CircleIcon color="disabled" />
-          <CircleIcon color="disabled" />
+          <CircleIcon color={indicators[0]} />
+          <CircleIcon color={indicators[1]} />
+          <CircleIcon color={indicators[2]} />
         </Grid>
         <IconButton>
           <FullscreenIcon />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={() => onExit()}>
           <CloseIcon />
         </IconButton>
       </Grid>
@@ -69,7 +103,7 @@ function GameDialog(props: GameDialogProps) {
       </IconButton>
       <Typography fontSize={24}>{translation}</Typography>
       <Grid container justifyContent='space-around' sx={{ mt: 2 }}>
-        <Button variant="contained" color='error' data-answer='false' onClick={handleClick}>Incorrect</Button>
+        <Button variant="contained" color='error' data-answer='false' onClick={handleClick} >Incorrect</Button>
         <Button variant="contained" color='success' data-answer='true' onClick={handleClick}>Correct</Button>
       </Grid>
     </Grid>

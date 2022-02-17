@@ -27,6 +27,10 @@ function Sprint() {
     setGameState(true);
   };
 
+  const handleGameEnd = () => {
+    setGameState(false);
+  };
+
   const handleAnswer = (answer: boolean) => {
     setWord(currentWord + 1);
     console.log(answer);
@@ -44,10 +48,14 @@ function Sprint() {
       {gameStarted?
         <Grid container justifyContent='center' alignItems='center'>
           <Grid item xs={12} sm={6} md={4}>
-            {console.log(words)}
-            <GameDialog onClick={handleAnswer} isCorrect={!false} word={words[currentWord].word} translation={words[currentWord].wordTranslate}/>
+            <GameDialog 
+              onAnswer={handleAnswer} 
+              isCorrect={!false} 
+              word={words[currentWord].word} 
+              translation={words[currentWord].wordTranslate}
+              onExit={handleGameEnd}
+            />
           </Grid>
-
         </Grid>
         :
         <Grid container sx={{
