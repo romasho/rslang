@@ -5,17 +5,18 @@ import GameDialog from '../../GameDialog';
 import { getWords } from '../../../utils/services';
 import type { IWord } from '../../../interfaces/requestsInterfaces'
 
-// function Random(min: number, max: number) {
-//   const minValue = Math.ceil(min);
-//   const maxValue = Math.floor(max);
-//   return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
-// }
+function Random(min: number, max: number) {
+  const minValue = Math.ceil(min);
+  const maxValue = Math.floor(max);
+  return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
+}
 
 function Sprint() {
   const [selectedValue, setSelectedValue] = React.useState('1');
   const [gameStarted, setGameState] = React.useState(false);
   const [words, setWords] = React.useState<IWord[]>([]);
-
+  const [score, setScore] = React.useState(0);
+  const [answers, setAnswers] = React.useState<boolean[]>([]);
   const [currentWord, setWord] = React.useState(0);
 
   const handleDifficultyChange = (value: string) => {
@@ -23,18 +24,30 @@ function Sprint() {
   };
 
   const handleGameStart = async () => {
-    setWords(await getWords(+selectedValue - 1));
+    setWords(await getWords(+selectedValue - 1, Random(0, 29)));
     setGameState(true);
   };
 
-  const handleGameEnd = () => {
+  const handleExit = () => {
     setGameState(false);
   };
 
   const handleAnswer = (answer: boolean) => {
     setWord(currentWord + 1);
-    console.log(answer);
+    setAnswers(answers.concat(answer));
   };
+
+  React.useEffect( () => {
+    if (currentWord === words.length - 1) {
+      getWords(+selectedValue - 1, Random(0, 29)).then((newPage) => {
+        setWords(words.concat(newPage));
+      })
+    }
+  }, [currentWord]);
+
+  React.useEffect( () => {
+    if (answers[answers.length - 1] === true) setScore(score + 10);
+  }, [answers]);
 
   return (
     <Grid container  sx={{
@@ -53,7 +66,7 @@ function Sprint() {
               isCorrect={!false} 
               word={words[currentWord].word} 
               translation={words[currentWord].wordTranslate}
-              onExit={handleGameEnd}
+              onExit={handleExit}
             />
           </Grid>
         </Grid>

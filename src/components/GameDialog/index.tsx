@@ -21,10 +21,11 @@ function GameDialog(props: GameDialogProps) {
   const [indicators, setIndicators] = React.useState<('disabled' | 'secondary')[]>(Array(3).fill('disabled'));
 
   const handleAnswer = (answer: boolean) => {
-    if (answer === isCorrect) setAnswerStatus(true);
-    else setAnswerStatus(false);
-    onAnswer(`${answer} ${answerStatus}`);
-  }
+    const answerIsCorrect = (answer === isCorrect);
+
+    setAnswerStatus(answerIsCorrect);
+    onAnswer(answerIsCorrect);
+  };
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     const answer  = ((event.target as HTMLElement).dataset.answer === 'true');
@@ -41,7 +42,7 @@ function GameDialog(props: GameDialogProps) {
     const indicatorsClone = indicators.slice();
     if (result && indicatorsClone.includes('disabled')) {
       indicatorsClone[indicatorsClone.indexOf('disabled')] = 'secondary';
-    } else indicatorsClone.fill('disabled')
+    } else indicatorsClone.fill('disabled');
     setIndicators(indicatorsClone);
   };
 
@@ -50,15 +51,15 @@ function GameDialog(props: GameDialogProps) {
     return () => {
       document.removeEventListener('keyup', handleKeyUp);
     }
-  }, [word])
+  }, [word]);
 
   React.useEffect(() => {
     updateIndicators(!!answerStatus);
-    setTimeout(() => setAnswerStatus(null), 700);
+    setTimeout(() => setAnswerStatus(null), 800);
   }, [word]);
 
   return (
-    <Grid 
+    <Grid
       container 
       component={Paper} 
       elevation={3} 
@@ -72,7 +73,7 @@ function GameDialog(props: GameDialogProps) {
           if (answerStatus) return '2px solid green';
           return '2px solid red';
       })(),
-      transition: '0.3s cubic-bezier'
+      transition: 'outline 50ms'
     }}>
 
       <Grid container justifyContent='space-between' flexWrap='nowrap' sx={{ mb: 2 }}>
@@ -98,7 +99,7 @@ function GameDialog(props: GameDialogProps) {
       </Grid>
 
       <Typography fontSize={32}>{word}</Typography>
-      <IconButton>
+      <IconButton color='secondary'>
         <MusicNoteIcon />
       </IconButton>
       <Typography fontSize={24}>{translation}</Typography>
