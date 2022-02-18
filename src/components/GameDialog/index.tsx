@@ -1,25 +1,28 @@
+import React from 'react';
 import { Grid, Typography, Button, Paper, IconButton, Tooltip } from '@mui/material';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import CloseIcon from '@mui/icons-material/Close';
 import CircleIcon from '@mui/icons-material/Circle';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import HelpIcon from '@mui/icons-material/Help';
-import React from 'react';
+import type { IWord } from '../../interfaces/requestsInterfaces';
 
 interface GameDialogProps {
   onAnswer: Function;
-  isCorrect: boolean;
-  word: string;
+  word: IWord;
   translation: string;
   onExit: Function;
   score: number;
 }
 
 function GameDialog(props: GameDialogProps) {
-  const { onAnswer, isCorrect, word, translation, onExit, score } = props;
+  const { onAnswer, word, translation, onExit, score } = props;
   const [answerStatus, setAnswerStatus] = React.useState<boolean | null>(null);
   const [indicators, setIndicators] = React.useState<('disabled' | 'secondary')[]>(Array(3).fill('disabled'));
+  const [volume, setVolume] = React.useState<boolean>(true);
+  const isCorrect = word.wordTranslate === translation;
 
   const handleAnswer = (answer: boolean) => {
     const answerIsCorrect = (answer === isCorrect);
@@ -33,8 +36,20 @@ function GameDialog(props: GameDialogProps) {
     handleAnswer(answer);
   };
 
+  const handleClickAudio = () => {
+    const audioPlayer = new Audio();
+    audioPlayer.volume = volume? 0.1 : 0;
+    audioPlayer.src = `https://rs-lang-team-be.herokuapp.com/${word.audio}`;
+    audioPlayer.load();
+    audioPlayer.play();
+  };
+
+  const handleClickVolume = () => {
+    if (volume) setVolume(false);
+    else setVolume(true);
+  };
+
   const handleKeyUp = (event: KeyboardEvent) => {
-    console.log(word);
     if (event.key === 'ArrowRight') handleAnswer(true);
     if (event.key === 'ArrowLeft') handleAnswer(false);
   };
@@ -84,8 +99,12 @@ function GameDialog(props: GameDialogProps) {
     }}>
 
       <Grid container justifyContent='space-between' flexWrap='nowrap' sx={{ mb: 1 }}>
-        <IconButton>
-          <NotificationsActiveIcon />
+        <IconButton onClick={handleClickVolume}>
+          {volume?
+            <NotificationsActiveIcon />
+            :
+            <NotificationsOffIcon />
+          }
         </IconButton>
         <Tooltip title='You can use arrow keys to choose answers'>
           <IconButton>
@@ -108,8 +127,8 @@ function GameDialog(props: GameDialogProps) {
         {score}
       </Typography>
 
-      <Typography fontSize={32}>{word}</Typography>
-      <IconButton color='secondary'>
+      <Typography fontSize={32}>{word.word}</Typography>
+      <IconButton color='secondary' onClick={handleClickAudio}>
         <MusicNoteIcon />
       </IconButton>
       <Typography fontSize={24}>{translation}</Typography>

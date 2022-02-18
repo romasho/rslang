@@ -11,7 +11,16 @@ function Random(min: number, max: number) {
   return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
 }
 
+function generateTranslation (word: IWord, wordsArr: IWord[]) {
+  const incorrect = wordsArr[Random(0, wordsArr.length - 1)].wordTranslate;
+  const correct = word.wordTranslate;
+
+  if (Random(0, 1)) return incorrect;
+  return correct;
+}
+
 const POINTS_DEFAULT = 10;
+const MAX_PAGES = 29;
 
 
 function Sprint() {
@@ -45,7 +54,7 @@ function Sprint() {
 
   React.useEffect( () => {
     if (currentWord === words.length - 10) {
-      getWords(+selectedValue - 1, Random(0, 29)).then((newPage) => {
+      getWords(+selectedValue - 1, Random(0, MAX_PAGES)).then((newPage) => {
         setWords(words.concat(newPage));
       })
     } 
@@ -71,10 +80,9 @@ function Sprint() {
         <Grid container justifyContent='center' alignItems='center'>
           <Grid item xs={12} sm={6} md={4}>
             <GameDialog 
-              onAnswer={handleAnswer} 
-              isCorrect={!false} 
-              word={words[currentWord].word} 
-              translation={words[currentWord].wordTranslate}
+              onAnswer={handleAnswer}
+              word={words[currentWord]}
+              translation={generateTranslation(words[currentWord], words)}
               onExit={handleExit}
               score={score}
             />
