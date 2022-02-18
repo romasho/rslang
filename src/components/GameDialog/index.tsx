@@ -13,10 +13,11 @@ interface GameDialogProps {
   word: string;
   translation: string;
   onExit: Function;
+  score: number;
 }
 
 function GameDialog(props: GameDialogProps) {
-  const { onAnswer, isCorrect, word, translation, onExit } = props;
+  const { onAnswer, isCorrect, word, translation, onExit, score } = props;
   const [answerStatus, setAnswerStatus] = React.useState<boolean | null>(null);
   const [indicators, setIndicators] = React.useState<('disabled' | 'secondary')[]>(Array(3).fill('disabled'));
 
@@ -40,9 +41,15 @@ function GameDialog(props: GameDialogProps) {
 
   const updateIndicators = (result: boolean) => {
     const indicatorsClone = indicators.slice();
-    if (result && indicatorsClone.includes('disabled')) {
+
+    if (!result) indicatorsClone.fill('disabled');
+    else if (result && indicatorsClone.includes('disabled')) {
       indicatorsClone[indicatorsClone.indexOf('disabled')] = 'secondary';
-    } else indicatorsClone.fill('disabled');
+    } else {
+      indicatorsClone.fill('disabled');
+      indicatorsClone[0] = 'secondary';
+    }
+    
     setIndicators(indicatorsClone);
   };
 
@@ -76,7 +83,7 @@ function GameDialog(props: GameDialogProps) {
       transition: 'outline 50ms'
     }}>
 
-      <Grid container justifyContent='space-between' flexWrap='nowrap' sx={{ mb: 2 }}>
+      <Grid container justifyContent='space-between' flexWrap='nowrap' sx={{ mb: 1 }}>
         <IconButton>
           <NotificationsActiveIcon />
         </IconButton>
@@ -97,6 +104,9 @@ function GameDialog(props: GameDialogProps) {
           <CloseIcon />
         </IconButton>
       </Grid>
+      <Typography>
+        {score}
+      </Typography>
 
       <Typography fontSize={32}>{word}</Typography>
       <IconButton color='secondary'>

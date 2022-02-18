@@ -11,6 +11,9 @@ function Random(min: number, max: number) {
   return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
 }
 
+const POINTS_DEFAULT = 10;
+
+
 function Sprint() {
   const [selectedValue, setSelectedValue] = React.useState('1');
   const [gameStarted, setGameState] = React.useState(false);
@@ -30,6 +33,9 @@ function Sprint() {
 
   const handleExit = () => {
     setGameState(false);
+    setScore(0);
+    setWord(0);
+    setAnswers([]);
   };
 
   const handleAnswer = (answer: boolean) => {
@@ -38,15 +44,18 @@ function Sprint() {
   };
 
   React.useEffect( () => {
-    if (currentWord === words.length - 1) {
+    if (currentWord === words.length - 10) {
       getWords(+selectedValue - 1, Random(0, 29)).then((newPage) => {
         setWords(words.concat(newPage));
       })
-    }
+    } 
   }, [currentWord]);
 
   React.useEffect( () => {
-    if (answers[answers.length - 1] === true) setScore(score + 10);
+    const combo = answers.length - 1 - answers.lastIndexOf(false);
+    const multiplier = Math.ceil(combo / 3);
+
+    setScore(score + POINTS_DEFAULT * multiplier);
   }, [answers]);
 
   return (
@@ -67,6 +76,7 @@ function Sprint() {
               word={words[currentWord].word} 
               translation={words[currentWord].wordTranslate}
               onExit={handleExit}
+              score={score}
             />
           </Grid>
         </Grid>
