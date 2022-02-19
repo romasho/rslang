@@ -138,10 +138,10 @@ function Authorization() {
           sm={6}
           md={8}
           sx={{
-            backgroundImage: 'url(https://i.pinimg.com/originals/e6/da/0d/e6da0db3567e1d7c588ed513314687c2.jpg)',
+            backgroundImage: 'url(forest-yellow-bg.jpg)',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
-            backgroundPosition: 'center 40%',
+            backgroundPosition: 'center top',
             zIndex: '-1'
           }}
         />
