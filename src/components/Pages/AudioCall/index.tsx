@@ -1,24 +1,20 @@
-import { Grid, ToggleButtonGroup, Typography } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import React, { useState, useEffect, useContext } from 'react';
 import { IWord } from '../../../interfaces/requestsInterfaces';
 import { getWords } from '../../../utils/services';
 import Game from './components/game';
 import { AudioCallContext } from './context';
-import { StylesToggleButton } from '../../DifficultySelector';
-
-const LEVELS = [0, 1, 2, 3, 4, 5];
-const audioPlayer = new Audio();
-audioPlayer.volume = 0.1;
-
-export function playAudio(url: string) {
-  audioPlayer.src = url;
-  audioPlayer.load();
-  audioPlayer.play();
-}
+import DifficultySelector from '../../DifficultySelector';
+import playAudio from '../../../utils/miscellaneous';
 
 function AudioCall() {
   const [quizState, dispatch] = useContext(AudioCallContext);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [selectedValue, setSelectedValue] = React.useState('1');
+
+  const handleDifficultyChange = (value: string) => {
+    setSelectedValue(value);
+  };
 
   const getResponseOptions = (randomWord: IWord) => {
     let arrResponse: any = [randomWord?.wordTranslate];
@@ -60,7 +56,7 @@ function AudioCall() {
       {isDataLoaded ?
         (
           <Grid container justifyContent='center' alignItems='center'>
-            <Grid item xs="auto" sm={6} md={6}>
+            <Grid item xs="auto" sm={11} md={6}>
               <Game />
             </Grid>
           </Grid>
@@ -75,27 +71,26 @@ function AudioCall() {
             Audiocall
           </Typography>
           <Typography sx={{ mb: 10, fontSize: 32, fontFamily: 'Bebas Neue' }}>
-            Audiocall training develops vocabulary. You have to choose the translation of the word you heard.
+            Audiocall training develops vocabulary. <br/> You have to choose the translation of the word you heard.
           </Typography>
-          <Typography variant='h5' sx={{ fontFamily: 'Bebas Neue', color: 'white' }}>
-            Select difficulty level
-          </Typography>
-          <ToggleButtonGroup
-            exclusive
-            sx={{
-              fontSize: 240,
-              backdropFilter: 'blur(5px)'
+          <DifficultySelector onChange={handleDifficultyChange} selectedValue={selectedValue} />
+          <Button variant='contained'
+            onClick={() => {
+              getWords(+selectedValue - 1, Math.floor(Math.random() * 30)).then(elem => {
+                dispatch({ type: "LOADED_QUESTIONS", payload: elem })
+                setIsDataLoaded(true)});
             }}
-          >
-            {LEVELS.map(el => <StylesToggleButton value={el}
-              onClick={() => {
-                getWords(el, Math.floor(Math.random() * 30)).then(elem => {
-                  dispatch({ type: "LOADED_QUESTIONS", payload: elem })
-                  setIsDataLoaded(true)});
-              }}>
-              {el + 1}
-            </StylesToggleButton>)}
-          </ToggleButtonGroup>
+            sx={{ 
+              mt: 10, 
+              fontSize: 24, 
+              fontWeight: 'bold', 
+              bgcolor: 'background.default', 
+              fontFamily: 'Bebas Neue', 
+              letterSpacing: 3  
+            }}>
+            Start game
+          </Button>
+          
         </Grid>)
       }
     </Grid>

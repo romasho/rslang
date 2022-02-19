@@ -2,7 +2,8 @@ import { Box, Button } from "@mui/material";
 import React, { useContext } from "react";
 import { AudioCallContext } from "../context";
 import Question from "./qustion"
-import TableResult from "./results";
+import TableResult from "../../../ResultsPage/results";
+import CircularStatic from "./circularProgress";
 
 
 function Game() {
@@ -14,7 +15,7 @@ function Game() {
       alignItems: 'center', 
     }}>
       {quizState.showResults && (
-        <TableResult words={quizState.words} usersAnswers={quizState.usersAnswers} />
+        <TableResult words={quizState.words} usersAnswers={quizState.usersAnswers}  score={null} />
       )}
       {!quizState.showResults && (
         <Box sx={{
@@ -23,7 +24,7 @@ function Game() {
           flexDirection: 'column',
           alignItems: 'center',
         }}>
-          <div>Question {quizState.currentQuestionIndex + 1}/{quizState.words.length}</div>
+          <CircularStatic currentword={quizState.currentQuestionIndex + 1} countwords={quizState.words.length}/>
           <Question />
           <Button variant="outlined"
             type="button"
