@@ -4,18 +4,15 @@ import DifficultySelector from '../../DifficultySelector';
 import GameDialog from '../../GameDialog';
 import { getWords } from '../../../utils/services';
 import type { IWord } from '../../../interfaces/requestsInterfaces'
-
-function Random(min: number, max: number) {
-  const minValue = Math.ceil(min);
-  const maxValue = Math.floor(max);
-  return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
-}
+import { random } from  '../../../utils/miscellaneous';
+import Timer from '../../Timer';
+import TableResult from '../../ResultsPage/results';
 
 function generateTranslation (word: IWord, wordsArr: IWord[]) {
-  const incorrect = wordsArr[Random(0, wordsArr.length - 1)].wordTranslate;
+  const incorrect = wordsArr[random(0, wordsArr.length - 1)].wordTranslate;
   const correct = word.wordTranslate;
 
-  if (Random(0, 1)) return incorrect;
+  if (random(0, 1)) return incorrect;
   return correct;
 }
 
@@ -25,7 +22,7 @@ const MAX_PAGES = 29;
 
 function Sprint() {
   const [selectedValue, setSelectedValue] = React.useState('1');
-  const [gameStarted, setGameState] = React.useState(false);
+  const [gameState, setGameState] = React.useState<false | 'inProgress' | 'ended'>(false);
   const [words, setWords] = React.useState<IWord[]>([]);
   const [score, setScore] = React.useState(0);
   const [answers, setAnswers] = React.useState<boolean[]>([]);
@@ -36,8 +33,8 @@ function Sprint() {
   };
 
   const handleGameStart = async () => {
-    setWords(await getWords(+selectedValue - 1, Random(0, 29)));
-    setGameState(true);
+    setWords(await getWords(+selectedValue - 1, random(0, 29)));
+    setGameState('inProgress');
   };
 
   const handleExit = () => {
@@ -47,6 +44,10 @@ function Sprint() {
     setAnswers([]);
   };
 
+  const handleGameEnd = () => {
+    setGameState('ended');
+  };
+
   const handleAnswer = (answer: boolean) => {
     setWord(currentWord + 1);
     setAnswers(answers.concat(answer));
@@ -54,7 +55,7 @@ function Sprint() {
 
   React.useEffect( () => {
     if (currentWord === words.length - 10) {
-      getWords(+selectedValue - 1, Random(0, MAX_PAGES)).then((newPage) => {
+      getWords(+selectedValue - 1, random(0, MAX_PAGES)).then((newPage) => {
         setWords(words.concat(newPage));
       })
     } 
@@ -76,10 +77,11 @@ function Sprint() {
       backgroundPosition: 'center center',
       mixBlendMode: 'multiply',
     }}>
-      {gameStarted?
+      {gameState === 'inProgress' &&
         <Grid container justifyContent='center' alignItems='center'>
           <Grid item xs={12} sm={6} md={4}>
-            <GameDialog 
+            <Timer onGameEnd={handleGameEnd} time={60000}/>
+            <GameDialog
               onAnswer={handleAnswer}
               word={words[currentWord]}
               translation={generateTranslation(words[currentWord], words)}
@@ -88,7 +90,11 @@ function Sprint() {
             />
           </Grid>
         </Grid>
-        :
+      }
+      {gameState === 'ended' &&
+        <TableResult words={words.slice(0, answers.length)} usersAnswers={answers} score={score}/>
+      }
+      {!gameState &&
         <Grid container sx={{
           flexDirection: 'column',
           justifyContent: 'center',
@@ -102,20 +108,19 @@ function Sprint() {
           </Typography>
           <DifficultySelector onChange={handleDifficultyChange} selectedValue={selectedValue} />
           <Button variant='contained'
-            onClick={handleGameStart}
-            sx={{ 
-              mt: 10, 
-              fontSize: 24, 
-              fontWeight: 'bold', 
-              bgcolor: 'background.default', 
-              fontFamily: 'Bebas Neue', 
-              letterSpacing: 3  
-            }}>
+                  onClick={handleGameStart}
+                  sx={{
+                    mt: 10,
+                    fontSize: 24,
+                    fontWeight: 'bold',
+                    bgcolor: 'background.default',
+                    fontFamily: 'Bebas Neue',
+                    letterSpacing: 3
+                  }}>
             Start game
           </Button>
         </Grid>
       }
-
     </Grid>
   );
 }

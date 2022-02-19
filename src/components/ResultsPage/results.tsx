@@ -1,17 +1,10 @@
 import React from "react";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { IconButton } from "@mui/material";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Typography } from '@mui/material';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { IWord } from "../../interfaces/requestsInterfaces";
-import playAudio from "../../utils/miscellaneous";
+import { playAudio } from "../../utils/miscellaneous";
 
 
 interface IResults {
@@ -21,7 +14,7 @@ interface IResults {
 }
 
 export default function TableResult({ words, usersAnswers, score = null }: IResults) {
-  const successfulPercent = (usersAnswers.filter(el => el === true).length / words.length) * 100;
+  const successfulPercent = Math.round((usersAnswers.filter(el => el === true).length / words.length) * 100);
   const correcInRow = Math.max(...usersAnswers.reduce((acc, n, i, a) => {
     if (n !== a[i - 1]) acc.push(0);
     // eslint-disable-next-line no-plusplus
@@ -41,8 +34,10 @@ export default function TableResult({ words, usersAnswers, score = null }: IResu
         flexDirection: 'column',
         alignItems: 'center'
       }}>
-      <h3>Your results {successfulPercent}%</h3>
-      {score ? <h3>Score {score}</h3> : null}
+      <Typography component='h3' variant='h3' sx={{ mt: 2, fontFamily: 'Bebas Neue' }}>
+        Your results: {successfulPercent}%
+      </Typography>
+      {score ? <Typography variant='h4' sx={{ fontFamily: 'Bebas Neue' }}>Score: {score}</Typography> : null}
       <Table sx={{ maxWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
