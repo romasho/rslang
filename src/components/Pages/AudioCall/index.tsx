@@ -1,20 +1,13 @@
-import { Button, Grid, ToggleButtonGroup, Typography } from '@mui/material';
+import { Grid, ToggleButtonGroup, Typography } from '@mui/material';
 import React, { useState, useEffect, useContext } from 'react';
 import { IWord } from '../../../interfaces/requestsInterfaces';
 import { getWords } from '../../../utils/services';
 import Game from './components/game';
 import { AudioCallContext } from './context';
 import { StylesToggleButton } from '../../DifficultySelector';
+import playAudio from '../../../utils/miscellaneous';
 
 const LEVELS = [0, 1, 2, 3, 4, 5];
-const audioPlayer = new Audio();
-audioPlayer.volume = 0.1;
-
-export function playAudio(url: string) {
-  audioPlayer.src = url;
-  audioPlayer.load();
-  audioPlayer.play();
-}
 
 function AudioCall() {
   const [quizState, dispatch] = useContext(AudioCallContext);
@@ -60,7 +53,7 @@ function AudioCall() {
       {isDataLoaded ?
         (
           <Grid container justifyContent='center' alignItems='center'>
-            <Grid item xs="auto" sm={6} md={6}>
+            <Grid item xs="auto" sm={11} md={6}>
               <Game />
             </Grid>
           </Grid>
@@ -75,7 +68,7 @@ function AudioCall() {
             Audiocall
           </Typography>
           <Typography sx={{ mb: 10, fontSize: 32, fontFamily: 'Bebas Neue' }}>
-            Audiocall training develops vocabulary. You have to choose the translation of the word you heard.
+            Audiocall training develops vocabulary. <br/> You have to choose the translation of the word you heard.
           </Typography>
           <Typography variant='h5' sx={{ fontFamily: 'Bebas Neue', color: 'white' }}>
             Select difficulty level
