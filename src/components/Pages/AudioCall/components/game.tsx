@@ -24,7 +24,7 @@ function Game() {
           flexDirection: 'column',
           alignItems: 'center',
         }}>
-          <CircularStatic currentWord={quizState.currentQuestionIndex + 1} countWords={quizState.words.length}/>
+          <CircularStatic currentword={quizState.currentQuestionIndex + 1} countwords={quizState.words.length}/>
           <Question />
           <Button variant="outlined"
             type="button"

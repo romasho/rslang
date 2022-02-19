@@ -1,26 +1,15 @@
 import * as React from 'react';
-import Stack from '@mui/material/Stack';
 import CircularProgress, { CircularProgressProps } from '@mui/material/CircularProgress';
 import { Box, Typography } from '@mui/material';
 
-// export default function CircularDeterminate({currentWord, countWords}) {
-//     const progress = (currentWord / countWords) * 100
-
-//   return (
-//     <Stack spacing={6} direction="row">
-//       <CircularProgress variant="determinate" value={progress} />
-//     </Stack>
-//   );
-// }
-
-
-
 function CircularProgressWithLabel(
-  props: CircularProgressProps & { value: number, currentWord: number, countWords: number },
+  props: CircularProgressProps & { value: number, currentword: number, countwords: number },
 ) {
+  const { value, size, currentword, countwords } = props;
+
   return (
     <Box sx={{ position: 'relative', display: 'inline-flex', width: '100px', height: '100px' }}>
-      <CircularProgress variant="determinate" {...props} />
+      <CircularProgress variant="determinate" value={value} size={size} />
       <Box
         sx={{
           top: 0,
@@ -38,14 +27,23 @@ function CircularProgressWithLabel(
           variant="caption"
           component="div"
           color="text.secondary"
-        >{`${props.currentWord} / ${props.countWords}`}</Typography>
+          sx={{
+            fontFamily: 'Permanent Marker',
+            fontSize: '1rem'
+          }}
+        >{`${currentword} / ${countwords}`}</Typography>
       </Box>
     </Box>
   );
 }
 
-export default function CircularStatic({currentWord, countWords}) {
-  const progress = (currentWord / countWords) * 100
+interface IWordInfo {
+  currentword: number,
+  countwords: number,
+}
 
-  return <CircularProgressWithLabel value={progress} currentWord={currentWord} countWords={countWords} size={100}/>;
+export default function CircularStatic({ currentword, countwords }: IWordInfo) {
+  const progress = (currentword / countwords) * 100
+
+  return <CircularProgressWithLabel value={progress} currentword={currentword} countwords={countwords} size={100} />;
 }
