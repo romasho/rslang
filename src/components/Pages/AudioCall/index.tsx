@@ -1,4 +1,4 @@
-import { Button, Grid, ToggleButtonGroup, Typography } from '@mui/material';
+import { Grid, ToggleButtonGroup, Typography } from '@mui/material';
 import React, { useState, useEffect, useContext } from 'react';
 import { IWord } from '../../../interfaces/requestsInterfaces';
 import { getWords } from '../../../utils/services';

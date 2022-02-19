@@ -2,7 +2,7 @@ import { ToggleButtonGroup, ToggleButton, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React from 'react';
 
-interface SimpleDialogProps {
+interface DifficultySelectorProps {
   onChange: Function;
   selectedValue: string
 }
@@ -19,7 +19,7 @@ export const StylesToggleButton = styled(ToggleButton)({
   },
 });
 
-function DifficultySelector(props: SimpleDialogProps) {
+function DifficultySelector(props: DifficultySelectorProps) {
   const { onChange, selectedValue} = props;
 
   const handleChange = (event: React.MouseEvent<HTMLElement>, difficulty: string) => {
