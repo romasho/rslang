@@ -8,8 +8,9 @@ import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import HelpIcon from '@mui/icons-material/Help';
 import type { IWord } from '../../interfaces/requestsInterfaces';
+import { playAudio } from  '../../utils/miscellaneous';
 
-interface GameDialogProps {
+interface IGameDialogProps {
   onAnswer: Function;
   word: IWord;
   translation: string;
@@ -17,7 +18,7 @@ interface GameDialogProps {
   score: number;
 }
 
-function GameDialog(props: GameDialogProps) {
+function GameDialog(props: IGameDialogProps) {
   const { onAnswer, word, translation, onExit, score } = props;
   const [answerStatus, setAnswerStatus] = React.useState<boolean | null>(null);
   const [indicators, setIndicators] = React.useState<('disabled' | 'secondary')[]>(Array(3).fill('disabled'));
@@ -26,6 +27,9 @@ function GameDialog(props: GameDialogProps) {
 
   const handleAnswer = (answer: boolean) => {
     const answerIsCorrect = (answer === isCorrect);
+
+    if (answerIsCorrect) playAudio('success.mp3', volume? 0.1 : 0);
+    else playAudio('error.mp3', volume? 0.1 : 0);
 
     setAnswerStatus(answerIsCorrect);
     onAnswer(answerIsCorrect);
@@ -37,11 +41,7 @@ function GameDialog(props: GameDialogProps) {
   };
 
   const handleClickAudio = () => {
-    const audioPlayer = new Audio();
-    audioPlayer.volume = volume? 0.1 : 0;
-    audioPlayer.src = `https://rs-lang-team-be.herokuapp.com/${word.audio}`;
-    audioPlayer.load();
-    audioPlayer.play();
+    playAudio(`https://rs-lang-team-be.herokuapp.com/${word.audio}`);
   };
 
   const handleClickVolume = () => {
@@ -83,19 +83,18 @@ function GameDialog(props: GameDialogProps) {
   return (
     <Grid
       container 
-      component={Paper} 
-      elevation={3} 
+      component={Paper}
       flexDirection='column' 
       alignItems='center'
      
       sx={{
         p: 2,
-        outline: (() => {
+        boxShadow: (() => {
           if (answerStatus === null) return 'none';
-          if (answerStatus) return '2px solid green';
-          return '2px solid red';
+          if (answerStatus) return '0 0 0 5px #96CEB4';
+          return '0 0 0 5px #D9534F';
       })(),
-      transition: 'outline 50ms'
+      transition: '300ms'
     }}>
 
       <Grid container justifyContent='space-between' flexWrap='nowrap' sx={{ mb: 1 }}>
