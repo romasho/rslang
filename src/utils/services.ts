@@ -103,7 +103,7 @@ export async function getUserWords(id: string): Promise<IUserWord[] | null> {
   }
 }
 
-export async function getUserWord({id, wordId}: {id: string, wordId: string}): Promise<IUserWord | IResponseErr | null> {
+export async function getUserWord({ id, wordId }: { id: string, wordId: string }): Promise<IUserWord | IResponseErr | null> {
   try {
     const result = await fetch(`https://rs-lang-team-be.herokuapp.com/users/${id}/words/${wordId}`, {
       headers: {
@@ -117,7 +117,7 @@ export async function getUserWord({id, wordId}: {id: string, wordId: string}): P
   }
 }
 
-export async function createUserWord({userId, wordId, word}: {userId: string, wordId: string, word: IUserWordInput}): Promise<IUserWord | null> {
+export async function createUserWord({ userId, wordId, word }: { userId: string, wordId: string, word: IUserWordInput }): Promise<IUserWord | null> {
   try {
     const result = await fetch(`https://rs-lang-team-be.herokuapp.com/users/${userId}/words/${wordId}`, {
       method: 'POST',
@@ -135,7 +135,7 @@ export async function createUserWord({userId, wordId, word}: {userId: string, wo
   }
 }
 
-export async function updateUserWord({userId, wordId, word}: {userId: string, wordId: string, word: IUserWordInput}): Promise<IUserWord | IResponseErr | null> {
+export async function updateUserWord({ userId, wordId, word }: { userId: string, wordId: string, word: IUserWordInput }): Promise<IUserWord | IResponseErr | null> {
   try {
     const result = await fetch(`https://rs-lang-team-be.herokuapp.com/users/${userId}/words/${wordId}`, {
       method: 'PUT',
@@ -153,7 +153,7 @@ export async function updateUserWord({userId, wordId, word}: {userId: string, wo
   }
 }
 
-export async function deleteUserWord({userId, wordId}: {userId: string, wordId: string}): Promise<boolean> {
+export async function deleteUserWord({ userId, wordId }: { userId: string, wordId: string }): Promise<boolean> {
   const result = await fetch(`https://rs-lang-team-be.herokuapp.com/users/${userId}/words/${wordId}`, {
     method: 'DELETE',
     headers: {
