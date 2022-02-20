@@ -41,6 +41,11 @@ function Sprint() {
     fullScreen.exit();
   };
 
+  const handleRestart = () => {
+    handleExit();
+    setGameState('inProgress');
+  };
+
   const handleGameEnd = () => {
     setGameState('ended');
     fullScreen.exit();
@@ -93,7 +98,7 @@ function Sprint() {
         </Grid>
         }
         {gameState === 'ended' &&
-        <TableResult words={words.slice(0, answers.length)} usersAnswers={answers} score={score}/>
+        <TableResult words={words.slice(0, answers.length)} usersAnswers={answers} score={score} choseDifficulty={handleExit} restart={handleRestart}/>
         }
         {!gameState &&
         <Grid container sx={{

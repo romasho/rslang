@@ -16,6 +16,15 @@ function AudioCall() {
     setSelectedValue(value);
   };
 
+  const handleExit = () => {
+    setIsDataLoaded(false);
+    dispatch({ type: "EXIT"})
+  };
+
+  const handleRestart = () => {
+    dispatch({ type: "RESTART"})
+  };
+
   const getResponseOptions = (randomWord: IWord) => {
     let arrResponse: any = [randomWord?.wordTranslate];
     for (let i = 0; i < 3; i += 1) {
@@ -57,7 +66,7 @@ function AudioCall() {
         (
           <Grid container justifyContent='center' alignItems='center'>
             <Grid item xs="auto" sm={11} md={6}>
-              <Game />
+              <Game onExit={handleExit} onRestart={handleRestart}/>
             </Grid>
           </Grid>
         )
@@ -67,16 +76,16 @@ function AudioCall() {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-          <Typography component='h1' variant='h1' sx={{ mb: 10, fontFamily: 'Permanent Marker' }}>
+          <Typography component='h1' variant='h1' sx={{ mb: 10, fontFamily: 'Permanent Marker', fontSize: { xs: "4rem", sm: "6rem" } }}>
             Audiocall
           </Typography>
-          <Typography sx={{ mb: 10, fontSize: 32, fontFamily: 'Bebas Neue' }}>
+          <Typography sx={{ mb: 10, fontSize: 32, fontFamily: 'Bebas Neue', textAlign: 'center' }}>
             Audiocall training develops vocabulary. <br/> You have to choose the translation of the word you heard.
           </Typography>
           <DifficultySelector onChange={handleDifficultyChange} selectedValue={selectedValue} />
           <Button variant='contained'
             onClick={() => {
-              getWords(+selectedValue - 1, Math.floor(Math.random() * 30)).then(elem => {
+              getWords(+selectedValue - 1, 0).then(elem => {
                 dispatch({ type: "LOADED_QUESTIONS", payload: elem })
                 setIsDataLoaded(true)});
             }}
