@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Header } from './components';
-import { Authorization, Home, Dictionary, AudioCall, Sprint } from './components/Pages';
+import { Authorization, Home, Schoolbook, AudioCall, Sprint } from './components/Pages';
 import { AudioCallProvider } from './components/Pages/AudioCall/context';
+
 
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
       <main>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/dictionary' element={<Dictionary />} />
+          <Route path='/schoolbook' element={<Schoolbook />} />
           <Route path='/authorization' element={<Authorization />} />
           <Route path='/audio-call' element={<AudioCallProvider><AudioCall /></AudioCallProvider>} />
           <Route path='/sprint' element={<Sprint />} />
