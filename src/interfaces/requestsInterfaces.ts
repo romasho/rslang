@@ -76,7 +76,7 @@ interface IWordAggr extends IWordAggregated {
 
 interface IAggregatedWords {
   paginatedResults: IWordAggr[],
-  totalCount: { count: number};
+  totalCount: { count: number };
 }
 
 interface IStatistic {
@@ -91,4 +91,4 @@ interface ISettings {
   optional?: {};
 }
 
-export type { IWord, IUserInput, IUserResponse, IResponseErr, ILoginResponse, IUserWord, IUserWordInput, IAggregatedWordsInput, IAggregatedWords, IStatistic, ISettings }
+export type { IWord, IUserInput, IUserResponse, IResponseErr, ILoginResponse, IUserWord, IUserWordInput, IAggregatedWordsInput, IAggregatedWords, IStatistic, ISettings, IWordAggr }
