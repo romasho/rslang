@@ -6,6 +6,7 @@ import CircleIcon from '@mui/icons-material/Circle';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import NotificationsOffIcon from '@mui/icons-material/NotificationsOff';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import HelpIcon from '@mui/icons-material/Help';
 import type { IWord } from '../../interfaces/requestsInterfaces';
 import { playAudio } from  '../../utils/miscellaneous';
@@ -16,10 +17,16 @@ interface IGameDialogProps {
   translation: string;
   onExit: Function;
   score: number;
+  onFullScreen:  {
+    active: boolean;
+    enter: () => Promise<void>;
+    exit: () => Promise<void>;
+    node: React.MutableRefObject<HTMLDivElement | null>;
+  }
 }
 
 function GameDialog(props: IGameDialogProps) {
-  const { onAnswer, word, translation, onExit, score } = props;
+  const { onAnswer, word, translation, onExit, score, onFullScreen } = props;
   const [answerStatus, setAnswerStatus] = React.useState<boolean | null>(null);
   const [indicators, setIndicators] = React.useState<('disabled' | 'secondary')[]>(Array(3).fill('disabled'));
   const [volume, setVolume] = React.useState<boolean>(true);
@@ -49,9 +56,16 @@ function GameDialog(props: IGameDialogProps) {
     else setVolume(true);
   };
 
+  const handleFullScreen = () => {
+    if (onFullScreen.active) onFullScreen.exit();
+    else onFullScreen.enter();
+  };
+
   const handleKeyUp = (event: KeyboardEvent) => {
-    if (event.key === 'ArrowRight') handleAnswer(true);
-    if (event.key === 'ArrowLeft') handleAnswer(false);
+    let answer = null;
+    if (event.key === 'ArrowRight') answer = true;
+    if (event.key === 'ArrowLeft') answer = false;
+    if (answer !== null) handleAnswer(answer);
   };
 
   const updateIndicators = (result: boolean) => {
@@ -73,20 +87,22 @@ function GameDialog(props: IGameDialogProps) {
     return () => {
       document.removeEventListener('keyup', handleKeyUp);
     }
-  }, [word]);
+  }, [translation]);
 
   React.useEffect(() => {
     updateIndicators(!!answerStatus);
-    setTimeout(() => setAnswerStatus(null), 800);
+    const timer = setTimeout(() => setAnswerStatus(null), 800);
+    return () => {
+      clearTimeout(timer);
+    }
   }, [word]);
 
   return (
     <Grid
-      container 
+      container
       component={Paper}
-      flexDirection='column' 
+      flexDirection='column'
       alignItems='center'
-     
       sx={{
         p: 2,
         boxShadow: (() => {
@@ -115,14 +131,18 @@ function GameDialog(props: IGameDialogProps) {
           <CircleIcon color={indicators[1]} />
           <CircleIcon color={indicators[2]} />
         </Grid>
-        <IconButton>
-          <FullscreenIcon />
+        <IconButton onClick={handleFullScreen}>
+          {onFullScreen.active?
+            <FullscreenExitIcon/>
+            :
+            <FullscreenIcon />
+          }
         </IconButton>
         <IconButton onClick={() => onExit()}>
           <CloseIcon />
         </IconButton>
       </Grid>
-      <Typography>
+      <Typography sx={{ color: 'secondary.main', fontWeight: 'bold', fontSize: 20 }}>
         {score}
       </Typography>
 
@@ -132,8 +152,8 @@ function GameDialog(props: IGameDialogProps) {
       </IconButton>
       <Typography fontSize={24}>{translation}</Typography>
       <Grid container justifyContent='space-around' sx={{ mt: 2 }}>
-        <Button variant="contained" color='error' data-answer='false' onClick={handleClick} >Incorrect</Button>
-        <Button variant="contained" color='success' data-answer='true' onClick={handleClick}>Correct</Button>
+        <Button variant="contained" color='error' data-answer='false' onClick={handleClick} >◄ Incorrect</Button>
+        <Button variant="contained" color='success' data-answer='true' onClick={handleClick}>Correct ►</Button>
       </Grid>
     </Grid>
   )

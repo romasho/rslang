@@ -35,7 +35,7 @@ export default function TableResult({ words, usersAnswers, score = null }: IResu
         alignItems: 'center'
       }}>
       <Typography component='h3' variant='h3' sx={{ mt: 2, fontFamily: 'Bebas Neue' }}>
-        Your results: {successfulPercent}%
+        Your results: {successfulPercent || 0}%
       </Typography>
       {score ? <Typography variant='h4' sx={{ fontFamily: 'Bebas Neue' }}>Score: {score}</Typography> : null}
       <Table sx={{ maxWidth: 650 }} size="small" aria-label="a dense table">
