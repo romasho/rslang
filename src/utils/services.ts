@@ -89,7 +89,7 @@ export async function getUser(id: string): Promise<IUserResponse | null> {
   }
 }
 
-export async function getUserWords(id: string): Promise<IUserWord | null> {
+export async function getUserWords(id: string): Promise<IUserWord[] | null> {
   try {
     const result = await fetch(`https://rs-lang-team-be.herokuapp.com/users/${id}/words`, {
       headers: {
