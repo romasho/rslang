@@ -11,7 +11,7 @@ export interface IInitialState {
 }
 
 interface IAction {
-    type: 'NEXT_QUESTION' | 'LOADED_QUESTIONS' | 'ANSWERS' | 'SELECT_ANSWER';
+    type: 'NEXT_QUESTION' | 'LOADED_QUESTIONS' | 'ANSWERS' | 'SELECT_ANSWER' | 'EXIT' | 'RESTART';
     payload: any;
 }
 
@@ -27,7 +27,7 @@ const initialState: IInitialState = {
 const reducer = (state: IInitialState, action: IAction): IInitialState => {
     switch (action.type) {
         case 'SELECT_ANSWER': {
-            
+
             if (action.payload === state.words[state.currentQuestionIndex].wordTranslate) {
                 return {
                     ...state,
@@ -64,6 +64,19 @@ const reducer = (state: IInitialState, action: IAction): IInitialState => {
                 ...state,
                 answers: action.payload,
             }
+        }
+        case 'RESTART': {
+            return {
+                ...state,
+                currentQuestionIndex: 0,
+                answers: [],
+                showResults: false,
+                currentAnswer: '',
+                usersAnswers: [],
+            }
+        }
+        case 'EXIT': {
+            return initialState
         }
         default: {
             return state

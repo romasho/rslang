@@ -51,7 +51,10 @@ interface ILoginResponse {
 interface IUserWord {
   id: string;
   difficulty: string;
-  optional?: {};
+  optional: {
+    count: number,
+    isLearned: boolean,
+  };
   wordId: string;
 }
 
