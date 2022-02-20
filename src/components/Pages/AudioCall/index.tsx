@@ -5,7 +5,7 @@ import { getWords } from '../../../utils/services';
 import Game from './components/game';
 import { AudioCallContext } from './context';
 import DifficultySelector from '../../DifficultySelector';
-import playAudio from '../../../utils/miscellaneous';
+import { playAudio } from '../../../utils/miscellaneous';
 
 function AudioCall() {
   const [quizState, dispatch] = useContext(AudioCallContext);

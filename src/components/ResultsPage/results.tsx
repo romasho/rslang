@@ -1,21 +1,15 @@
-import React, { useState, useEffect } from "react";
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Box, IconButton } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Typography, Box } from '@mui/material';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { IUserWord, IWord } from "../../interfaces/requestsInterfaces";
-import playAudio from "../../utils/miscellaneous";
+import { playAudio } from "../../utils/miscellaneous";
 import { getUserWords, createUserWord, updateUserWord } from "../../utils/services";
 import { loadState } from "../../utils/state";
+
 
 function getMaxCorrectInRow(array: boolean[]) {
   return Math.max(...array.reduce((acc, n, i, a) => {
@@ -85,7 +79,7 @@ export default function TableResult({ words, usersAnswers, score = null, restart
     }
   }, [usersWords]);
 
-  const successfulPercent = (usersAnswers.filter(el => el === true).length / words.length) * 100;
+  const successfulPercent = Math.round((usersAnswers.filter(el => el === true).length / words.length) * 100);
   const correcInRow = getMaxCorrectInRow(usersAnswers);
   const gameName = window.location.href.split('/')[window.location.href.split('/').length - 1];
   console.log(correcInRow, gameName);
@@ -114,8 +108,10 @@ export default function TableResult({ words, usersAnswers, score = null, restart
           flexDirection: 'column',
           alignItems: 'center'
         }}>
-        <h3>Your results {successfulPercent}%</h3>
-        {score ? <h3>Score {score}</h3> : null}
+        <Typography component='h3' variant='h3' sx={{ mt: 2, fontFamily: 'Bebas Neue' }}>
+          Your results: {successfulPercent || 0}%
+        </Typography>
+        {score ? <Typography variant='h4' sx={{ fontFamily: 'Bebas Neue' }}>Score: {score}</Typography> : null}
         <Table sx={{ maxWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>

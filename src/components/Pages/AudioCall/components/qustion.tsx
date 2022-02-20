@@ -3,7 +3,7 @@ import { Box, IconButton } from '@mui/material';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import { AudioCallContext } from '../context';
 import Answer from './answer'
-import playAudio from '../../../../utils/miscellaneous';
+import { playAudio } from '../../../../utils/miscellaneous';
 
 
 function Question() {
