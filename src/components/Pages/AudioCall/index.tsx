@@ -6,11 +6,14 @@ import Game from './components/game';
 import { AudioCallContext } from './context';
 import DifficultySelector from '../../DifficultySelector';
 import { playAudio } from '../../../utils/miscellaneous';
+import { StyledFullScreen, useFullScreenHandle } from '../../StyledFullScreen'
 
 function AudioCall() {
   const [quizState, dispatch] = useContext(AudioCallContext);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [selectedValue, setSelectedValue] = React.useState('1');
+
+  const fullScreen = useFullScreenHandle();
 
   const handleDifficultyChange = (value: string) => {
     setSelectedValue(value);
@@ -18,12 +21,14 @@ function AudioCall() {
 
   const handleExit = () => {
     setIsDataLoaded(false);
-    dispatch({ type: "EXIT"})
+    dispatch({ type: "EXIT" })
+    fullScreen.exit();
   };
 
   const handleRestart = () => {
-    dispatch({ type: "RESTART"})
+    dispatch({ type: "RESTART" })
   };
+
 
   const getResponseOptions = (randomWord: IWord) => {
     let arrResponse: any = [randomWord?.wordTranslate];
@@ -54,55 +59,58 @@ function AudioCall() {
   }, [quizState.currentQuestionIndex]);
 
   return (
-    <Grid container sx={{
-      flexGrow: 1,
-      backgroundImage: 'url(forest-blue-bg.jpg)',
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center center',
-      mixBlendMode: 'multiply',
-    }}>
-      {isDataLoaded ?
-        (
-          <Grid container justifyContent='center' alignItems='center'>
-            <Grid item xs="auto" sm={11} md={6}>
-              <Game onExit={handleExit} onRestart={handleRestart}/>
+    <StyledFullScreen handle={fullScreen}>
+      <Grid container sx={{
+        flexGrow: 1,
+        backgroundImage: 'url(forest-blue-bg.jpg)',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        mixBlendMode: 'multiply',
+      }}>
+        {isDataLoaded ?
+          (
+            <Grid container justifyContent='center' alignItems='center'>
+              <Grid item xs="auto" sm={11} md={6}>
+                <Game onExit={handleExit} onRestart={handleRestart} onFullScreen={fullScreen}/>
+              </Grid>
             </Grid>
-          </Grid>
-        )
-        :
-        (<Grid container sx={{
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-          <Typography component='h1' variant='h1' sx={{ mb: 10, fontFamily: 'Permanent Marker', fontSize: { xs: "4rem", sm: "6rem" } }}>
-            Audiocall
-          </Typography>
-          <Typography sx={{ mb: 10, fontSize: 32, fontFamily: 'Bebas Neue', textAlign: 'center' }}>
-            Audiocall training develops vocabulary. <br/> You have to choose the translation of the word you heard.
-          </Typography>
-          <DifficultySelector onChange={handleDifficultyChange} selectedValue={selectedValue} />
-          <Button variant='contained'
-            onClick={() => {
-              getWords(+selectedValue - 1, 0).then(elem => {
-                dispatch({ type: "LOADED_QUESTIONS", payload: elem })
-                setIsDataLoaded(true)});
-            }}
-            sx={{ 
-              mt: 10, 
-              fontSize: 24, 
-              fontWeight: 'bold', 
-              bgcolor: 'background.default', 
-              fontFamily: 'Bebas Neue', 
-              letterSpacing: 3  
-            }}>
-            Start game
-          </Button>
-          
-        </Grid>)
-      }
-    </Grid>
+          )
+          :
+          (<Grid container sx={{
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <Typography component='h1' variant='h1' sx={{ mb: 10, fontFamily: 'Permanent Marker', fontSize: { xs: "4rem", sm: "6rem" } }}>
+              Audiocall
+            </Typography>
+            <Typography sx={{ mb: 10, fontSize: 32, fontFamily: 'Bebas Neue', textAlign: 'center' }}>
+              Audiocall training develops vocabulary. <br /> You have to choose the translation of the word you heard.
+            </Typography>
+            <DifficultySelector onChange={handleDifficultyChange} selectedValue={selectedValue} />
+            <Button variant='contained'
+              onClick={() => {
+                getWords(+selectedValue - 1, 0).then(elem => {
+                  dispatch({ type: "LOADED_QUESTIONS", payload: elem })
+                  setIsDataLoaded(true)
+                });
+              }}
+              sx={{
+                mt: 10,
+                fontSize: 24,
+                fontWeight: 'bold',
+                bgcolor: 'background.default',
+                fontFamily: 'Bebas Neue',
+                letterSpacing: 3
+              }}>
+              Start game
+            </Button>
+
+          </Grid>)
+        }
+      </Grid>
+    </StyledFullScreen>
   );
 }
 
