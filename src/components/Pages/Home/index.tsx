@@ -12,7 +12,7 @@ function Home() {
           backgroundAttachment: 'fixed',
           backgroundSize: 'cover',
           backgroundPosition: 'center center',
-          minHeight: 'calc(100vh - 64px)'
+          minHeight: 'calc(100vh - 64px)',
         }}
       >
         <Container maxWidth='lg' sx={{ pt: 2, pb: 2, flexGrow: 1 }}>
@@ -33,8 +33,8 @@ function Home() {
                   borderRadius: '20px',
                 }} />
               <Grid item xs={12} sm={7} md={4} sx={{ mt: { xs: 0, sm: 12 } }}>
-                <Typography variant='h4' gutterBottom component='h1' sx={{ mb: 0, fontFamily: 'Permanent Marker', fontSize: "2rem" }}>LanguageHike</Typography>
-                <Typography variant='h5' gutterBottom component='h2'>Learn English step-by-step — just like hiking</Typography>
+                <Typography variant='h4' gutterBottom component='h1' sx={{ mb: 1, fontFamily: 'Permanent Marker', fontSize: "2rem" }}>LanguageHike</Typography>
+                <Typography variant='h5' gutterBottom component='h2' sx={{ fontFamily: 'Bebas Neue' }}>Learn English step-by-step — just like hiking</Typography>
                 <Typography>
                   An application for the effective study of foreign words in a playful way. Always at hand. On any device.
                 </Typography>
@@ -116,7 +116,7 @@ function Home() {
           </Grid>
           <Grid container justifyContent='space-between' sx={{ m: 0, mb: 2 }}>
             <Grid item xs={12} sm={8} md={6}>
-              <Typography variant='h4' gutterBottom component='h2' sx={{ fontFamily: 'Permanent Marker', fontSize: "2rem" }}>Team</Typography>
+              <Typography variant='h4' gutterBottom component='h2' color='white' sx={{ fontFamily: 'Permanent Marker', fontSize: "2rem" }}>Team</Typography>
               <Paper sx={{ width: '95%', p: 2, mb: 2 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <img src='./roma.jpg' alt='' width='100px' height='100px' className='avatar' />
@@ -128,10 +128,10 @@ function Home() {
               </Paper>
               <Paper sx={{ width: '95%', p: 2, mb: 2 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <img src='./alex.jpg' alt='' width='100px' height='100px' className='avatar' />
+                  <img src='./tyoma.jpg' alt='' width='100px' height='100px' className='avatar' />
                   <Box sx={{ ml: 2, width: '70%' }}>
                     <Typography variant='h5' component='h3'>Artyom</Typography>
-                    <Typography variant='body2'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore nemo similique alias cum voluptatum!</Typography>
+                    <Typography variant='body2'>Frontend developer<br/> I was responsible for writing server requests, making authorization page and Sprint game.git</Typography>
                   </Box>
                 </Box>
               </Paper>

@@ -8,7 +8,7 @@ let storage: IStorage = {
 const sessionState: IBookState = Object.freeze({
   chapter: 0,
   page: 1,
-  isDict: false
+  isDict: false,
 });
 
 const saveState = () => localStorage.setItem('storage', JSON.stringify(storage));

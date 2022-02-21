@@ -1,4 +1,6 @@
 import { IWord } from '../interfaces/requestsInterfaces';
+import { loadSessionState, saveSessionState } from './state';
+import { getWords } from './services';
 
 const audioPlayer = new Audio();
 
@@ -25,12 +27,31 @@ function random(min: number, max: number) {
   return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
 }
 
-const generateTranslation = (word: IWord, wordsArr: IWord[]) => {
+function generateTranslation(word: IWord, wordsArr: IWord[]) {
   const incorrect = wordsArr[random(0, wordsArr.length - 1)].wordTranslate;
   const correct = word.wordTranslate;
 
   if (random(0, 1)) return incorrect;
   return correct;
-};
+}
 
-export { playAudio, random, shuffleArray, generateTranslation }
+function isTrainingGame() {
+  const gameName = window.location.href.split('/')[window.location.href.split('/').length - 1];
+  const sessionState = loadSessionState();
+
+  return gameName === sessionState.game;
+}
+
+async function getWordsFromSchoolbook () {
+  const sessionState = loadSessionState();
+
+  if (isTrainingGame()) {
+    delete sessionState.game;
+    saveSessionState(sessionState);
+
+    return getWords(sessionState.chapter, sessionState.page);
+  }
+  return null;
+}
+
+export { playAudio, random, shuffleArray, generateTranslation, isTrainingGame, getWordsFromSchoolbook }
