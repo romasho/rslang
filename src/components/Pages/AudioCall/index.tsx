@@ -58,6 +58,7 @@ function AudioCall() {
     }
   }, [quizState.currentQuestionIndex]);
 
+
   return (
     <StyledFullScreen handle={fullScreen}>
       <Grid container sx={{
@@ -71,7 +72,7 @@ function AudioCall() {
         {isDataLoaded ?
           (
             <Grid container justifyContent='center' alignItems='center'>
-              <Grid item xs="auto" sm={11} md={6}>
+              <Grid item xs={12} sm={10} md={8}>
                 <Game onExit={handleExit} onRestart={handleRestart} onFullScreen={fullScreen}/>
               </Grid>
             </Grid>

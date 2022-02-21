@@ -6,7 +6,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import LoginIcon from '@mui/icons-material/Login';
 
 const pages = ['SchoolBook', 'Audio call', 'Sprint']
-const path = ['/schoolBook', '/audio-call', '/sprint']
+const path = ['/schoolBook', '/audiocall', '/sprint']
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(

@@ -87,7 +87,7 @@ interface IStatistic {
 
 interface ISettings {
   id: string
-  wordsPerDay?: number;
+  wordsPerDay: number;
   optional?: {};
 }
 
