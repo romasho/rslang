@@ -53,14 +53,16 @@ function SchoolBook() {
 
   return (
     <>
-      <Box sx={{
-        backgroundImage: 'url(./schoolBook-bg.jpg)',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center center',
-        minHeight: 'calc(100vh - 64px)'
-      }}>
+      <Box
+        sx={{
+          backgroundImage: 'url(./schoolBook-bg.jpg)',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+          minHeight: 'calc(100vh - 64px)'
+        }}
+      >
         <Container disableGutters sx={{ p: { xs: '5px', sm: 1, md: 2 }, flexGrow: 1 }}>
           <Typography variant='h5' component='h2' gutterBottom sx={{ mb: 2, fontFamily: 'Permanent Marker', fontSize: { xs: "2rem", sm: "3rem" } }}>Schoolbook</Typography>
           <Container
