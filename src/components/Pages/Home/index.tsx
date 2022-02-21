@@ -122,7 +122,7 @@ function Home() {
                   <img src='./roma.jpg' alt='' width='100px' height='100px' className='avatar' />
                   <Box sx={{ ml: 2, width: '70%' }}>
                     <Typography variant='h5' component='h3'>Roma</Typography>
-                    <Typography variant='body2'>Team leader. Enthusiastic and diligent Front-end developer. Made: Audiocall, results games, statistics.</Typography>
+                    <Typography variant='body2'>Team leader<br/> Enthusiastic and diligent Front-end developer. Made: Audiocall, results games, statistics.</Typography>
                   </Box>
                 </Box>
               </Paper>
@@ -131,7 +131,7 @@ function Home() {
                   <img src='./tyoma.jpg' alt='' width='100px' height='100px' className='avatar' />
                   <Box sx={{ ml: 2, width: '70%' }}>
                     <Typography variant='h5' component='h3'>Artyom</Typography>
-                    <Typography variant='body2'>Frontend developer<br/> I was responsible for writing server requests, making authorization page and Sprint game.git</Typography>
+                    <Typography variant='body2'>Frontend developer<br/> I was responsible for writing server requests, making authorization page and Sprint game. Things I like: beer and nice code.</Typography>
                   </Box>
                 </Box>
               </Paper>
@@ -140,8 +140,8 @@ function Home() {
                   <img src='./alex.jpg' alt='' width='100px' height='100px' className='avatar' />
                   <Box sx={{ ml: 2, width: '70%' }}>
                     <Typography variant='h5' component='h3'>Alex</Typography>
-                    <Typography variant='body2'>Start programming in 2019. Front-end developer with technical education.
-                      Made: basic project structure, main page, ststatistic page and schoolBook.</Typography>
+                    <Typography variant='body2'>Front-end developer with technical education.
+                      Made: basic project structure, main page, statistic page and schoolBook.</Typography>
                   </Box>
                 </Box>
               </Paper>
