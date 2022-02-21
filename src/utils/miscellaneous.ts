@@ -42,16 +42,19 @@ function isTrainingGame() {
   return gameName === sessionState.game;
 }
 
+function deleteTrainingType() {
+  const sessionState = loadSessionState();
+  delete sessionState.game;
+  saveSessionState(sessionState);
+}
+
 async function getWordsFromSchoolbook () {
   const sessionState = loadSessionState();
 
   if (isTrainingGame()) {
-    delete sessionState.game;
-    saveSessionState(sessionState);
-
     return getWords(sessionState.chapter, sessionState.page);
   }
   return null;
 }
 
-export { playAudio, random, shuffleArray, generateTranslation, isTrainingGame, getWordsFromSchoolbook }
+export { playAudio, random, shuffleArray, generateTranslation, isTrainingGame, getWordsFromSchoolbook, deleteTrainingType }
