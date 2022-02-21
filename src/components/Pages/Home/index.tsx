@@ -119,10 +119,10 @@ function Home() {
               <Typography variant='h4' gutterBottom component='h2' sx={{ fontFamily: 'Permanent Marker', fontSize: "2rem" }}>Team</Typography>
               <Paper sx={{ width: '95%', p: 2, mb: 2 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <img src='./alex.jpg' alt='' width='100px' height='100px' className='avatar' />
+                  <img src='./roma.jpg' alt='' width='100px' height='100px' className='avatar' />
                   <Box sx={{ ml: 2, width: '70%' }}>
                     <Typography variant='h5' component='h3'>Roma</Typography>
-                    <Typography variant='body2'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore nemo similique alias cum voluptatum!</Typography>
+                    <Typography variant='body2'>Team leader. Enthusiastic and diligent Front-end developer. Made: Audiocall, results games, statistics.</Typography>
                   </Box>
                 </Box>
               </Paper>
@@ -141,7 +141,7 @@ function Home() {
                   <Box sx={{ ml: 2, width: '70%' }}>
                     <Typography variant='h5' component='h3'>Alex</Typography>
                     <Typography variant='body2'>Start programming in 2019. Front-end developer with technical education.
-                      Made: basic project structure, main page and schoolBook</Typography>
+                      Made: basic project structure, main page, ststatistic page and schoolBook.</Typography>
                   </Box>
                 </Box>
               </Paper>

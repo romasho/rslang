@@ -12,6 +12,10 @@ function Statistic() {
   const filter = '{"$and":[{"userWord.optional.isLearned": false}]}'
   const userId = loadState().auth?.id as string;
 
+  const date = new Date();
+  const currentDay = date.toISOString().split('T')[0];
+  
+
   React.useEffect(() => {
     setData(null);
 
@@ -27,8 +31,9 @@ function Statistic() {
         setStudyedWords(count);
       }
     })
-  })
+  }, [])
 
+  console.log(data, currentDay);
   return (
     <>
       <Box
@@ -48,8 +53,10 @@ function Statistic() {
           {data ? (
             <>
               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Total words studied: {studyedWords}</Typography>
-              <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Total words learned: number </Typography>
-              <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>New words for today: number </Typography>
+              <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Total words learned: {data.learnedWords} </Typography>
+              <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>New words for today: 
+              {data.optional.audiocall.numberLearnedWordsPerDay[currentDay] + data.optional.sprint.numberLearnedWordsPerDay[currentDay]}
+               </Typography>
               <Box sx={{
                 mt: 2,
                 display: 'flex',
@@ -63,9 +70,10 @@ function Statistic() {
                   }}
                 >
                   <Typography variant='h6' component='h3' sx={{ fontFamily: 'Permanent Marker' }}>Sprint</Typography>
-                  <Typography>New words for today: number </Typography>
-                  <Typography>Average win rate: number </Typography>
-                  <Typography>Longest series: number </Typography>
+                  <Typography>New words for today: {data.optional.sprint.numberNewWordsPerDay[currentDay]}</Typography>
+                  <Typography>Words learned today: {data.optional.sprint.numberLearnedWordsPerDay[currentDay]}</Typography>
+                  <Typography>Average win rate: {data.optional.sprint.successfulPercent}% </Typography>
+                  <Typography>Longest series: {data.optional.sprint.correcInRow} </Typography>
                 </Card>
                 <Card
                   sx={{
@@ -74,9 +82,10 @@ function Statistic() {
                   }}
                 >
                   <Typography variant='h6' component='h3' sx={{ fontFamily: 'Permanent Marker' }}>Audio call</Typography>
-                  <Typography>New words for today: number </Typography>
-                  <Typography>Average win rate: number </Typography>
-                  <Typography>Longest series: number </Typography>
+                  <Typography>New words for today: {data.optional.audiocall.numberNewWordsPerDay[currentDay]} </Typography>
+                  <Typography>Words learned today: {data.optional.audiocall.numberLearnedWordsPerDay[currentDay]}</Typography>
+                  <Typography>Average win rate: {data.optional.audiocall.successfulPercent}% </Typography>
+                  <Typography>Longest series: {data.optional.audiocall.correcInRow} </Typography>
                 </Card>
               </Box>
             </>
