@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { AppBar, Toolbar, Button, IconButton, Box, Container, Menu, MenuItem, Link, Typography } from '@mui/material';
+import { AppBar, Toolbar, Button, IconButton, Box, Container, Menu, MenuItem, Link } from '@mui/material';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import MenuIcon from "@mui/icons-material/Menu";
 import LoginIcon from '@mui/icons-material/Login';
+import PersonIcon from '@mui/icons-material/Person';
+import { loadState } from '../../utils/state';
+import { signOut } from '../../utils/services';
 
 const pages = ['SchoolBook', 'Audio call', 'Sprint']
 const path = ['/schoolBook', '/audiocall', '/sprint']
@@ -13,12 +16,27 @@ function Header() {
     null
   );
 
+  const [anchorElAuth, setAnchorElAuth] = React.useState<null | HTMLElement>(null);
+
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleOpenAuthMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElAuth(event.currentTarget);
+  };
+
+  const handleCloseAuthMenu = () => {
+    setAnchorElAuth(null);
+  };
+
+  const handleSignOut = () => {
+    signOut();
+    handleCloseAuthMenu();
   };
 
   return (
@@ -75,9 +93,30 @@ function Header() {
             <Button component={RouterLink} to="/sprint" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Sprint</Button>
           </Box>
 
-
-          <Typography />
-
+          {loadState().auth?
+            <>
+              <Button 
+                color='secondary' 
+                startIcon={<PersonIcon />} 
+                onClick={handleOpenAuthMenu} 
+                sx={{ fontWeight: 'bold', textTransform: 'none' }}
+              >
+                {loadState().auth?.name}
+              </Button>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorElAuth}
+                open={Boolean(anchorElAuth)}
+                onClose={handleCloseAuthMenu}
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button',
+                }}
+              >
+                <MenuItem key={0} onClick={handleCloseAuthMenu}>Statistic</MenuItem>
+                <MenuItem key={1} onClick={handleSignOut}>Logout</MenuItem>
+              </Menu>
+            </>
+          : ''}
 
           <IconButton component={RouterLink} to="/authorization" sx={{ ml: 1 }}>
             <LoginIcon color="secondary" />
