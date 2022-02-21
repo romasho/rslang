@@ -9,8 +9,6 @@ function Dictionary() {
   const flag = true;
   const [data, setData] = React.useState<null | IWordAggr[]>(null)
   const userId = loadState().auth?.id as string;
-  console.log(data);
-
 
   React.useEffect(() => {
     setData(null)
