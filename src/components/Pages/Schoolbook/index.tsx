@@ -53,9 +53,16 @@ function SchoolBook() {
 
   return (
     <>
-      <Box>
+      <Box sx={{
+        backgroundImage: 'url(./schoolBook-bg.jpg)',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        minHeight: 'calc(100vh - 64px)'
+      }}>
         <Container disableGutters sx={{ p: { xs: '5px', sm: 1, md: 2 }, flexGrow: 1 }}>
-          <Typography variant='h5' component='h2' gutterBottom sx={{ fontWeight: 700 }}>Schoolbook</Typography>
+          <Typography variant='h5' component='h2' gutterBottom sx={{ mb: 2, fontFamily: 'Permanent Marker', fontSize: { xs: "2rem", sm: "3rem" } }}>Schoolbook</Typography>
           <Container
             disableGutters
             sx={{
@@ -64,7 +71,7 @@ function SchoolBook() {
               mb: 1,
               pb: 1,
               pt: 1,
-              backgroundColor: '#fffbd2',
+              backdropFilter: 'blur(5px)',
               flexWrap: 'wrap',
               gap: { xs: 1, sm: 2 },
               position: 'sticky',
@@ -82,10 +89,24 @@ function SchoolBook() {
               siblingCount={0}
               sx={{ order: { xs: -1, sm: 'inherit' } }}
             />
-            <Button variant='outlined' onClick={handleDictBtn} sx={{ fontWeight: 700, fontSize: { xs: '10px', sm: '14px' } }}>Dictionary</Button>
+            <Button
+              variant='outlined'
+              onClick={handleDictBtn}
+              sx={{
+                fontWeight: 700,
+                fontSize: { xs: '10px', sm: '14px' },
+                color: 'black',
+                borderColor: 'black',
+                '&:hover': {
+                  borderColor: 'black',
+                  color: '#D9534F'
+                }
+              }}
+            >Dictionary</Button>
             <TrainingBtn isDisabled={isLearned} />
           </Container>
-          <Typography>{isLearned ? 'Сongratulations! this page is learned' : ''}</Typography>
+          <Typography variant='h3' sx={{ mb: 2, fontFamily: 'Permanent Marker', textAlign: 'center', fontSize: { xs: "1.5rem", sm: "3rem" } }}>
+            {isLearned ? 'Congratulations! this page is learned' : ''}</Typography>
           <Container>
             {state.isDict ?
               (<div>

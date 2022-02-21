@@ -15,7 +15,21 @@ function TrainingBtn({ isDisabled }: ITrainigProps) {
 
   return (
     <>
-      <Button disabled={isDisabled} variant='outlined' onClick={handleOpenTraining} sx={{ fontWeight: 700, fontSize: { xs: '10px', sm: '14px' } }}>Training</Button>
+      <Button
+        disabled={isDisabled}
+        variant='outlined'
+        onClick={handleOpenTraining}
+        sx={{
+          fontWeight: 700,
+          fontSize: { xs: '10px', sm: '14px' },
+          color: 'black',
+          borderColor: 'black',
+          '&:hover': {
+            borderColor: 'black',
+            color: '#D9534F'
+          }
+        }}
+      >Training</Button>
       <Menu
         anchorEl={anchorTraining}
         open={Boolean(anchorTraining)}

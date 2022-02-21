@@ -108,6 +108,7 @@ function Word({ data, changeBookState, prevState }: IWordCard) {
         flexDirection: { xs: 'column', md: 'row' },
         mb: 2,
         minHeight: '200px',
+        borderRight: `15px solid ${cardShadow}`,
         boxShadow: `8px 6px 10px 0px ${cardShadow}`
       }}
     >
