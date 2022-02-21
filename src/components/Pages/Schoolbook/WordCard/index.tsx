@@ -9,7 +9,7 @@ import { changeDifficulty, changeLearned, getCardShadowColor, isDifficult, isLea
 type color = "error" | "inherit" | "secondary" | "disabled" | "action" | "primary" | "info" | "success" | "warning" | undefined;
 
 
-function Word({ data }: IWordCard) {
+function Word({ data, changeBookState, prevState }: IWordCard) {
   const [action, updateAction] = React.useState(false)
   const path = 'https://rs-lang-team-be.herokuapp.com/';
   const [userWords, updateUserWords] = React.useState<null | IUserWord[]>(null)
@@ -79,12 +79,14 @@ function Word({ data }: IWordCard) {
     updateBtnState(true)
     await changeDifficulty(id, userWords)
     updateAction(val => !val);
+    changeBookState(prevState + 1)
   }
 
   const handleLearnWord = async () => {
     updateBtnState(true)
     await changeLearned(id, userWords)
     updateAction(val => !val);
+    changeBookState(prevState + 1)
   }
 
   React.useEffect(() => {
@@ -106,6 +108,7 @@ function Word({ data }: IWordCard) {
         flexDirection: { xs: 'column', md: 'row' },
         mb: 2,
         minHeight: '200px',
+        borderRight: `15px solid ${cardShadow}`,
         boxShadow: `8px 6px 10px 0px ${cardShadow}`
       }}
     >
