@@ -92,7 +92,7 @@ function AudioCall() {
             <DifficultySelector onChange={handleDifficultyChange} selectedValue={selectedValue} />
             <Button variant='contained'
               onClick={() => {
-                getWords(+selectedValue - 1, 2).then(elem => {
+                getWords(+selectedValue - 1, 3).then(elem => {
                   dispatch({ type: "LOADED_QUESTIONS", payload: elem })
                   setIsDataLoaded(true)
                 });

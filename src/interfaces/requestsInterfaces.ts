@@ -88,14 +88,20 @@ interface IStatistic {
       correcInRow: number;
       numberNewWordsPerDay: {
         [key: string]: number;
-      }
+      },
+      numberLearnedWordsPerDay: {
+        [key: string]: number;
+      },
     },
     sprint: {
       successfulPercent:number;
       correcInRow: number;
       numberNewWordsPerDay: {
         [key: string]: number;
-      }
+      },
+      numberLearnedWordsPerDay: {
+        [key: string]: number;
+      },
     }
   };
 }
