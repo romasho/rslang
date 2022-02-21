@@ -25,7 +25,16 @@ function ChapterBtn({ onChange, chapter }: IChaptersProps) {
       <ButtonGroup>
         <Button
           onClick={handleOpenChapters}
-          sx={{ fontWeight: 700, fontSize: { xs: '10px', sm: '14px' } }}
+          sx={{
+            fontWeight: 700,
+            fontSize: { xs: '10px', sm: '14px' },
+            color: 'black',
+            borderColor: 'black',
+            '&:hover': {
+              borderColor: 'black',
+              color: '#D9534F'
+            }
+          }}
         >
           {CHAPTERS[selectedIndex].name}
         </Button>

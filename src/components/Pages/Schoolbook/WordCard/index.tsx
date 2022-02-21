@@ -1,5 +1,5 @@
 import { NewReleasesRounded, PauseCircleOutline, PlayCircleOutline, School } from "@mui/icons-material";
-import { Card, CardContent, CardMedia, Container, IconButton, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Container, IconButton, Tooltip, Typography } from "@mui/material";
 import React from "react";
 import { IUserWord } from "../../../../interfaces/requestsInterfaces";
 import { IWordCard } from "../../../../interfaces/schoolbookInterfaces";
@@ -9,7 +9,7 @@ import { changeDifficulty, changeLearned, getCardShadowColor, isDifficult, isLea
 type color = "error" | "inherit" | "secondary" | "disabled" | "action" | "primary" | "info" | "success" | "warning" | undefined;
 
 
-function Word({ data }: IWordCard) {
+function Word({ data, changeBookState, prevState }: IWordCard) {
   const [action, updateAction] = React.useState(false)
   const path = 'https://rs-lang-team-be.herokuapp.com/';
   const [userWords, updateUserWords] = React.useState<null | IUserWord[]>(null)
@@ -79,12 +79,14 @@ function Word({ data }: IWordCard) {
     updateBtnState(true)
     await changeDifficulty(id, userWords)
     updateAction(val => !val);
+    changeBookState(prevState + 1)
   }
 
   const handleLearnWord = async () => {
     updateBtnState(true)
     await changeLearned(id, userWords)
     updateAction(val => !val);
+    changeBookState(prevState + 1)
   }
 
   React.useEffect(() => {
@@ -106,6 +108,7 @@ function Word({ data }: IWordCard) {
         flexDirection: { xs: 'column', md: 'row' },
         mb: 2,
         minHeight: '200px',
+        borderRight: `15px solid ${cardShadow}`,
         boxShadow: `8px 6px 10px 0px ${cardShadow}`
       }}
     >
@@ -121,17 +124,23 @@ function Word({ data }: IWordCard) {
         <Container disableGutters sx={{ display: 'flex', columnGap: 1, alignItems: { xs: 'flex-start', sm: 'center' }, flexDirection: { xs: 'column-reverse', sm: 'row' } }}>
           <Typography variant='h6' component='h3' sx={{ flexShrink: 0 }}>{word} - {transcription}</Typography>
           <Container sx={{ width: '100%' }} disableGutters>
-            <IconButton onClick={handlePlayer}>
-              {isPlay ? <PauseCircleOutline color="primary" /> : <PlayCircleOutline color="primary" />}
-            </IconButton>
+            <Tooltip title='Play'>
+              <IconButton onClick={handlePlayer}>
+                {isPlay ? <PauseCircleOutline color="primary" /> : <PlayCircleOutline color="primary" />}
+              </IconButton>
+            </Tooltip>
             {isSigned ? (
               <>
-                <IconButton onClick={handleHardWord} disabled={btnState}>
-                  <NewReleasesRounded color={diffColor} />
-                </IconButton>
-                <IconButton onClick={handleLearnWord} disabled={btnState}>
-                  <School color={learnedColor} />
-                </IconButton>
+                <Tooltip title='Difficult word'>
+                  <IconButton onClick={handleHardWord} disabled={btnState}>
+                    <NewReleasesRounded color={diffColor} />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title='Learned word'>
+                  <IconButton onClick={handleLearnWord} disabled={btnState}>
+                    <School color={learnedColor} />
+                  </IconButton>
+                </Tooltip>
               </>
             ) : (
               ''

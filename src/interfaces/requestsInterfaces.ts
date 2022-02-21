@@ -76,7 +76,7 @@ interface IWordAggr extends IWordAggregated {
 
 interface IAggregatedWords {
   paginatedResults: IWordAggr[],
-  totalCount: { count: number };
+  totalCount: [{ count: number }];
 }
 
 interface IStatistic {

@@ -1,7 +1,8 @@
 import { Button, Menu, MenuItem } from '@mui/material';
 import React from 'react';
+import { ITrainigProps } from '../../../../../interfaces/schoolbookInterfaces';
 
-function TrainingBtn() {
+function TrainingBtn({ isDisabled }: ITrainigProps) {
   const [anchorTraining, setAnchorTraining] = React.useState<null | HTMLElement>(null)
 
   const handleOpenTraining = (event: React.MouseEvent<HTMLElement>) => {
@@ -14,7 +15,21 @@ function TrainingBtn() {
 
   return (
     <>
-      <Button variant='outlined' onClick={handleOpenTraining} sx={{ fontWeight: 700, fontSize: { xs: '10px', sm: '14px' } }}>Training</Button>
+      <Button
+        disabled={isDisabled}
+        variant='outlined'
+        onClick={handleOpenTraining}
+        sx={{
+          fontWeight: 700,
+          fontSize: { xs: '10px', sm: '14px' },
+          color: 'black',
+          borderColor: 'black',
+          '&:hover': {
+            borderColor: 'black',
+            color: '#D9534F'
+          }
+        }}
+      >Training</Button>
       <Menu
         anchorEl={anchorTraining}
         open={Boolean(anchorTraining)}
