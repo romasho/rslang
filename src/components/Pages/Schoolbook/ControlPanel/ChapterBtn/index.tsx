@@ -1,6 +1,6 @@
 import { Button, ButtonGroup, Menu, MenuItem } from '@mui/material';
 import React from 'react';
-import CHAPTERS from '../../../../../constants';
+import { CHAPTERS } from '../../../../../constants';
 import { IChaptersProps } from '../../../../../interfaces/schoolbookInterfaces';
 
 
@@ -59,11 +59,3 @@ function ChapterBtn({ onChange, chapter }: IChaptersProps) {
 }
 
 export default ChapterBtn;
-
-// sx={{
-//   color: 'black',
-//   borderColor: 'black',
-//   '&:hover': {
-//     borderColor: 'black'
-//   }
-// }}

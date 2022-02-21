@@ -9,13 +9,10 @@ function Dictionary() {
   const flag = true;
   const [data, setData] = React.useState<null | IWordAggr[]>(null)
   const userId = loadState().auth?.id as string;
-  console.log(data);
-
 
   React.useEffect(() => {
     setData(null)
     const filter = '{"$and":[{"userWord.difficulty":"hard"}]}'
-    // const filter = '{"$and":[{"userWord.difficulty":"easy", userWord.optional.isLearned: true}]}'
 
     getUserAggregatedWords({ id: userId, filter }).then(res => {
       if (!res) return;

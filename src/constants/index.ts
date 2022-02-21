@@ -1,6 +1,6 @@
 import { IChapter } from "../interfaces/schoolbookInterfaces";
 
-const CHAPTERS: IChapter[] = [
+export const CHAPTERS: IChapter[] = [
   {
     chapter: 0,
     name: 'Chapter 1'
@@ -27,4 +27,8 @@ const CHAPTERS: IChapter[] = [
   },
 ]
 
-export default CHAPTERS;
+export const EASY_ANSWERS_COUNT = 3;
+
+export const LEARNED_SHADOW = 'rgba(46, 125, 50, 0.37)';
+
+export const DIFF_SHADOW = 'rgba(217, 83, 79, 0.37)';
