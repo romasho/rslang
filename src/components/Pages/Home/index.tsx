@@ -131,7 +131,7 @@ function Home() {
                   <img src='./tyoma.jpg' alt='' width='100px' height='100px' className='avatar' />
                   <Box sx={{ ml: 2, width: '70%' }}>
                     <Typography variant='h5' component='h3'>Artyom</Typography>
-                    <Typography variant='body2'>Frontend developer<br/> I was responsible for writing server requests, making authorization page and Sprint game.</Typography>
+                    <Typography variant='body2'>Frontend developer<br/> I was responsible for writing server requests, making authorization page and Sprint game.git</Typography>
                   </Box>
                 </Box>
               </Paper>
