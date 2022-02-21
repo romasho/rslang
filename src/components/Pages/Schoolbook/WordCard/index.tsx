@@ -131,14 +131,18 @@ function Word({ data, changeBookState, prevState }: IWordCard) {
             {isSigned ? (
               <>
                 <Tooltip title='Difficult word'>
-                  <IconButton onClick={handleHardWord} disabled={btnState}>
-                    <NewReleasesRounded color={diffColor} />
-                  </IconButton>
+                  <span>
+                    <IconButton onClick={handleHardWord} disabled={btnState}>
+                      <NewReleasesRounded color={diffColor} />
+                    </IconButton>
+                  </span>
                 </Tooltip>
                 <Tooltip title='Learned word'>
-                  <IconButton onClick={handleLearnWord} disabled={btnState}>
-                    <School color={learnedColor} />
-                  </IconButton>
+                  <span>
+                    <IconButton onClick={handleLearnWord} disabled={btnState}>
+                      <School color={learnedColor} />
+                    </IconButton>
+                  </span>
                 </Tooltip>
               </>
             ) : (
