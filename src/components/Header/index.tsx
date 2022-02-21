@@ -1,22 +1,23 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { AppBar, Toolbar, Button, IconButton, Box, Container, Menu, MenuItem, Link } from '@mui/material';
+import { AppBar, Toolbar, Button, IconButton, Box, Container, Menu, MenuItem, Link, MenuList, Popper, Grow, Paper, ClickAwayListener } from '@mui/material';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import MenuIcon from "@mui/icons-material/Menu";
 import LoginIcon from '@mui/icons-material/Login';
 import PersonIcon from '@mui/icons-material/Person';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import LogoutIcon from '@mui/icons-material/Logout';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { loadState } from '../../utils/state';
 import { signOut } from '../../utils/services';
 
-const pages = ['SchoolBook', 'Audio call', 'Sprint']
-const path = ['/schoolBook', '/audio-call', '/sprint']
+const pages = ['SchoolBook', 'Audio call', 'Sprint'];
+const path = ['/schoolBook', '/audio-call', '/sprint'];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
-
-  const [anchorElAuth, setAnchorElAuth] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -26,12 +27,15 @@ function Header() {
     setAnchorElNav(null);
   };
 
-  const handleOpenAuthMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElAuth(event.currentTarget);
+  const [openAuthMenu, setOpenAuthMenu] = React.useState<boolean>(false);
+  const anchorAuthRef = React.useRef<HTMLButtonElement>(null);
+
+  const handleToggleAuthMenu = () => {
+    setOpenAuthMenu((prevOpen) => !prevOpen);
   };
 
   const handleCloseAuthMenu = () => {
-    setAnchorElAuth(null);
+    setOpenAuthMenu(false);
   };
 
   const handleSignOut = () => {
@@ -95,26 +99,54 @@ function Header() {
 
           {loadState().auth?
             <>
-              <Button 
-                color='secondary' 
-                startIcon={<PersonIcon />} 
-                onClick={handleOpenAuthMenu} 
+              <Button
+                variant='linkBtn'
+                ref={anchorAuthRef}
+                id="composition-button"
+                startIcon={<PersonIcon color='secondary' />}
+                endIcon={<KeyboardArrowDownIcon color='secondary' />}
+                onClick={handleToggleAuthMenu}
                 sx={{ fontWeight: 'bold', textTransform: 'none' }}
               >
                 {loadState().auth?.name}
               </Button>
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorElAuth}
-                open={Boolean(anchorElAuth)}
-                onClose={handleCloseAuthMenu}
-                MenuListProps={{
-                  'aria-labelledby': 'basic-button',
-                }}
+              <Popper
+                open={openAuthMenu}
+                anchorEl={anchorAuthRef.current}
+                role={undefined}
+                placement="bottom-start"
+                transition
+                style={{ zIndex: '999' }}
               >
-                <MenuItem key={0} onClick={handleCloseAuthMenu}>Statistic</MenuItem>
-                <MenuItem key={1} onClick={handleSignOut}>Logout</MenuItem>
-              </Menu>
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    in={TransitionProps?.in}
+                    onEnter={TransitionProps?.onEnter}
+                    onExited={TransitionProps?.onExited}
+                    style={{
+                      transformOrigin:
+                        placement === 'bottom-start' ? 'left top' : 'left bottom',
+                    }}
+                  >
+                    <Paper>
+                      <ClickAwayListener onClickAway={handleCloseAuthMenu}>
+                        <MenuList
+                          autoFocusItem={openAuthMenu}
+                          id="composition-menu"
+                          aria-labelledby="composition-button"
+                        >
+                          <MenuItem onClick={handleCloseAuthMenu}>
+                            <Button startIcon={<BarChartIcon color='success' />} component={RouterLink} to="/statistic" sx={{ textTransform: 'none', color: 'black' }}>Statistic</Button>
+                          </MenuItem>
+                          <MenuItem onClick={handleSignOut}>
+                            <Button startIcon={<LogoutIcon color='error' />} sx={{ textTransform: 'none', color: 'black' }}>Log out</Button>
+                          </MenuItem>
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
             </>
           : ''}
 

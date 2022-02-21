@@ -73,14 +73,13 @@ function Sprint() {
   }, [answers]);
 
   return (
-    <StyledFullScreen handle={fullScreen}>
+    <StyledFullScreen sx={{ mixBlendMode: 'multiply' }} handle={fullScreen}>
       <Grid container  sx={{
         flexGrow: 1,
         backgroundImage: 'url(forest-red-bg.jpg)',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
-        mixBlendMode: 'multiply',
       }}>
         {gameState === 'inProgress' &&
         <Grid container justifyContent='center' alignItems='center'>
