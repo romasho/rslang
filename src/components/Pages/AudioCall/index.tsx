@@ -5,7 +5,7 @@ import { getWords } from '../../../utils/services';
 import Game from './components/game';
 import { AudioCallContext } from './context';
 import DifficultySelector from '../../DifficultySelector';
-import { getWordsFromSchoolbook, isTrainingGame, playAudio, random } from '../../../utils/miscellaneous';
+import { deleteTrainingType, getWordsFromSchoolbook, isTrainingGame, playAudio, random } from '../../../utils/miscellaneous';
 import { StyledFullScreen, useFullScreenHandle } from '../../StyledFullScreen'
 
 function AudioCall() {
@@ -51,6 +51,12 @@ function AudioCall() {
     }
   }, [isDataLoaded]);
 
+  useEffect(() =>
+    () => {
+      deleteTrainingType();
+    }
+    , []);
+
   useEffect(() => {
     if (isDataLoaded) {
 
@@ -74,7 +80,7 @@ function AudioCall() {
           (
             <Grid container justifyContent='center' alignItems='center'>
               <Grid item xs={12} sm={10} md={8}>
-                <Game onExit={handleExit} onRestart={handleRestart} onFullScreen={fullScreen}/>
+                <Game onExit={handleExit} onRestart={handleRestart} onFullScreen={fullScreen} />
               </Grid>
             </Grid>
           )
@@ -90,17 +96,17 @@ function AudioCall() {
             <Typography sx={{ mb: 10, fontSize: 32, fontFamily: 'Bebas Neue', textAlign: 'center' }}>
               Audiocall training develops vocabulary. <br /> You have to choose the translation of the word you heard.
             </Typography>
-            {isTraining? '' : <DifficultySelector onChange={handleDifficultyChange} selectedValue={selectedValue.toString()} />}
+            {isTraining ? '' : <DifficultySelector onChange={handleDifficultyChange} selectedValue={selectedValue.toString()} />}
             <Button variant='contained'
               onClick={async () => {
                 const schoolbookWords = await getWordsFromSchoolbook();
 
-                const newWords =  schoolbookWords || await getWords(+selectedValue - 1, random(0, 29));
+                const newWords = schoolbookWords || await getWords(+selectedValue - 1, random(0, 29));
 
-                
-                  dispatch({ type: "LOADED_QUESTIONS", payload: newWords })
-                  setIsDataLoaded(true)
-                ;
+
+                dispatch({ type: "LOADED_QUESTIONS", payload: newWords })
+                setIsDataLoaded(true)
+                  ;
               }}
               sx={{
                 mt: 10,

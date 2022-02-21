@@ -56,7 +56,7 @@ function Statistic() {
           {data ? (
             <>
               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Total words studied: {studyedWords}</Typography>
-              <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Total words learned: {data.learnedWords} </Typography>
+              <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Total words learned: {learned} </Typography>
               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>New words learned today: 
                {`${  String(data.optional.audiocall.numberLearnedWordsPerDay[currentDay] + data.optional.sprint.numberLearnedWordsPerDay[currentDay])}`}
                </Typography>
