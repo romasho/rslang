@@ -8,7 +8,6 @@ import { changeDifficulty, changeLearned, getCardShadowColor, isDifficult, isLea
 
 type color = "error" | "inherit" | "secondary" | "disabled" | "action" | "primary" | "info" | "success" | "warning" | undefined;
 
-
 function Word({ data, changeBookState, prevState }: IWordCard) {
   const [action, updateAction] = React.useState(false)
   const path = 'https://rs-lang-team-be.herokuapp.com/';
@@ -158,5 +157,3 @@ function Word({ data, changeBookState, prevState }: IWordCard) {
 }
 
 export default Word;
-
-// onClick={handleHardWord}

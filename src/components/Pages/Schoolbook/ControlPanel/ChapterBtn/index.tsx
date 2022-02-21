@@ -59,11 +59,3 @@ function ChapterBtn({ onChange, chapter }: IChaptersProps) {
 }
 
 export default ChapterBtn;
-
-// sx={{
-//   color: 'black',
-//   borderColor: 'black',
-//   '&:hover': {
-//     borderColor: 'black'
-//   }
-// }}

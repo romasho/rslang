@@ -27,4 +27,6 @@ const CHAPTERS: IChapter[] = [
   },
 ]
 
+
+
 export default CHAPTERS;

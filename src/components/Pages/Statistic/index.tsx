@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Box, Container } from '@mui/material';
+import { Typography, Box, Container, Card } from '@mui/material';
 import { Footer } from '../..';
 import { IStatistic } from '../../../interfaces/requestsInterfaces';
 import { loadState } from '../../../utils/state';
@@ -9,16 +9,15 @@ function Statistic() {
   const [data, setData] = React.useState<null | IStatistic>(null);
   const [studyedWords, setStudyedWords] = React.useState(0)
 
-  console.log('stat');
   const filter = '{"$and":[{"userWord.optional.isLearned": false}]}'
+  const userId = loadState().auth?.id as string;
 
   React.useEffect(() => {
-    const userId = loadState().auth?.id as string;
     setData(null);
 
     Promise.all([getUserStatistic(userId), getUserAggregatedWords({ id: userId, filter })]).then(result => {
 
-      console.log(result);
+      // console.log(result);
 
       const studiedData = result[1] ? result[1][0] : null;
 
@@ -47,9 +46,42 @@ function Statistic() {
             User statistic
           </Typography>
           {data ? (
-            <Typography>Total words studied: {studyedWords}</Typography>
+            <>
+              <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Total words studied: {studyedWords}</Typography>
+              <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Total words learned: number </Typography>
+              <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>New words for today: number </Typography>
+              <Box sx={{
+                mt: 2,
+                display: 'flex',
+                flexDirection: { xs: 'column', md: 'row' },
+                gap: 2
+              }}>
+                <Card
+                  sx={{
+                    flexGrow: 1,
+                    p: 2
+                  }}
+                >
+                  <Typography variant='h6' component='h3' sx={{ fontFamily: 'Permanent Marker' }}>Sprint</Typography>
+                  <Typography>New words for today: number </Typography>
+                  <Typography>Average win rate: number </Typography>
+                  <Typography>Longest series: number </Typography>
+                </Card>
+                <Card
+                  sx={{
+                    flexGrow: 1,
+                    p: 2
+                  }}
+                >
+                  <Typography variant='h6' component='h3' sx={{ fontFamily: 'Permanent Marker' }}>Audio call</Typography>
+                  <Typography>New words for today: number </Typography>
+                  <Typography>Average win rate: number </Typography>
+                  <Typography>Longest series: number </Typography>
+                </Card>
+              </Box>
+            </>
           ) : (
-            <Typography variant='subtitle1' sx={{ fontFamily: 'Permanent Marker', textAlign: 'center' }}>Start learning words and playing games to display your statistic</Typography>
+            <Typography variant='subtitle1' sx={{ textAlign: 'center' }}>Start learning words and playing games to display your statistic!</Typography>
           )}
         </Container>
       </Box>
