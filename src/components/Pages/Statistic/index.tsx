@@ -32,8 +32,6 @@ function Statistic() {
       }
     })
   }, [])
-
-  console.log(data, currentDay);
   return (
     <>
       <Box
@@ -54,9 +52,10 @@ function Statistic() {
             <>
               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Total words studied: {studyedWords}</Typography>
               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Total words learned: {data.learnedWords} </Typography>
-              <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>New words for today: 
-              {data.optional.audiocall.numberLearnedWordsPerDay[currentDay] + data.optional.sprint.numberLearnedWordsPerDay[currentDay]}
+              <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>New words learned today: 
+               {`${  String(data.optional.audiocall.numberLearnedWordsPerDay[currentDay] + data.optional.sprint.numberLearnedWordsPerDay[currentDay])}`}
                </Typography>
+               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Percentage of correct answers per day: {(data.optional.sprint.successfulPercent + data.optional.audiocall.successfulPercent) / 2 }%  </Typography>
               <Box sx={{
                 mt: 2,
                 display: 'flex',

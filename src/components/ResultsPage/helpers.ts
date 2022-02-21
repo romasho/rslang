@@ -38,7 +38,8 @@ export async function udateStatistics(words: IWord[], usersAnswers: boolean[], s
     if (isAuth) {
         const usersWords = (await getUserWords(isAuth) as IUserWord[]);
         let usersStatistics = (await getUserStatistic(isAuth)) as IStatistic;
-        if (usersStatistics === null) {
+        if (!usersStatistics) {
+            console.log('fuck')
             usersStatistics = defaultStatistics;
         }
         const learnedWords = usersWords.reduce((acc, word) => {
@@ -50,7 +51,7 @@ export async function udateStatistics(words: IWord[], usersAnswers: boolean[], s
         defaultStatistics.learnedWords = learnedWords;
         const gameWay = (gameName === 'audiocall') ? defaultStatistics.optional.audiocall : defaultStatistics.optional.sprint;
         gameWay.correcInRow = correcInRow > gameWay.correcInRow ? correcInRow : gameWay.correcInRow;
-        gameWay.successfulPercent = gameWay.successfulPercent !== 0 ? (successfulPercent + gameWay.successfulPercent) / 2 : gameWay.successfulPercent;
+        gameWay.successfulPercent = (gameWay.successfulPercent === 0) ? successfulPercent : (successfulPercent + gameWay.successfulPercent) / 2;
 
 
         words.forEach((word, index) => {
