@@ -14,7 +14,6 @@ function SchoolBook() {
   const [data, setData] = React.useState<null | BookData>(null);
   const [cardsState, changeCardStates] = React.useState<number>(0)
   const user = loadState().auth;
-
   const [isLearned, changeLearned] = React.useState(false)
 
   React.useEffect(() => {

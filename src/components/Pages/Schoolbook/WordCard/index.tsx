@@ -1,5 +1,5 @@
 import { NewReleasesRounded, PauseCircleOutline, PlayCircleOutline, School } from "@mui/icons-material";
-import { Card, CardContent, CardMedia, Container, IconButton, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Container, IconButton, Tooltip, Typography } from "@mui/material";
 import React from "react";
 import { IUserWord } from "../../../../interfaces/requestsInterfaces";
 import { IWordCard } from "../../../../interfaces/schoolbookInterfaces";
@@ -7,7 +7,6 @@ import { getWordsOfUser } from "../helpers";
 import { changeDifficulty, changeLearned, getCardShadowColor, isDifficult, isLearnedWord } from "./helpers";
 
 type color = "error" | "inherit" | "secondary" | "disabled" | "action" | "primary" | "info" | "success" | "warning" | undefined;
-
 
 function Word({ data, changeBookState, prevState }: IWordCard) {
   const [action, updateAction] = React.useState(false)
@@ -124,17 +123,23 @@ function Word({ data, changeBookState, prevState }: IWordCard) {
         <Container disableGutters sx={{ display: 'flex', columnGap: 1, alignItems: { xs: 'flex-start', sm: 'center' }, flexDirection: { xs: 'column-reverse', sm: 'row' } }}>
           <Typography variant='h6' component='h3' sx={{ flexShrink: 0 }}>{word} - {transcription}</Typography>
           <Container sx={{ width: '100%' }} disableGutters>
-            <IconButton onClick={handlePlayer}>
-              {isPlay ? <PauseCircleOutline color="primary" /> : <PlayCircleOutline color="primary" />}
-            </IconButton>
+            <Tooltip title='Play'>
+              <IconButton onClick={handlePlayer}>
+                {isPlay ? <PauseCircleOutline color="primary" /> : <PlayCircleOutline color="primary" />}
+              </IconButton>
+            </Tooltip>
             {isSigned ? (
               <>
-                <IconButton onClick={handleHardWord} disabled={btnState}>
-                  <NewReleasesRounded color={diffColor} />
-                </IconButton>
-                <IconButton onClick={handleLearnWord} disabled={btnState}>
-                  <School color={learnedColor} />
-                </IconButton>
+                <Tooltip title='Difficult word'>
+                  <IconButton onClick={handleHardWord} disabled={btnState}>
+                    <NewReleasesRounded color={diffColor} />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title='Learned word'>
+                  <IconButton onClick={handleLearnWord} disabled={btnState}>
+                    <School color={learnedColor} />
+                  </IconButton>
+                </Tooltip>
               </>
             ) : (
               ''
@@ -152,5 +157,3 @@ function Word({ data, changeBookState, prevState }: IWordCard) {
 }
 
 export default Word;
-
-// onClick={handleHardWord}

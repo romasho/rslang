@@ -80,9 +80,30 @@ interface IAggregatedWords {
 }
 
 interface IStatistic {
-  id: string
-  learnedWords?: number;
-  optional?: {};
+  id?: string
+  learnedWords: number;
+  optional: {
+    audiocall: {
+      successfulPercent:number;
+      correcInRow: number;
+      numberNewWordsPerDay: {
+        [key: string]: number;
+      },
+      numberLearnedWordsPerDay: {
+        [key: string]: number;
+      },
+    },
+    sprint: {
+      successfulPercent:number;
+      correcInRow: number;
+      numberNewWordsPerDay: {
+        [key: string]: number;
+      },
+      numberLearnedWordsPerDay: {
+        [key: string]: number;
+      },
+    }
+  };
 }
 
 interface ISettings {

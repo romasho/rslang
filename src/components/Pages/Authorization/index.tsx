@@ -5,7 +5,8 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { Footer } from '../..';
 import type { IAuthorizationState, IAction } from '../../../interfaces/authorizationInterface';
 import type { IResponseErr } from '../../../interfaces/requestsInterfaces';
-import { createUser, signIn, signOut } from '../../../utils/services';
+import { createUser, signIn, signOut, updateUserStatistic } from '../../../utils/services';
+import { defaultStatistics } from '../../ResultsPage/helpers';
 
 const initialFieldsState: IAuthorizationState = {
   regName: {
@@ -107,6 +108,8 @@ function Authorization() {
     setLoadingState(true);
 
     const response = await createUser({name: fields.regName.value, email: fields.regEmail.value, password: fields.regPassword.value});
+    updateUserStatistic(defaultStatistics);
+    
 
     if (response && 'error' in response) onRegErr(response);
     else if (response) {
