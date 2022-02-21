@@ -234,7 +234,7 @@ export async function getUserSettings(id: string): Promise<IStatistic | null> {
 }
 
 export async function updateUserSettings(settings: ISettings): Promise<ISettings | IResponseErr | null> {
-  const { learnedWords, optional } = settings;
+  const { wordsPerDay, optional } = settings;
   try {
     const result = await fetch(`https://rs-lang-team-be.herokuapp.com/users/${settings.id}/settings`, {
       method: 'PUT',
@@ -243,7 +243,7 @@ export async function updateUserSettings(settings: ISettings): Promise<ISettings
         'Authorization': `Bearer ${loadState().auth?.token}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ learnedWords, optional })
+      body: JSON.stringify({ wordsPerDay, optional })
     });
 
     return await result.json();
@@ -320,3 +320,4 @@ Examples of usage:
     updateUserSettings({id: "61feaf3049f2c80016c599b0", optional: { theme: 'dark' }}) => change/create user setting obj. You can store anything in 'optional' param or not use it at all
 
 */
+

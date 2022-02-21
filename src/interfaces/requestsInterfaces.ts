@@ -80,30 +80,30 @@ interface IAggregatedWords {
 }
 
 interface IStatistic {
-  id: string
-  learnedWords?: number;
-  optional?: {};
-}
-
-interface ISettings {
-  id: string
+  id?: string
   learnedWords: number;
-  optional?: {
+  optional: {
     audiocall: {
       successfulPercent:number;
       correcInRow: number;
       numberNewWordsPerDay: {
-        
+        [key: string]: number;
       }
     },
     sprint: {
       successfulPercent:number;
       correcInRow: number;
       numberNewWordsPerDay: {
-        
+        [key: string]: number;
       }
     }
   };
+}
+
+interface ISettings {
+  id: string
+  wordsPerDay?: number;
+  optional?: {};
 }
 
 export type { IWord, IUserInput, IUserResponse, IResponseErr, ILoginResponse, IUserWord, IUserWordInput, IAggregatedWordsInput, IAggregatedWords, IStatistic, ISettings, IWordAggr }

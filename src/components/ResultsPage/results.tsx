@@ -40,21 +40,52 @@ async function udateStatistics(words: IWord[], usersAnswers: boolean[], successf
             }
           }
         });
-        // const x = (usersStatistics?.optional.gameName[currentDay]) ? usersStatistics?.optional.gameName[currentDay] + 1 : 0;
-        // updateUserStatistic({
-        //   ...usersStatistics,
-        //   learnedWords,
-        //   optional: {
-        //     [gameName]: {
-        //       successfulPercent,
-        //       correcInRow,
-        //       numberNewWordsPerDay: {
-        //         [currentDay]: x
-        //       }
-        //     }
 
-        //   }
-        // })
+        if (gameName === 'audiocall') {
+          const x = (usersStatistics?.optional.audiocall.numberNewWordsPerDay[currentDay] || usersStatistics?.optional.audiocall.numberNewWordsPerDay[currentDay] === 0)
+            ? usersStatistics.optional.audiocall.numberNewWordsPerDay[currentDay] + 1 : 0;
+            console.log({
+              learnedWords,
+              optional: {
+                audiocall: {
+                  successfulPercent,
+                  correcInRow,
+                  numberNewWordsPerDay: {
+                    [currentDay]: x
+                  }
+                },
+                sprint: {
+                  successfulPercent: usersStatistics?.optional.sprint.successfulPercent as number,
+                  correcInRow: usersStatistics?.optional.sprint.correcInRow as number,
+                  numberNewWordsPerDay: {
+                    [currentDay]: x
+                  }
+                }
+              }
+            });
+            
+          updateUserStatistic({
+            id: isAuth,
+            learnedWords,
+            optional: {
+              audiocall: {
+                successfulPercent,
+                correcInRow,
+                numberNewWordsPerDay: {
+                  [currentDay]: x
+                }
+              },
+              sprint: {
+                successfulPercent: usersStatistics?.optional.sprint.successfulPercent as number,
+                correcInRow: usersStatistics?.optional.sprint.correcInRow as number,
+                numberNewWordsPerDay: {
+                  [currentDay]: x
+                }
+              }
+            }
+          })
+        }
+
       } else {
         const { difficulty, optional } = isWordInArray;
         console.log('обновляем данные', difficulty, optional, word.wordTranslate);
