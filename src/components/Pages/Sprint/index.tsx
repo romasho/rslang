@@ -78,7 +78,6 @@ function Sprint() {
         setWords(words.concat(shuffledPage));
       })
     }
-    console.log(words);
   }, [currentWord]);
 
   React.useEffect( () => {

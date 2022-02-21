@@ -47,6 +47,7 @@ export async function udateStatistics(words: IWord[], usersAnswers: boolean[], s
         }, 0)
 
         defaultStatistics.learnedWords = learnedWords;
+        defaultStatistics.optional = usersStatistics.optional;
         const gameWay = (gameName === 'audiocall') ? defaultStatistics.optional.audiocall : defaultStatistics.optional.sprint;
         gameWay.correcInRow = correcInRow > gameWay.correcInRow ? correcInRow : gameWay.correcInRow;
         gameWay.successfulPercent = (gameWay.successfulPercent === 0) ? successfulPercent : (successfulPercent + gameWay.successfulPercent) / 2;
@@ -86,7 +87,6 @@ export async function udateStatistics(words: IWord[], usersAnswers: boolean[], s
                 });
             }
         });
-        console.log(defaultStatistics)
         updateUserStatistic(defaultStatistics);
     }
 }
