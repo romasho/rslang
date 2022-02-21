@@ -4,7 +4,7 @@ import DifficultySelector from '../../DifficultySelector';
 import GameDialog from '../../GameDialog';
 import { getWords } from '../../../utils/services';
 import type { IWord } from '../../../interfaces/requestsInterfaces'
-import { shuffleArray, generateTranslation } from  '../../../utils/miscellaneous';
+import { shuffleArray, generateTranslation, getWordsFromSchoolbook, isTrainingGame } from '../../../utils/miscellaneous';
 import Timer from '../../Timer';
 import TableResult from '../../ResultsPage/results';
 import { StyledFullScreen, useFullScreenHandle } from '../../StyledFullScreen'
@@ -22,13 +22,17 @@ function Sprint() {
 
   const randomizedPages = shuffleArray(Array.from(Array(MAX_PAGES).keys()));
   const fullScreen = useFullScreenHandle();
+  const isTraining = isTrainingGame();
 
   const handleDifficultyChange = (value: string) => {
     setSelectedValue(+value);
   };
 
   const handleGameStart = async () => {
-    const newWords = await getWords(+selectedValue - 1, randomizedPages[currentWord]);
+    const schoolbookWords = await getWordsFromSchoolbook();
+
+    const newWords =  schoolbookWords || await getWords(+selectedValue - 1, randomizedPages[currentWord]);
+
     setWords(shuffleArray(newWords));
     setGameState('inProgress');
   };
@@ -63,6 +67,7 @@ function Sprint() {
         setWords(words.concat(shuffledPage));
       })
     }
+    console.log(words);
   }, [currentWord]);
 
   React.useEffect( () => {
@@ -112,7 +117,7 @@ function Sprint() {
           <Typography sx={{ mb: 10, fontSize: 32, fontFamily: 'Bebas Neue'}}>
             Check how much points you can score in one minute, <br/> making educated guesses about words
           </Typography>
-          <DifficultySelector onChange={handleDifficultyChange} selectedValue={selectedValue.toString()} />
+          {isTraining? '' : <DifficultySelector onChange={handleDifficultyChange} selectedValue={selectedValue.toString()} />}
           <Button variant='contained'
                   onClick={handleGameStart}
                   sx={{

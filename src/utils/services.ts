@@ -166,7 +166,8 @@ export async function deleteUserWord({ userId, wordId }: { userId: string, wordI
 
 
 export async function getUserAggregatedWords(filter: IAggregatedWordsInput): Promise<IAggregatedWords[] | null> {
-  const url = new URL(`https://rs-lang-team-be.herokuapp.com/users/${filter.id}/aggregatedWords`);
+  const id = filter.id? filter.id : loadState().auth?.id;
+  const url = new URL(`https://rs-lang-team-be.herokuapp.com/users/${id}/aggregatedWords`);
 
   if (filter.group) url.searchParams.set('group', filter.group.toString());
   if (filter.page) url.searchParams.set('page', filter.page.toString());

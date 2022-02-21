@@ -21,7 +21,11 @@ function SchoolBook() {
     const { chapter, page } = state;
     getWords(chapter, page).then(res => setData(res));
     isLearndedPage(state).then(res => {
-      changeLearned(res === 20)
+      if (state.isDict) {
+        changeLearned(false)
+      } else {
+        changeLearned(res === 20)
+      }
     });
   }, [state, cardsState])
 
@@ -105,7 +109,7 @@ function SchoolBook() {
                 }
               }}
             >Dictionary</Button>
-            <TrainingBtn isDisabled={isLearned} />
+            <TrainingBtn isDisabled={isLearned}  />
           </Container>
           <Typography variant='h3' sx={{ mb: 2, fontFamily: 'Permanent Marker', textAlign: 'center', fontSize: { xs: "1.5rem", sm: "3rem" } }}>
             {isLearned ? 'Congratulations! this page is learned' : ''}</Typography>
