@@ -73,13 +73,14 @@ function Sprint() {
   }, [answers]);
 
   return (
-    <StyledFullScreen sx={{ mixBlendMode: 'multiply' }} handle={fullScreen}>
-      <Grid container  sx={{
+    <StyledFullScreen sx={{ boxShadow: 'inset 0px 2px 4px -1px rgb(0 0 0 / 20%), inset 0px 4px 5px 0px rgb(0 0 0 / 14%), inset 0px 1px 10px 0px rgb(0 0 0 / 12%)' }} handle={fullScreen}>
+      <Grid container  justifyContent='center' alignItems='center' flexDirection='column' sx={{
         flexGrow: 1,
         backgroundImage: 'url(forest-red-bg.jpg)',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
+        mixBlendMode: 'multiply'
       }}>
         {gameState === 'inProgress' &&
         <Grid container justifyContent='center' alignItems='center'>
