@@ -6,7 +6,7 @@ const isAuth = loadState().auth?.id;
 const date = new Date();
 const currentDay = date.toISOString().split('T')[0];
 
-const defaultStatistics: IStatistic = {
+export const defaultStatistics: IStatistic = {
     id: isAuth,
     learnedWords: 0,
     optional: {
@@ -33,7 +33,7 @@ const defaultStatistics: IStatistic = {
     }
 }
 
-export default async function udateStatistics(words: IWord[], usersAnswers: boolean[], successfulPercent: number, correcInRow: number, gameName: string) {
+export async function udateStatistics(words: IWord[], usersAnswers: boolean[], successfulPercent: number, correcInRow: number, gameName: string) {
 
     if (isAuth) {
         const usersWords = (await getUserWords(isAuth) as IUserWord[]);
