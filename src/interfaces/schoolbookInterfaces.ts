@@ -14,7 +14,9 @@ export interface IBookState {
 export type BookData = IWord[] | [];
 
 export interface IWordCard {
-  data: IWord
+  data: IWord,
+  changeBookState: Function,
+  prevState: number
 }
 export interface IChaptersProps {
   onChange: Function,
@@ -23,4 +25,8 @@ export interface IChaptersProps {
 
 export interface IDictProp {
   data: IWordAggr
+}
+
+export interface ITrainigProps {
+  isDisabled: boolean
 }
