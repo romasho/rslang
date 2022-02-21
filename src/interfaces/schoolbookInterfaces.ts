@@ -8,7 +8,8 @@ export interface IChapter {
 export interface IBookState {
   chapter: number,
   page: number,
-  isDict: boolean
+  isDict: boolean,
+  game?: 'sprint' | 'audio-call',
 }
 
 export type BookData = IWord[] | [];

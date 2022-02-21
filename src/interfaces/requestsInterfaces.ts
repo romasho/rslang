@@ -61,7 +61,7 @@ interface IUserWord {
 type IUserWordInput = Omit<IUserWord, 'id' | 'wordId'>
 
 interface IAggregatedWordsInput {
-  id: string;
+  id?: string;
   group?: number;
   page?: number;
   wordsPerPage?: number;

@@ -7,31 +7,40 @@ import { getUserAggregatedWords, getUserStatistic } from '../../../utils/service
 
 function Statistic() {
   const [data, setData] = React.useState<null | IStatistic>(null);
-  const [studyedWords, setStudyedWords] = React.useState(0)
+  const [studyedWords, setStudyedWords] = React.useState(0);
+  const [learned, updateLearned] = React.useState(3600);
 
-  const filter = '{"$and":[{"userWord.optional.isLearned": false}]}'
+  const filterStudied = '{"$and":[{"userWord.optional.isLearned": false}]}';
+  const filterLearned = '{"$and":[{"userWord.optional.isLearned": true}]}';
   const userId = loadState().auth?.id as string;
 
   const date = new Date();
   const currentDay = date.toISOString().split('T')[0];
-  
 
   React.useEffect(() => {
     setData(null);
 
-    Promise.all([getUserStatistic(userId), getUserAggregatedWords({ id: userId, filter })]).then(result => {
+    Promise.all([getUserStatistic(userId), getUserAggregatedWords({ id: userId, filter: filterStudied }), getUserAggregatedWords({ id: userId, filter: filterLearned })])
+      .then(result => {
+        const studiedData = result[1] ? result[1][0] : null;
+        const learnedData = result[2] ? result[2][0] : null;
 
-      // console.log(result);
+        if (learnedData) {
+          const { count } = learnedData.totalCount[0];
+          updateLearned(count)
+        }
 
-      const studiedData = result[1] ? result[1][0] : null;
-
-      setData(result[0])
-      if (studiedData) {
-        const { count } = studiedData.totalCount[0];
-        setStudyedWords(count);
-      }
-    })
+        setData(result[0])
+        if (studiedData) {
+          const { count } = studiedData.totalCount[0];
+          setStudyedWords(count);
+        }
+      })
   }, [])
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
   return (
     <>
       <Box
@@ -51,11 +60,18 @@ function Statistic() {
           {data ? (
             <>
               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Total words studied: {studyedWords}</Typography>
+<<<<<<< HEAD
               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Total words learned: {data.learnedWords} </Typography>
               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>New words learned today: 
                {`${  String(data.optional.audiocall.numberLearnedWordsPerDay[currentDay] + data.optional.sprint.numberLearnedWordsPerDay[currentDay])}`}
                </Typography>
                <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Percentage of correct answers per day: {(data.optional.sprint.successfulPercent + data.optional.audiocall.successfulPercent) / 2 }%  </Typography>
+=======
+              <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Total words learned: {learned} </Typography>
+              <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>New words for today:
+                {data.optional.audiocall.numberLearnedWordsPerDay[currentDay] + data.optional.sprint.numberLearnedWordsPerDay[currentDay]}
+              </Typography>
+>>>>>>> develop
               <Box sx={{
                 mt: 2,
                 display: 'flex',
