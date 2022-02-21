@@ -140,7 +140,8 @@ function Home() {
                   <img src='./alex.jpg' alt='' width='100px' height='100px' className='avatar' />
                   <Box sx={{ ml: 2, width: '70%' }}>
                     <Typography variant='h5' component='h3'>Alex</Typography>
-                    <Typography variant='body2'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore nemo similique alias cum voluptatum!</Typography>
+                    <Typography variant='body2'>Start programming in 2019. Front-end developer with technical education.
+                      Made: basic project structure, main page and schoolBook</Typography>
                   </Box>
                 </Box>
               </Paper>
