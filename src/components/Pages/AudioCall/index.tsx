@@ -5,7 +5,7 @@ import { getWords } from '../../../utils/services';
 import Game from './components/game';
 import { AudioCallContext } from './context';
 import DifficultySelector from '../../DifficultySelector';
-import { playAudio } from '../../../utils/miscellaneous';
+import { getWordsFromSchoolbook, isTrainingGame, playAudio, random } from '../../../utils/miscellaneous';
 import { StyledFullScreen, useFullScreenHandle } from '../../StyledFullScreen'
 
 function AudioCall() {
@@ -14,6 +14,7 @@ function AudioCall() {
   const [selectedValue, setSelectedValue] = React.useState('1');
 
   const fullScreen = useFullScreenHandle();
+  const isTraining = isTrainingGame()
 
   const handleDifficultyChange = (value: string) => {
     setSelectedValue(value);
@@ -89,13 +90,17 @@ function AudioCall() {
             <Typography sx={{ mb: 10, fontSize: 32, fontFamily: 'Bebas Neue', textAlign: 'center' }}>
               Audiocall training develops vocabulary. <br /> You have to choose the translation of the word you heard.
             </Typography>
-            <DifficultySelector onChange={handleDifficultyChange} selectedValue={selectedValue} />
+            {isTraining? '' : <DifficultySelector onChange={handleDifficultyChange} selectedValue={selectedValue.toString()} />}
             <Button variant='contained'
-              onClick={() => {
-                getWords(+selectedValue - 1, 2).then(elem => {
-                  dispatch({ type: "LOADED_QUESTIONS", payload: elem })
+              onClick={async () => {
+                const schoolbookWords = await getWordsFromSchoolbook();
+
+                const newWords =  schoolbookWords || await getWords(+selectedValue - 1, random(0, 29));
+
+                
+                  dispatch({ type: "LOADED_QUESTIONS", payload: newWords })
                   setIsDataLoaded(true)
-                });
+                ;
               }}
               sx={{
                 mt: 10,

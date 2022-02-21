@@ -39,7 +39,6 @@ export async function udateStatistics(words: IWord[], usersAnswers: boolean[], s
         const usersWords = (await getUserWords(isAuth) as IUserWord[]);
         let usersStatistics = (await getUserStatistic(isAuth)) as IStatistic;
         if (!usersStatistics) {
-            console.log('fuck')
             usersStatistics = defaultStatistics;
         }
         const learnedWords = usersWords.reduce((acc, word) => {
@@ -47,7 +46,6 @@ export async function udateStatistics(words: IWord[], usersAnswers: boolean[], s
             return acc
         }, 0)
 
-        defaultStatistics.learnedWords = usersStatistics.learnedWords;
         defaultStatistics.learnedWords = learnedWords;
         const gameWay = (gameName === 'audiocall') ? defaultStatistics.optional.audiocall : defaultStatistics.optional.sprint;
         gameWay.correcInRow = correcInRow > gameWay.correcInRow ? correcInRow : gameWay.correcInRow;
@@ -88,6 +86,7 @@ export async function udateStatistics(words: IWord[], usersAnswers: boolean[], s
                 });
             }
         });
+        console.log(defaultStatistics)
         updateUserStatistic(defaultStatistics);
     }
 }

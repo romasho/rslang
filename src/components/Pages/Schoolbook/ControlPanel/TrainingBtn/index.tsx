@@ -56,9 +56,9 @@ function TrainingBtn({ isDisabled }: ITrainigProps) {
         </MenuItem>
         <MenuItem key={1}
                   onClick={handleTrainingStart}
-                  data-game='audio-call'
+                  data-game='audiocall'
                   component={RouterLink}
-                  to='/audio-call'
+                  to='/audiocall'
                   sx={{
                     color: 'black', textDecoration: 'none'
                   }}
