@@ -1,6 +1,7 @@
 import { loadState } from "../../../../../utils/state";
 import { IUserWord } from "../../../../../interfaces/requestsInterfaces";
 import { createUserWord, updateUserWord } from "../../../../../utils/services";
+import { DIFF_SHADOW, EASY_ANSWERS_COUNT, LEARNED_SHADOW } from "../../../../../constants";
 
 type diffColor = "error" | "inherit" | "secondary" | "disabled" | "action" | "primary" | "info" | "success" | "warning" | undefined;
 
@@ -71,7 +72,7 @@ export async function changeLearned(wordId: string, userWords: IUserWord[] | nul
   if (!userWords) return false;
 
   if (userWords.length === 0) {
-    await createUserWord({ userId, wordId, word: { difficulty: "easy", optional: { count: 3, isLearned: true } } });
+    await createUserWord({ userId, wordId, word: { difficulty: "easy", optional: { count: EASY_ANSWERS_COUNT, isLearned: true } } });
     return true;
   }
 
@@ -81,7 +82,7 @@ export async function changeLearned(wordId: string, userWords: IUserWord[] | nul
     const value = userWord.optional.isLearned;
 
     const optional = {
-      count: value ? 1 : 3,
+      count: value ? 1 : EASY_ANSWERS_COUNT,
       isLearned: !value
     }
 
@@ -92,7 +93,7 @@ export async function changeLearned(wordId: string, userWords: IUserWord[] | nul
 
     await updateUserWord({ userId, wordId, word });
   } else {
-    await createUserWord({ userId, wordId, word: { difficulty: "easy", optional: { count: 3, isLearned: true } } });
+    await createUserWord({ userId, wordId, word: { difficulty: "easy", optional: { count: EASY_ANSWERS_COUNT, isLearned: true } } });
   }
 
   return true;
@@ -101,9 +102,9 @@ export async function changeLearned(wordId: string, userWords: IUserWord[] | nul
 export function getCardShadowColor(diff: diffColor, learn: diffColor) {
   if (diff === 'inherit' && learn === 'inherit') return '0';
 
-  if (diff === 'secondary') return 'rgba(217, 83, 79, 0.37)';
+  if (diff === 'secondary') return DIFF_SHADOW;
 
-  if (learn === 'success') return 'rgba(46, 125, 50, 0.37)';
+  if (learn === 'success') return LEARNED_SHADOW;
 
   return '0';
 }

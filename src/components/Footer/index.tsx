@@ -29,5 +29,3 @@ function Footer() {
 }
 
 export default Footer;
-
-// order: { xs: -1, sm: 2 }
