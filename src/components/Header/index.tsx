@@ -104,7 +104,7 @@ function Header() {
                 ref={anchorAuthRef}
                 id="composition-button"
                 startIcon={<PersonIcon color='secondary' />}
-                endIcon={<KeyboardArrowDownIcon color='secondary' />}
+                endIcon={<KeyboardArrowDownIcon color='secondary' sx={{ transform: `rotate(${openAuthMenu? '180': '0'}deg)`, transition: '0.5s' }} />}
                 onClick={handleToggleAuthMenu}
                 sx={{ fontWeight: 'bold', textTransform: 'none' }}
               >
