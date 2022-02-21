@@ -21,7 +21,7 @@ function Answer({ answerText, onSelectAnswer, currentAnswer, correctAnswer }: IA
     id={answerText} 
     name="answer" 
     disabled={!!currentAnswer}
-    sx={{margin: '20px 10px' }}
+    sx={{margin: '20px 10px', minWidth: { xs: "40%", sm: "64px" } }}
     onClick={() => onSelectAnswer(answerText)}>
         {answerText}
     </Button>

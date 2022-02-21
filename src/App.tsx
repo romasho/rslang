@@ -15,7 +15,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/schoolbook' element={<Schoolbook />} />
           <Route path='/authorization' element={<Authorization />} />
-          <Route path='/audio-call' element={<AudioCallProvider><AudioCall /></AudioCallProvider>} />
+          <Route path='/audiocall' element={<AudioCallProvider><AudioCall /></AudioCallProvider>} />
           <Route path='/sprint' element={<Sprint />} />
           <Route path='/statistic' element={<Statistic />} />
         </Routes>

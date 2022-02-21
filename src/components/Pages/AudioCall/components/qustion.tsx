@@ -11,8 +11,8 @@ function Question() {
   const currentWord = quizState.words[quizState.currentQuestionIndex];
   return (
     <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        <IconButton aria-label="delete" 
-        size="large" 
+        <IconButton aria-label='delete' 
+        size='large' 
         onClick={() => { playAudio(`https://rs-lang-team-be.herokuapp.com/${currentWord.audio}`) }}
         sx={{
           width: '120px',
@@ -23,15 +23,21 @@ function Question() {
           height: '100px',
         }}/>
         </IconButton>
-        <div>
+        <Box sx={{
+          display: 'flex',
+          maxWidth: { xs: '90%', sm: '100%' },
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+        }}>
           {quizState.answers.map((answer) => (
             <Answer key={answer}
               answerText={answer}
               correctAnswer={currentWord.wordTranslate}
               currentAnswer={quizState.currentAnswer}
-              onSelectAnswer={(answerText: string) => dispatch({ type: "SELECT_ANSWER", payload: answerText })} />
+              onSelectAnswer={(answerText: string) => dispatch({ type: 'SELECT_ANSWER', payload: answerText })} />
           ))}
-        </div>
+        </Box>
     </Box>
   );
 }

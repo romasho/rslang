@@ -320,3 +320,4 @@ Examples of usage:
     updateUserSettings({id: "61feaf3049f2c80016c599b0", optional: { theme: 'dark' }}) => change/create user setting obj. You can store anything in 'optional' param or not use it at all
 
 */
+

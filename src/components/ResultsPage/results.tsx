@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Typography, Box } from '@mui/material';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { IUserWord, IWord } from "../../interfaces/requestsInterfaces";
 import { playAudio } from "../../utils/miscellaneous";
-import { getUserWords, createUserWord, updateUserWord } from "../../utils/services";
-import { loadState } from "../../utils/state";
-
+import { udateStatistics } from "./helpers";
+import { IWord } from "../../interfaces/requestsInterfaces";
 
 function getMaxCorrectInRow(array: boolean[]) {
   return Math.max(...array.reduce((acc, n, i, a) => {
@@ -29,60 +27,14 @@ interface IResults {
 }
 
 export default function TableResult({ words, usersAnswers, score = null, restart, choseDifficulty }: IResults) {
-  const [usersWords, setUserWords] = useState<IUserWord[] | null>(null);
-  const [dataLoaded, setDataLoaded] = useState(false)
-  const isAuth = loadState().auth?.id;
-
-  useEffect(() => {
-    if (isAuth) {
-      getUserWords(isAuth)?.then((res) => setUserWords(res));
-      setDataLoaded(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (dataLoaded && isAuth) {
-      words.forEach((word, index) => {
-        const isWordInArray = usersWords?.find((userWord) => userWord.wordId === word.id);
-
-        if (!isWordInArray) {
-          console.log('слов еще не было', word)
-          const newCount = usersAnswers[index] ? 1 : 0;
-          createUserWord({
-            userId: isAuth, wordId: word.id, word: {
-              difficulty: "easy",
-              optional: {
-                count: newCount,
-                isLearned: false,
-              }
-            }
-          });
-        } else {
-          const { difficulty, optional } = isWordInArray;
-          console.log('обновляем данные', difficulty, optional, word.wordTranslate);
-          const newCount = usersAnswers[index] ? (optional.count + 1) : 0;
-          const isHard = (difficulty === 'easy') ? 'easy' : 'hard';
-          const necessaryForStudying = (difficulty === 'easy') ? 3 : 5;
-          const isLearned = newCount >= necessaryForStudying;
-
-          updateUserWord({
-            userId: isAuth, wordId: word.id, word: {
-              difficulty: isHard,
-              optional: {
-                isLearned,
-                count: newCount,
-              }
-            }
-          });
-        }
-      });
-    }
-  }, [usersWords]);
-
   const successfulPercent = Math.round((usersAnswers.filter(el => el === true).length / words.length) * 100);
   const correcInRow = getMaxCorrectInRow(usersAnswers);
   const gameName = window.location.href.split('/')[window.location.href.split('/').length - 1];
-  console.log(correcInRow, gameName);
+
+
+  useEffect(() => {
+    udateStatistics(words, usersAnswers, successfulPercent, correcInRow, gameName);
+  }, []);
 
   return (
     <>

@@ -11,8 +11,9 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { loadState } from '../../utils/state';
 import { signOut } from '../../utils/services';
 
-const pages = ['SchoolBook', 'Audio call', 'Sprint'];
-const path = ['/schoolBook', '/audio-call', '/sprint'];
+const pages = ['SchoolBook', 'Audio call', 'Sprint']
+const path = ['/schoolBook', '/audiocall', '/sprint']
+
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -93,7 +94,7 @@ function Header() {
 
           <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
             <Button component={RouterLink} to="/schoolbook" variant='linkBtn' sx={{ fontWeight: 'bold' }}>SchoolBook</Button>
-            <Button component={RouterLink} to="/audio-call" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Audio call</Button>
+            <Button component={RouterLink} to="/audiocall" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Audio call</Button>
             <Button component={RouterLink} to="/sprint" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Sprint</Button>
           </Box>
 
