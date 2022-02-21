@@ -108,7 +108,7 @@ function SchoolBook() {
                 }
               }}
             >Dictionary</Button>
-            <TrainingBtn isDisabled={isLearned}  />
+            <TrainingBtn isDisabled={isLearned || state.isDict}  />
           </Container>
           <Typography variant='h3' sx={{ mb: 2, fontFamily: 'Permanent Marker', textAlign: 'center', fontSize: { xs: "1.5rem", sm: "3rem" } }}>
             {isLearned ? 'Congratulations! this page is learned' : ''}</Typography>
