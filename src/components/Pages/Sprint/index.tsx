@@ -4,7 +4,13 @@ import DifficultySelector from '../../DifficultySelector';
 import GameDialog from '../../GameDialog';
 import { getWords } from '../../../utils/services';
 import type { IWord } from '../../../interfaces/requestsInterfaces'
-import { shuffleArray, generateTranslation, getWordsFromSchoolbook, isTrainingGame } from '../../../utils/miscellaneous';
+import {
+  shuffleArray,
+  generateTranslation,
+  getWordsFromSchoolbook,
+  isTrainingGame,
+  deleteTrainingType,
+} from '../../../utils/miscellaneous';
 import Timer from '../../Timer';
 import TableResult from '../../ResultsPage/results';
 import { StyledFullScreen, useFullScreenHandle } from '../../StyledFullScreen'
@@ -30,7 +36,6 @@ function Sprint() {
 
   const handleGameStart = async () => {
     const schoolbookWords = await getWordsFromSchoolbook();
-
     const newWords =  schoolbookWords || await getWords(+selectedValue - 1, randomizedPages[currentWord]);
 
     setWords(shuffleArray(newWords));
@@ -59,6 +64,12 @@ function Sprint() {
     setWord(currentWord + 1);
     setAnswers(answers.concat(answer));
   };
+
+  React.useEffect(() =>
+     () => {
+      deleteTrainingType();
+    }
+  , []);
 
   React.useEffect( () => {
     if (currentWord === words.length - 10) {
