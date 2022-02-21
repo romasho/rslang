@@ -1,4 +1,4 @@
-import { Card, CardContent, CardMedia, Container, IconButton, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Container, IconButton, Tooltip, Typography } from "@mui/material";
 import { DeleteForeverRounded, PauseCircleOutline, PlayCircleOutline } from "@mui/icons-material";
 import React from "react";
 import { IDictProp } from "../../../interfaces/schoolbookInterfaces";
@@ -98,12 +98,16 @@ function DictWord({ data }: IDictProp) {
         <Container disableGutters sx={{ display: 'flex', columnGap: 1, alignItems: { xs: 'flex-start', sm: 'center' }, flexDirection: { xs: 'column-reverse', sm: 'row' } }}>
           <Typography variant='h6' component='h3' sx={{ flexShrink: 0 }}>{word} - {transcription}</Typography>
           <Container sx={{ width: '100%' }} disableGutters>
-            <IconButton onClick={handlePlayer}>
-              {isPlay ? <PauseCircleOutline color="primary" /> : <PlayCircleOutline color="primary" />}
-            </IconButton>
-            <IconButton onClick={deleteHandle}>
-              <DeleteForeverRounded color='primary' />
-            </IconButton>
+            <Tooltip title='play'>
+              <IconButton onClick={handlePlayer}>
+                {isPlay ? <PauseCircleOutline color="primary" /> : <PlayCircleOutline color="primary" />}
+              </IconButton>
+            </Tooltip>
+            <Tooltip title='Delete word'>
+              <IconButton onClick={deleteHandle}>
+                <DeleteForeverRounded color='primary' />
+              </IconButton>
+            </Tooltip>
           </Container>
         </Container>
         <Typography variant='body2' sx={{ mb: 1 }}>{wordTranslate}</Typography>
