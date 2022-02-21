@@ -89,7 +89,7 @@ function Header() {
 
           <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
             <Button component={RouterLink} to="/schoolbook" variant='linkBtn' sx={{ fontWeight: 'bold' }}>SchoolBook</Button>
-            <Button component={RouterLink} to="/audio-call" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Audio call</Button>
+            <Button component={RouterLink} to="/audiocall" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Audio call</Button>
             <Button component={RouterLink} to="/sprint" variant='linkBtn' sx={{ fontWeight: 'bold' }}>Sprint</Button>
           </Box>
 

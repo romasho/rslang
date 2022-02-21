@@ -234,7 +234,7 @@ export async function getUserSettings(id: string): Promise<IStatistic | null> {
 }
 
 export async function updateUserSettings(settings: ISettings): Promise<ISettings | IResponseErr | null> {
-  const { wordsPerDay, optional } = settings;
+  const { learnedWords, optional } = settings;
   try {
     const result = await fetch(`https://rs-lang-team-be.herokuapp.com/users/${settings.id}/settings`, {
       method: 'PUT',
@@ -243,7 +243,7 @@ export async function updateUserSettings(settings: ISettings): Promise<ISettings
         'Authorization': `Bearer ${loadState().auth?.token}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ wordsPerDay, optional })
+      body: JSON.stringify({ learnedWords, optional })
     });
 
     return await result.json();

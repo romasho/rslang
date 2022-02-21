@@ -15,14 +15,15 @@ async function udateStatistics(words: IWord[], usersAnswers: boolean[], successf
   if (isAuth) {
     const usersWords = (await getUserWords(isAuth) as IUserWord[]);
     const usersStatistics = (await getUserStatistic(isAuth));
-    
-  
+    const date = new Date();
+    const currentDay = date.toISOString().split('T')[0];
+
     const learnedWords = usersWords.reduce((acc, word) => {
       if (word.optional.isLearned === true) return acc + 1;
       return acc
     }, 0)
     const studiedWords = usersWords.length - learnedWords;
-    console.log(successfulPercent,  correcInRow, gameName, learnedWords, studiedWords)
+    console.log(successfulPercent, correcInRow, gameName, learnedWords, studiedWords)
 
     words.forEach((word, index) => {
       const isWordInArray = usersWords?.find((userWord) => userWord.wordId === word.id);
@@ -39,8 +40,20 @@ async function udateStatistics(words: IWord[], usersAnswers: boolean[], successf
             }
           }
         });
+        // const x = (usersStatistics?.optional.gameName[currentDay]) ? usersStatistics?.optional.gameName[currentDay] + 1 : 0;
         // updateUserStatistic({
+        //   ...usersStatistics,
+        //   learnedWords,
+        //   optional: {
+        //     [gameName]: {
+        //       successfulPercent,
+        //       correcInRow,
+        //       numberNewWordsPerDay: {
+        //         [currentDay]: x
+        //       }
+        //     }
 
+        //   }
         // })
       } else {
         const { difficulty, optional } = isWordInArray;
@@ -88,7 +101,7 @@ export default function TableResult({ words, usersAnswers, score = null, restart
   const correcInRow = getMaxCorrectInRow(usersAnswers);
   const gameName = window.location.href.split('/')[window.location.href.split('/').length - 1];
 
-  
+
   useEffect(() => {
     udateStatistics(words, usersAnswers, successfulPercent, correcInRow, gameName);
   }, []);

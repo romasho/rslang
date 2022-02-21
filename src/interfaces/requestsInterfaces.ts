@@ -87,8 +87,23 @@ interface IStatistic {
 
 interface ISettings {
   id: string
-  wordsPerDay: number;
-  optional?: {};
+  learnedWords: number;
+  optional?: {
+    audiocall: {
+      successfulPercent:number;
+      correcInRow: number;
+      numberNewWordsPerDay: {
+        
+      }
+    },
+    sprint: {
+      successfulPercent:number;
+      correcInRow: number;
+      numberNewWordsPerDay: {
+        
+      }
+    }
+  };
 }
 
 export type { IWord, IUserInput, IUserResponse, IResponseErr, ILoginResponse, IUserWord, IUserWordInput, IAggregatedWordsInput, IAggregatedWords, IStatistic, ISettings, IWordAggr }
