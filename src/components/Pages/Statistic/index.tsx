@@ -58,9 +58,9 @@ function Statistic() {
               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Total words studied: {studyedWords}</Typography>
               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Total words learned: {learned} </Typography>
               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>New words learned today: 
-               {`${  String(data.optional.audiocall.numberLearnedWordsPerDay[currentDay] + data.optional.sprint.numberLearnedWordsPerDay[currentDay])}`}
+               {`${  String(data.optional.audiocall.numberLearnedWordsPerDay[currentDay] + data.optional.sprint.numberLearnedWordsPerDay[currentDay]) || 0}`}
                </Typography>
-               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Percentage of correct answers per day: {(data.optional.sprint.successfulPercent + data.optional.audiocall.successfulPercent) / 2 }%  </Typography>
+               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Percentage of correct answers per day: {(Math.round(data.optional.sprint.successfulPercent + data.optional.audiocall.successfulPercent) / 2)  || 0}%  </Typography>
               <Box sx={{
                 mt: 2,
                 display: 'flex',
@@ -74,10 +74,10 @@ function Statistic() {
                   }}
                 >
                   <Typography variant='h6' component='h3' sx={{ fontFamily: 'Permanent Marker' }}>Sprint</Typography>
-                  <Typography>New words for today: {data.optional.sprint.numberNewWordsPerDay[currentDay]}</Typography>
-                  <Typography>Words learned today: {data.optional.sprint.numberLearnedWordsPerDay[currentDay]}</Typography>
-                  <Typography>Average win rate: {data.optional.sprint.successfulPercent}% </Typography>
-                  <Typography>Longest series: {data.optional.sprint.correcInRow} </Typography>
+                  <Typography>New words for today: {data.optional.sprint.numberNewWordsPerDay[currentDay] || 0}</Typography>
+                  <Typography>Words learned today: {data.optional.sprint.numberLearnedWordsPerDay[currentDay] || 0}</Typography>
+                  <Typography>Average win rate: {Math.round(data.optional.sprint.successfulPercent) || 0}% </Typography>
+                  <Typography>Longest series: {data.optional.sprint.correcInRow || 0} </Typography>
                 </Card>
                 <Card
                   sx={{
@@ -86,15 +86,15 @@ function Statistic() {
                   }}
                 >
                   <Typography variant='h6' component='h3' sx={{ fontFamily: 'Permanent Marker' }}>Audio call</Typography>
-                  <Typography>New words for today: {data.optional.audiocall.numberNewWordsPerDay[currentDay]} </Typography>
-                  <Typography>Words learned today: {data.optional.audiocall.numberLearnedWordsPerDay[currentDay]}</Typography>
-                  <Typography>Average win rate: {data.optional.audiocall.successfulPercent}% </Typography>
-                  <Typography>Longest series: {data.optional.audiocall.correcInRow} </Typography>
+                  <Typography>New words for today: {data.optional.audiocall.numberNewWordsPerDay[currentDay] || 0} </Typography>
+                  <Typography>Words learned today: {data.optional.audiocall.numberLearnedWordsPerDay[currentDay] || 0}</Typography>
+                  <Typography>Average win rate: {Math.round(data.optional.audiocall.successfulPercent) || 0}% </Typography>
+                  <Typography>Longest series: {data.optional.audiocall.correcInRow || 0} </Typography>
                 </Card>
               </Box>
             </>
           ) : (
-            <Typography variant='subtitle1' sx={{ textAlign: 'center' }}>Start learning words and playing games to display your statistic!</Typography>
+            <Typography sx={{  mt: 3 textAlign: 'center', fontFamily: 'Bebas Neue', fontSize: 24 }}>Start learning words and playing games to display your statistic!</Typography>
           )}
         </Container>
       </Box>

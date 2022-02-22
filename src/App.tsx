@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { Header } from './components';
 import { Authorization, Home, Schoolbook, AudioCall, Sprint, Statistic } from './components/Pages';
 import { AudioCallProvider } from './components/Pages/AudioCall/context';
@@ -8,7 +8,7 @@ import { AudioCallProvider } from './components/Pages/AudioCall/context';
 function App() {
   return (
 
-    <Router>
+    <HashRouter>
       <Header />
       <main>
         <Routes>
@@ -20,7 +20,7 @@ function App() {
           <Route path='/statistic' element={<Statistic />} />
         </Routes>
       </main>
-    </Router>
+    </HashRouter>
 
   );
 }
