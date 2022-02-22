@@ -1,6 +1,6 @@
-import { IWord } from '../interfaces/requestsInterfaces';
+import { IAggregatedWords, IWord } from '../interfaces/requestsInterfaces';
 import { loadSessionState, saveSessionState } from './state';
-import { getWords } from './services';
+import { getUserAggregatedWords } from './services';
 
 const audioPlayer = new Audio();
 
@@ -50,9 +50,17 @@ function deleteTrainingType() {
 
 async function getWordsFromSchoolbook () {
   const sessionState = loadSessionState();
+  const filter = `{"$or":[{"$and":[{"group": ${sessionState.chapter}, "page": ${sessionState.page}, "userWord.optional.isLearned": false}]},{"userWord":null}]}`;
+  const filter2 = `{"$or":[{"$and":[{"group": ${sessionState.chapter}, "userWord.optional.isLearned": false}]},{"userWord":null}]}`;
 
   if (isTrainingGame()) {
-    return getWords(sessionState.chapter, sessionState.page);
+    const x = await (getUserAggregatedWords({ group: sessionState.chapter, filter, wordsPerPage: 20 }));
+    if (x) {
+      if (x[0].paginatedResults.filter(el => el.userWord?.optional.isLearned !== true).length <= 4) {
+        return (getUserAggregatedWords({ group: sessionState.chapter, filter: filter2, wordsPerPage: 20 })) as Promise<IAggregatedWords[]>; 
+      }   
+      return (getUserAggregatedWords({ group: sessionState.chapter, filter, wordsPerPage: 20 })) as Promise<IAggregatedWords[]>;
+    }
   }
   return null;
 }

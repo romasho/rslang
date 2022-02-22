@@ -7,7 +7,7 @@ function Home() {
     <>
       <Box
         sx={{
-          backgroundImage: 'url(./home-bg-2.webp)',
+          backgroundImage: 'url(./homeBg.jpg)',
           backgroundRepeat: 'no-repeat',
           backgroundAttachment: 'fixed',
           backgroundSize: 'cover',
@@ -155,7 +155,7 @@ function Home() {
               sx={{
                 p: 0,
                 height: { xs: 0, sm: '500px' },
-                backgroundImage: 'url(https://i.pinimg.com/564x/33/ee/2c/33ee2c26b51bf4d2b8655902c619ae7f.jpg)',
+                backgroundImage: 'url(./5eff44ad1b5db4bfe4a8b77bfbcff2f0.jpg)',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center 0%',
                 borderRadius: '20px',

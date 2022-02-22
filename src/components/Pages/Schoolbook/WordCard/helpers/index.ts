@@ -15,6 +15,16 @@ export function isDifficult(wordId: string, userWords: IUserWord[] | null): diff
   return userWord.difficulty === 'hard' ? 'secondary' : 'inherit'
 }
 
+export function getCount(wordId: string, userWords: IUserWord[] | null) {
+  if (!userWords || userWords.length === 0) return 0;
+
+  const userWord = userWords.find(item => item.wordId === wordId);
+
+  if (!userWord) return 0;
+
+  return userWord.optional.count;
+}
+
 export async function changeDifficulty(wordId: string, userWords: IUserWord[] | null) {
   const memory = loadState().auth;
 

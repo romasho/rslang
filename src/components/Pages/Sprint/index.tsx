@@ -35,8 +35,9 @@ function Sprint() {
   };
 
   const handleGameStart = async () => {
-    const schoolbookWords = await getWordsFromSchoolbook();
-    const newWords =  schoolbookWords || await getWords(+selectedValue - 1, randomizedPages[currentWord]);
+    const schoolbookWords = (await getWordsFromSchoolbook());
+    const wordsForGame = schoolbookWords ? schoolbookWords[0].paginatedResults : null;
+    const newWords = wordsForGame || await getWords(+selectedValue - 1, randomizedPages[currentWord]);
 
     setWords(shuffleArray(newWords));
     setGameState('inProgress');
@@ -66,12 +67,12 @@ function Sprint() {
   };
 
   React.useEffect(() =>
-     () => {
+    () => {
       deleteTrainingType();
     }
-  , []);
+    , []);
 
-  React.useEffect( () => {
+  React.useEffect(() => {
     if (currentWord === words.length - 10) {
       getWords(+selectedValue - 1, randomizedPages[currentWord]).then((newPage) => {
         const shuffledPage = shuffleArray(newPage);
@@ -80,7 +81,7 @@ function Sprint() {
     }
   }, [currentWord]);
 
-  React.useEffect( () => {
+  React.useEffect(() => {
     const combo = answers.length - 1 - answers.lastIndexOf(false);
     const multiplier = Math.ceil(combo / 3);
 
@@ -89,7 +90,7 @@ function Sprint() {
 
   return (
     <StyledFullScreen sx={{ boxShadow: 'inset 0px 2px 4px -1px rgb(0 0 0 / 20%), inset 0px 4px 5px 0px rgb(0 0 0 / 14%), inset 0px 1px 10px 0px rgb(0 0 0 / 12%)' }} handle={fullScreen}>
-      <Grid container  justifyContent='center' alignItems='center' flexDirection='column' sx={{
+      <Grid container justifyContent='center' alignItems='center' flexDirection='column' sx={{
         flexGrow: 1,
         backgroundImage: 'url(forest-red-bg.jpg)',
         backgroundRepeat: 'no-repeat',
@@ -98,49 +99,49 @@ function Sprint() {
         mixBlendMode: 'multiply'
       }}>
         {gameState === 'inProgress' &&
-        <Grid container justifyContent='center' alignItems='center'>
-          <Grid item xs={12} sm={6} md={4}>
-            <Timer onGameEnd={handleGameEnd} time={60000} bColor={answers[answers.length - 1]? 'primary.main' : 'secondary.main'}/>
-            <GameDialog
-              onAnswer={handleAnswer}
-              word={words[currentWord]}
-              translation={generateTranslation(words[currentWord], words)}
-              onExit={handleExit}
-              score={score}
-              onFullScreen={fullScreen}
-            />
+          <Grid container justifyContent='center' alignItems='center'>
+            <Grid item xs={12} sm={6} md={4}>
+              <Timer onGameEnd={handleGameEnd} time={60000} bColor={answers[answers.length - 1] ? 'primary.main' : 'secondary.main'} />
+              <GameDialog
+                onAnswer={handleAnswer}
+                word={words[currentWord]}
+                translation={generateTranslation(words[currentWord], words)}
+                onExit={handleExit}
+                score={score}
+                onFullScreen={fullScreen}
+              />
+            </Grid>
           </Grid>
-        </Grid>
         }
         {gameState === 'ended' &&
-        <TableResult words={words.slice(0, answers.length)} usersAnswers={answers} score={score} choseDifficulty={handleExit} restart={handleRestart}/>
+          <TableResult words={words.slice(0, answers.length)} usersAnswers={answers} score={score} choseDifficulty={handleExit} restart={handleRestart} />
         }
         {!gameState &&
-        <Grid container sx={{
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-          <Typography component='h1' variant='h1' sx={{ mb: 10, fontFamily: 'Permanent Marker' }}>
-            Sprint
-          </Typography>
-          <Typography sx={{ mb: 10, fontSize: 32, fontFamily: 'Bebas Neue'}}>
-            Check how much points you can score in one minute, <br/> making educated guesses about words
-          </Typography>
-          {isTraining? '' : <DifficultySelector onChange={handleDifficultyChange} selectedValue={selectedValue.toString()} />}
-          <Button variant='contained'
-                  onClick={handleGameStart}
-                  sx={{
-                    mt: 10,
-                    fontSize: 24,
-                    fontWeight: 'bold',
-                    bgcolor: 'background.default',
-                    fontFamily: 'Bebas Neue',
-                    letterSpacing: 3
-                  }}>
-            Start game
-          </Button>
-        </Grid>
+          <Grid container sx={{
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <Typography component='h1' variant='h1' sx={{ mb: 10, fontFamily: 'Permanent Marker' }}>
+              Sprint
+            </Typography>
+            <Typography sx={{ mb: 10, fontSize: 32, fontFamily: 'Bebas Neue' }}>
+              Check how much points you can score in one minute, <br /> making educated guesses about words
+            </Typography>
+            {isTraining ? '' : <DifficultySelector onChange={handleDifficultyChange} selectedValue={selectedValue.toString()} />}
+            <Button variant='contained'
+              onClick={handleGameStart}
+              sx={{
+                mt: 10,
+                fontSize: 24,
+                fontWeight: 'bold',
+                bgcolor: 'background.default',
+                fontFamily: 'Bebas Neue',
+                letterSpacing: 3
+              }}>
+              Start game
+            </Button>
+          </Grid>
         }
       </Grid>
     </StyledFullScreen>

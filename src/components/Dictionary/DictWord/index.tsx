@@ -21,7 +21,7 @@ function DictWord({ data }: IDictProp) {
     textMeaningTranslate,
     textExampleTranslate,
     textExample,
-    _id
+    id
   } = data;
 
   const audioArr = [audio, audioExample, audioMeaning];
@@ -73,7 +73,7 @@ function DictWord({ data }: IDictProp) {
       }
     }
 
-    updateUserWord({ userId, wordId: _id, word: wordObj });
+    updateUserWord({ userId, wordId: id, word: wordObj });
     changeDisplay(false)
   }
 

@@ -1,17 +1,18 @@
 import { NewReleasesRounded, PauseCircleOutline, PlayCircleOutline, School } from "@mui/icons-material";
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import { Card, CardContent, CardMedia, Container, IconButton, Tooltip, Typography } from "@mui/material";
 import React from "react";
 import { IUserWord } from "../../../../interfaces/requestsInterfaces";
 import { IWordCard } from "../../../../interfaces/schoolbookInterfaces";
 import { getWordsOfUser } from "../helpers";
-import { changeDifficulty, changeLearned, getCardShadowColor, isDifficult, isLearnedWord } from "./helpers";
+import { changeDifficulty, changeLearned, getCardShadowColor, getCount, isDifficult, isLearnedWord } from "./helpers";
 
 type color = "error" | "inherit" | "secondary" | "disabled" | "action" | "primary" | "info" | "success" | "warning" | undefined;
 
 function Word({ data, changeBookState, prevState }: IWordCard) {
   const [action, updateAction] = React.useState(false)
   const path = 'https://rs-lang-team-be.herokuapp.com/';
-  const [userWords, updateUserWords] = React.useState<null | IUserWord[]>(null)
+  const [userWords, updateUserWords] = React.useState<null | IUserWord[]>(null);
   const [cardShadow, updateCardShadow] = React.useState('0');
 
   const isSigned = Boolean(userWords);
@@ -73,6 +74,7 @@ function Word({ data, changeBookState, prevState }: IWordCard) {
 
   const [diffColor, updateDiffColor] = React.useState<color>('inherit')
   const [learnedColor, updateLearnedColor] = React.useState<color>('inherit')
+  const [userWordCOunt, updateuserWordCOunt] = React.useState(0);
 
   const handleHardWord = async () => {
     updateBtnState(true)
@@ -93,8 +95,10 @@ function Word({ data, changeBookState, prevState }: IWordCard) {
       updateUserWords(res)
       const diffColorCurr = isDifficult(id, res);
       const learnedColorCurr = isLearnedWord(id, res);
+      const count = getCount(id, res);
       updateDiffColor(diffColorCurr)
       updateLearnedColor(learnedColorCurr)
+      updateuserWordCOunt(count)
       updateBtnState(false)
       updateCardShadow(getCardShadowColor(diffColorCurr, learnedColorCurr))
     })
@@ -141,6 +145,13 @@ function Word({ data, changeBookState, prevState }: IWordCard) {
                   <span>
                     <IconButton onClick={handleLearnWord} disabled={btnState}>
                       <School color={learnedColor} />
+                    </IconButton>
+                  </span>
+                </Tooltip>
+                <Tooltip title={`You answered the word correctly ${userWordCOunt} times in a row`}>
+                  <span>
+                    <IconButton disabled={btnState}>
+                      <LocalLibraryIcon color={userWordCOunt === 0 ? 'inherit' : "success"} />
                     </IconButton>
                   </span>
                 </Tooltip>

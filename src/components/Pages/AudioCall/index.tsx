@@ -100,9 +100,8 @@ function AudioCall() {
             <Button variant='contained'
               onClick={async () => {
                 const schoolbookWords = await getWordsFromSchoolbook();
-
-                const newWords = schoolbookWords || await getWords(+selectedValue - 1, random(0, 29));
-
+                const wordsForGame = schoolbookWords ? schoolbookWords[0].paginatedResults : null;
+                const newWords = wordsForGame || await getWords(+selectedValue - 1, random(0, 29));
 
                 dispatch({ type: "LOADED_QUESTIONS", payload: newWords })
                 setIsDataLoaded(true)
