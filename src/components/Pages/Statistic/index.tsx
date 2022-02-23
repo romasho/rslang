@@ -59,8 +59,14 @@ function Statistic() {
               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Total words learned: {learned} </Typography>
               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>New words learned today: 
                {`${  String(data.optional.audiocall.numberLearnedWordsPerDay[currentDay] + data.optional.sprint.numberLearnedWordsPerDay[currentDay]) || 0}`}
-               </Typography>
-               <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>Percentage of correct answers per day: {(Math.round(data.optional.sprint.successfulPercent + data.optional.audiocall.successfulPercent) / 2)  || 0}%  </Typography>
+              </Typography>
+              <Typography sx={{ fontSize: { xs: "1rem", sm: '1.5rem' } }}>
+                Percentage of correct answers per day:
+                 {(Math.round(
+                   data.optional.sprint.successfulPercent + data.optional.audiocall.successfulPercent) / 
+                   (data.optional.sprint.successfulPercent && data.optional.audiocall.successfulPercent? 2 : 1)
+                  )  || 0}%  
+              </Typography>
               <Box sx={{
                 mt: 2,
                 display: 'flex',
@@ -94,7 +100,7 @@ function Statistic() {
               </Box>
             </>
           ) : (
-            <Typography sx={{  mt: 3 textAlign: 'center', fontFamily: 'Bebas Neue', fontSize: 24 }}>Start learning words and playing games to display your statistic!</Typography>
+            <Typography sx={{  mt: 3, textAlign: 'center', fontFamily: 'Bebas Neue', fontSize: 24 }}>Start learning words and playing games to display your statistic!</Typography>
           )}
         </Container>
       </Box>
