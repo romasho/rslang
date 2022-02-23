@@ -1,8 +1,9 @@
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, Button, IconButton, Tooltip } from "@mui/material";
 import React, { useContext } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
+import HelpIcon from '@mui/icons-material/Help';
 import { AudioCallContext } from "../context";
 import Question from "./qustion"
 import TableResult from "../../../ResultsPage/results";
@@ -28,6 +29,20 @@ function Game({ onExit, onRestart, onFullScreen }: IGameProps) {
   };
 
   if (quizState.showResults) onFullScreen.exit();
+
+  function handleKeyUp(event: KeyboardEvent) {
+    if (event.key === 'Enter' && quizState.currentAnswer) {
+      dispatch({ type: "NEXT_QUESTION" })
+
+    }
+  }
+
+  React.useEffect(() => {
+    document.addEventListener('keyup', handleKeyUp);
+    return () => {
+      document.removeEventListener('keyup', handleKeyUp);
+    }
+  }, [quizState.currentAnswer]);
 
   return (
     <Box sx={{
@@ -60,6 +75,15 @@ function Game({ onExit, onRestart, onFullScreen }: IGameProps) {
               <FullscreenIcon />
             }
           </IconButton>
+          <Tooltip title='You can use "1", "2", "3", "4" to choose answers and "Enter" to next question'
+          sx={{
+            position: 'absolute', right: '100px',
+            top: '80px'
+          }}>
+            <IconButton>
+              <HelpIcon />
+            </IconButton>
+          </Tooltip>
           <CircularStatic currentword={quizState.currentQuestionIndex + 1} countwords={quizState.words.length} />
           <Question />
           <Button variant="contained"

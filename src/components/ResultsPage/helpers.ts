@@ -53,13 +53,15 @@ export async function udateStatistics(words: IWord[], usersAnswers: boolean[], s
         gameWay.successfulPercent = (gameWay.successfulPercent === 0) ? successfulPercent : (successfulPercent + gameWay.successfulPercent) / 2;
 
 
-        words.forEach((word, index) => {
-            const isWordInArray = usersWords?.find((userWord) => userWord.wordId === word.id);
+        words.forEach((word: IWord, index) => {
+            // eslint-disable-next-line no-underscore-dangle
+            const correctId = word.id ? word.id : (word as any)._id
+            const isWordInArray = usersWords?.find((userWord) => userWord.wordId === correctId);
 
             if (!isWordInArray) {
                 const newCount = usersAnswers[index] ? 1 : 0;
                 createUserWord({
-                    userId: isAuth, wordId: word.id, word: {
+                    userId: isAuth, wordId: correctId, word: {
                         difficulty: "easy",
                         optional: {
                             count: newCount,
@@ -77,7 +79,7 @@ export async function udateStatistics(words: IWord[], usersAnswers: boolean[], s
                 if (isLearned) gameWay.numberLearnedWordsPerDay[currentDay] += 1;
 
                 updateUserWord({
-                    userId: isAuth, wordId: word.id, word: {
+                    userId: isAuth, wordId: correctId, word: {
                         difficulty: isHard,
                         optional: {
                             isLearned,

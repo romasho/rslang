@@ -26,7 +26,8 @@ function Statistic() {
         const learnedData = result[2] ? result[2][0] : null;
 
         if (learnedData) {
-          const { count } = learnedData.totalCount[0];
+          
+          const count = learnedData.totalCount[0] ? learnedData.totalCount[0].count : 0;
           updateLearned(count)
         }
 

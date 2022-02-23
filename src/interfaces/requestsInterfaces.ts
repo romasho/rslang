@@ -72,6 +72,7 @@ type IWordAggregated = Omit<IWord, 'id'>;
 
 interface IWordAggr extends IWordAggregated {
   id: string;
+  _id?: string;
   userWord?: IUserWord;
 }
 

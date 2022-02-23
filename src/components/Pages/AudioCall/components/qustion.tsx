@@ -30,11 +30,12 @@ function Question() {
           flexWrap: 'wrap',
           justifyContent: 'center',
         }}>
-          {quizState.answers.map((answer) => (
+          {quizState.answers.map((answer, index) => (
             <Answer key={answer}
               answerText={answer}
               correctAnswer={currentWord.wordTranslate}
               currentAnswer={quizState.currentAnswer}
+              index={index}
               onSelectAnswer={(answerText: string) => dispatch({ type: 'SELECT_ANSWER', payload: answerText })} />
           ))}
         </Box>

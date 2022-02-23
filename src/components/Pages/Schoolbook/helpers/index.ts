@@ -21,6 +21,6 @@ export async function isLearndedPage(state: IBookState) {
   if (!res) return false;
 
   const { totalCount } = res[0] as IAggregatedWords;
-
-  return totalCount[0].count;
+  
+  return totalCount[0] ? totalCount[0].count : 0;
 }

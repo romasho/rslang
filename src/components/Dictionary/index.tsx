@@ -14,7 +14,7 @@ function Dictionary() {
     setData(null)
     const filter = '{"$and":[{"userWord.difficulty":"hard"}]}'
 
-    getUserAggregatedWords({ id: userId, filter }).then(res => {
+    getUserAggregatedWords({ id: userId, filter, wordsPerPage: 200 }).then(res => {
       if (!res) return;
       const { paginatedResults } = res[0] as IAggregatedWords;
 
