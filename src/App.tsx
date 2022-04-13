@@ -1,24 +1,26 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { Header } from './components';
-import { Authorization, Home, Dictionary, AudioCall, Sprint } from './components/Pages';
+import { Authorization, Home, Schoolbook, AudioCall, Sprint, Statistic } from './components/Pages';
+import { AudioCallProvider } from './components/Pages/AudioCall/context';
 
 
 function App() {
   return (
 
-    <Router>
+    <HashRouter>
       <Header />
       <main>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/dictionary' element={<Dictionary />} />
+          <Route path='/schoolbook' element={<Schoolbook />} />
           <Route path='/authorization' element={<Authorization />} />
-          <Route path='/audio-call' element={<AudioCall />} />
+          <Route path='/audiocall' element={<AudioCallProvider><AudioCall /></AudioCallProvider>} />
           <Route path='/sprint' element={<Sprint />} />
+          <Route path='/statistic' element={<Statistic />} />
         </Routes>
       </main>
-    </Router>
+    </HashRouter>
 
   );
 }

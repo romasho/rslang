@@ -26,7 +26,7 @@ export async function getWord(id: string): Promise<IWord | null> {
   }
 }
 
-export async function createUser(user: IUserInput): Promise<IUserResponse | IResponseErr | string | null> {
+export async function createUser(user: IUserInput): Promise<IUserResponse | IResponseErr | null> {
   const result = await fetch('https://rs-lang-team-be.herokuapp.com/users', {
     method: 'POST',
     headers: {
@@ -36,13 +36,21 @@ export async function createUser(user: IUserInput): Promise<IUserResponse | IRes
     body: JSON.stringify(user),
   });
   try {
-    if (result.status === 417) return result.text();
+    if (result.status === 417) return {
+      error: {
+        errors: [
+          {
+            message: await result.text(),
+            path: ['email']
+          }
+        ],
+        status: 'failed'
+      }
+    };
     return await result.json()
   } catch {
     return null
   }
-
-
 }
 
 export async function signIn(user: Omit<IUserInput, 'name'>): Promise<ILoginResponse | IResponseErr | null> {
@@ -81,7 +89,7 @@ export async function getUser(id: string): Promise<IUserResponse | null> {
   }
 }
 
-export async function getUserWords(id: string): Promise<IUserWord | null> {
+export async function getUserWords(id: string): Promise<IUserWord[] | null> {
   try {
     const result = await fetch(`https://rs-lang-team-be.herokuapp.com/users/${id}/words`, {
       headers: {
@@ -95,7 +103,7 @@ export async function getUserWords(id: string): Promise<IUserWord | null> {
   }
 }
 
-export async function getUserWord({id, wordId}: {id: string, wordId: string}): Promise<IUserWord | IResponseErr | null> {
+export async function getUserWord({ id, wordId }: { id: string, wordId: string }): Promise<IUserWord | IResponseErr | null> {
   try {
     const result = await fetch(`https://rs-lang-team-be.herokuapp.com/users/${id}/words/${wordId}`, {
       headers: {
@@ -109,7 +117,7 @@ export async function getUserWord({id, wordId}: {id: string, wordId: string}): P
   }
 }
 
-export async function createUserWord({userId, wordId, word}: {userId: string, wordId: string, word: IUserWordInput}): Promise<IUserWord | null> {
+export async function createUserWord({ userId, wordId, word }: { userId: string, wordId: string, word: IUserWordInput }): Promise<IUserWord | null> {
   try {
     const result = await fetch(`https://rs-lang-team-be.herokuapp.com/users/${userId}/words/${wordId}`, {
       method: 'POST',
@@ -127,7 +135,7 @@ export async function createUserWord({userId, wordId, word}: {userId: string, wo
   }
 }
 
-export async function updateUserWord({userId, wordId, word}: {userId: string, wordId: string, word: IUserWordInput}): Promise<IUserWord | IResponseErr | null> {
+export async function updateUserWord({ userId, wordId, word }: { userId: string, wordId: string, word: IUserWordInput }): Promise<IUserWord | IResponseErr | null> {
   try {
     const result = await fetch(`https://rs-lang-team-be.herokuapp.com/users/${userId}/words/${wordId}`, {
       method: 'PUT',
@@ -145,7 +153,7 @@ export async function updateUserWord({userId, wordId, word}: {userId: string, wo
   }
 }
 
-export async function deleteUserWord({userId, wordId}: {userId: string, wordId: string}): Promise<boolean> {
+export async function deleteUserWord({ userId, wordId }: { userId: string, wordId: string }): Promise<boolean> {
   const result = await fetch(`https://rs-lang-team-be.herokuapp.com/users/${userId}/words/${wordId}`, {
     method: 'DELETE',
     headers: {
@@ -158,7 +166,8 @@ export async function deleteUserWord({userId, wordId}: {userId: string, wordId: 
 
 
 export async function getUserAggregatedWords(filter: IAggregatedWordsInput): Promise<IAggregatedWords[] | null> {
-  const url = new URL(`https://rs-lang-team-be.herokuapp.com/users/${filter.id}/aggregatedWords`);
+  const id = filter.id? filter.id : loadState().auth?.id;
+  const url = new URL(`https://rs-lang-team-be.herokuapp.com/users/${id}/aggregatedWords`);
 
   if (filter.group) url.searchParams.set('group', filter.group.toString());
   if (filter.page) url.searchParams.set('page', filter.page.toString());
@@ -312,3 +321,4 @@ Examples of usage:
     updateUserSettings({id: "61feaf3049f2c80016c599b0", optional: { theme: 'dark' }}) => change/create user setting obj. You can store anything in 'optional' param or not use it at all
 
 */
+

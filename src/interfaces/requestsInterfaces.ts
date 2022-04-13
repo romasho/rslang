@@ -30,7 +30,7 @@ interface IUserResponse {
 
 interface IErr {
   message: string;
-  path: string[];
+  path: [string];
 }
 
 interface IResponseErr {
@@ -51,14 +51,17 @@ interface ILoginResponse {
 interface IUserWord {
   id: string;
   difficulty: string;
-  optional?: {};
+  optional: {
+    count: number,
+    isLearned: boolean,
+  };
   wordId: string;
 }
 
 type IUserWordInput = Omit<IUserWord, 'id' | 'wordId'>
 
 interface IAggregatedWordsInput {
-  id: string;
+  id?: string;
   group?: number;
   page?: number;
   wordsPerPage?: number;
@@ -68,18 +71,41 @@ interface IAggregatedWordsInput {
 type IWordAggregated = Omit<IWord, 'id'>;
 
 interface IWordAggr extends IWordAggregated {
-  _id: string;
+  id: string;
+  _id?: string;
+  userWord?: IUserWord;
 }
 
 interface IAggregatedWords {
   paginatedResults: IWordAggr[],
-  totalCount: { count: number};
+  totalCount: [{ count: number }];
 }
 
 interface IStatistic {
-  id: string
-  learnedWords?: number;
-  optional?: {};
+  id?: string
+  learnedWords: number;
+  optional: {
+    audiocall: {
+      successfulPercent:number;
+      correcInRow: number;
+      numberNewWordsPerDay: {
+        [key: string]: number;
+      },
+      numberLearnedWordsPerDay: {
+        [key: string]: number;
+      },
+    },
+    sprint: {
+      successfulPercent:number;
+      correcInRow: number;
+      numberNewWordsPerDay: {
+        [key: string]: number;
+      },
+      numberLearnedWordsPerDay: {
+        [key: string]: number;
+      },
+    }
+  };
 }
 
 interface ISettings {
@@ -88,4 +114,4 @@ interface ISettings {
   optional?: {};
 }
 
-export type { IWord, IUserInput, IUserResponse, IResponseErr, ILoginResponse, IUserWord, IUserWordInput, IAggregatedWordsInput, IAggregatedWords, IStatistic, ISettings }
+export type { IWord, IUserInput, IUserResponse, IResponseErr, ILoginResponse, IUserWord, IUserWordInput, IAggregatedWordsInput, IAggregatedWords, IStatistic, ISettings, IWordAggr }
